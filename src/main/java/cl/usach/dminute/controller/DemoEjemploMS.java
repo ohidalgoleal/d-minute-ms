@@ -19,9 +19,9 @@ public class DemoEjemploMS {
 			log.info("demo.ejemplo.INIT");
 		}
 		Salida retorno = new Salida();
-		retorno.setAdministrador("nombre");
-		retorno.setFono("1234");
-		retorno.setDv("K");
+		retorno.setAdministrador("Oliver Hidalgo");
+		retorno.setFono("984643056");
+		retorno.setDv("6");
 		retorno.setRut(15928819);
 		if(log.isInfoEnabled()) {
 			log.info("demo.ejemplo.END: " + retorno.toString());
