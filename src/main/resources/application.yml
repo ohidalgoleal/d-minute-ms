@@ -1,0 +1,48 @@
+#Spring properties 
+spring:
+  aop:
+    auto: true
+    proxy-target-class: false
+  messages:
+    always-use-message-format: false
+    basename: messages
+    cache-seconds: -1
+  mvc:
+    async:
+      request-timeout: 300
+    date-format: DD/MM/YYYY
+    favicon:
+      enabled: true
+    dispatch-options-request: true
+    dispatch-trace-request: false
+  couchbase:
+    bucket:
+      name: default
+  jpa:
+    database: mysql
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+      naming:
+        strategy: org.hibernate.cfg.ImprovedNamingStrategy
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect 
+  datasource:
+    url: jdbc:mysql://localhost:3306/dminute?useSSL=false
+    username: root
+    password: 123456
+      
+#Security properties      
+security: 
+  oauth2:
+    resource:
+      service-id: resource
+      prefer-token-info: true
+#Pantalla de error
+#server:
+#  error:
+#    whitelabel:
+#      enabled: true     
+      
+ 
