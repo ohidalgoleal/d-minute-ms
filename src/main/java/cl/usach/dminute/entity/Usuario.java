@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,5 +30,6 @@ public class Usuario {
 	@Column(name = "apellido")
 	private String apellido;
 	@Column(name = "password")
+	@JsonIgnore
 	private String password;
 }
