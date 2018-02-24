@@ -6,23 +6,30 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import cl.usach.dminute.dto.Constants;
 import cl.usach.dminute.entity.Usuario;
+import cl.usach.dminute.exception.ErrorTecnicoException;
 import cl.usach.dminute.repository.UsuarioJpa;
 import cl.usach.dminute.service.UsuarioService;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-
+@Slf4j
 @Service(value = "usuarioService")
 public class UsuarioImpl implements UserDetailsService, UsuarioService {
 	
 	@Autowired
 	@Qualifier("usuarioJpa")
 	private UsuarioJpa usuarioJpa;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
 		Usuario user = usuarioJpa.findByUsername(userId);
@@ -59,6 +66,22 @@ public class UsuarioImpl implements UserDetailsService, UsuarioService {
 
 	@Override
     public Usuario save(Usuario user) {
-        return usuarioJpa.save(user);
+		if(log.isInfoEnabled()) {
+			log.info("UsuarioImpl.save.INIT");
+			log.info("UsuarioImpl.save.user: " + user.toString());
+		}
+		try {
+			user.setPassword(passwordEncoder.encode(user.getPassword()));
+			Usuario validacion = findOne(user.getUsername()); 
+			if (validacion == null)
+				return usuarioJpa.save(user);
+			else
+				throw new ErrorTecnicoException(Constants.ERROR_USUARIO_EXISTE_COD, Constants.ERROR_USUARIO_EXISTE);
+		}catch(Exception ex) {
+			if(log.isErrorEnabled()) {
+				log.info("UsuarioImpl.save.ERROR - " + ex.getMessage());			
+			}	
+			throw ex;
+		}	
     }
 }

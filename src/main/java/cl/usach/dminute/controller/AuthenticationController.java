@@ -3,21 +3,23 @@ package cl.usach.dminute.controller;
 import cl.usach.dminute.configuration.JwtTokenUtil;
 import cl.usach.dminute.dto.AuthToken;
 import cl.usach.dminute.dto.LoginUser;
+import cl.usach.dminute.dto.Salida;
 import cl.usach.dminute.entity.Usuario;
 import cl.usach.dminute.service.UsuarioService;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
@@ -35,7 +37,7 @@ public class AuthenticationController {
 	@Qualifier("usuarioService")
     private UsuarioService usuarioService;
 
-    @RequestMapping(value = "/generate-token", method = RequestMethod.POST)
+	@PostMapping(value = "/generate-token", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> register(@RequestBody LoginUser loginUser) throws AuthenticationException {
 
     	if(log.isInfoEnabled()) {
@@ -59,6 +61,19 @@ public class AuthenticationController {
 			log.info("AuthenticationController.generate-token.Token.OK");
 		}
         return ResponseEntity.ok(new AuthToken(token));
+    }
+    
+    @PostMapping(value="/usuarioGuardar", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> usuarioGuardar(@RequestBody Usuario usuario){
+    	if(log.isInfoEnabled()) {
+			log.info("AuthenticationController.usuarioGuardar.INIT");
+		}
+        usuarioService.save(usuario);
+        
+        if(log.isInfoEnabled()) {
+			log.info("AuthenticationController.usuarioGuardar.OK");
+		}
+        return ResponseEntity.ok(new Salida());
     }
 
 }

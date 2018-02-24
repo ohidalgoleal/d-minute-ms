@@ -2,8 +2,11 @@ package cl.usach.dminute.configuration;
 
 import cl.usach.dminute.entity.Usuario;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Clock;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.impl.DefaultClock;
+
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -13,13 +16,19 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.function.Function;
 
+import javax.servlet.http.HttpServletRequest;
+
 import static cl.usach.dminute.dto.Constants.ACCESS_TOKEN_VALIDITY_SECONDS;
+import static cl.usach.dminute.dto.Constants.HEADER_STRING;
 import static cl.usach.dminute.dto.Constants.SIGNING_KEY;
+import static cl.usach.dminute.dto.Constants.TOKEN_PREFIX;
 
 @Component
 public class JwtTokenUtil implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
+    private Clock clock = DefaultClock.INSTANCE;
 
 	public String getUsernameFromToken(String token) {
         return getClaimFromToken(token, Claims::getSubject);
@@ -70,5 +79,45 @@ public class JwtTokenUtil implements Serializable {
               username.equals(userDetails.getUsername())
                     && !isTokenExpired(token));
     }
+    
+    public Boolean isTokenActivo(HttpServletRequest req)
+    {
+    	String header = req.getHeader(HEADER_STRING);
+    	String username = null;
+        String authToken = null;
+    	if (header != null && header.startsWith(TOKEN_PREFIX)) {
+    		 authToken = header.replace(TOKEN_PREFIX,"");
+    		 username = this.getUsernameFromToken(authToken);
+    		 return (
+    	              username.equals(username)
+    	                    && !isTokenExpired(authToken));
+    	}
+    	return true;
+    }
+    
+    public String getTokenActivo(HttpServletRequest req)
+    {
+    	String header = req.getHeader(HEADER_STRING);
+    	String authToken = null;
+    	if (header != null && header.startsWith(TOKEN_PREFIX)) {
+    		 authToken = header.replace(TOKEN_PREFIX,"");
+    		 return authToken;
+    	}
+    	return "";
+    }
+    
+    public String refrescarToken(String token) {
+        final Date createdDate = clock.now();
+        final Date expirationDate = getExpirationDateFromToken(token);
 
+        final Claims claims = getAllClaimsFromToken(token);
+        
+        return Jwts.builder()
+                .setClaims(claims)
+                .setIssuer("http://devglan.com")
+                .setIssuedAt(createdDate)
+                .setExpiration(expirationDate)
+                .signWith(SignatureAlgorithm.HS256, SIGNING_KEY)
+                .compact();
+    }
 }
