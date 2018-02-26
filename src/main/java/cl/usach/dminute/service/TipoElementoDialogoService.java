@@ -9,4 +9,6 @@ public interface TipoElementoDialogoService {
 
 	public abstract List<TipoElementoDialogo> listAllTipoElementoDialogo();
 	
+	public abstract void addTipoElementoDialogo(TipoElementoDialogo ingreso);
+	
 }

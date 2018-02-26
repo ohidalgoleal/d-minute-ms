@@ -22,8 +22,20 @@ public class RolProyectoImpl implements RolProyectoService  {
 	@Override
 	public List<RolProyecto> listAllRolProyecto() {
 		if(log.isInfoEnabled()) {
-			log.info("RolProyectoImpl.listAllRolProyecto");
+			log.info("RolProyectoImpl.listAllRolProyecto.INIT");
 		}
 		return rolProyectoJpa.findAll();
+	}
+
+	@Override
+	public void addRolProyecto(RolProyecto ingreso) {
+		if(log.isInfoEnabled()) {
+			log.info("RolProyectoImpl.addRolProyecto.INIT");
+		}
+		rolProyectoJpa.save(ingreso);
+		if(log.isInfoEnabled()) {
+			log.info("RolProyectoImpl.addRolProyecto.END");
+		}
+		
 	}
 }

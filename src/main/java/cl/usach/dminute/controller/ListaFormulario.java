@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -76,4 +78,27 @@ public class ListaFormulario {
 		}
 		return listaRetorno; 
 	}
+	
+	@ApiOperation("Operacion que permite agegar tipo de elemento de dialogo de un acta.")
+	@PostMapping(value="/addTipoElementoDialogo", produces = MediaType.APPLICATION_JSON_VALUE)	
+	public void AddTipoElementoDialogo(@RequestBody TipoElementoDialogo ingreso) {
+		if(log.isInfoEnabled()) {
+			log.info("ListaFormulario.addTipoElementoDialogo.INIT");
+		}
+		try {			
+			tipoElementoDialogoService.addTipoElementoDialogo(ingreso);
+			if(log.isInfoEnabled()) {
+				log.info("ListaFormulario.addTipoElementoDialogo - " + ingreso.toString());
+			}			
+		}catch (Exception e) {
+			// TODO: handle exception
+			if(log.isErrorEnabled()) {
+				log.info("ListaFormulario.addTipoElementoDialogo.ERROR - " +e.getMessage());			
+			}			
+		}
+		if(log.isInfoEnabled()) {
+			log.info("ListaFormulario.addTipoElementoDialogo.FIN");
+		}		
+	}
+	
 }

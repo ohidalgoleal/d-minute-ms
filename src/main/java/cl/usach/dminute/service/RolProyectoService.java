@@ -8,4 +8,6 @@ public interface RolProyectoService {
 
 	public abstract List<RolProyecto> listAllRolProyecto();
 	
+	public abstract void addRolProyecto(RolProyecto ingreso);
+	
 }

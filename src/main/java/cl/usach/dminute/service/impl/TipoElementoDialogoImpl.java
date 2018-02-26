@@ -22,8 +22,19 @@ public class TipoElementoDialogoImpl implements TipoElementoDialogoService {
 	@Override
 	public List<TipoElementoDialogo> listAllTipoElementoDialogo() {
 		if(log.isInfoEnabled()) {
-			log.info("TipoElementoDialogoImpl.listAllTipoElementoDialogo");
+			log.info("TipoElementoDialogoImpl.listAllTipoElementoDialogo.INIT");
 		}
 		return tipoElementoDialogoJpa.findAll();
+	}
+
+	@Override
+	public void addTipoElementoDialogo(TipoElementoDialogo ingreso) {
+		if(log.isInfoEnabled()) {
+			log.info("TipoElementoDialogoImpl.addTipoElementoDialogo.INIT");
+		}
+		tipoElementoDialogoJpa.save(ingreso);
+		if(log.isInfoEnabled()) {
+			log.info("TipoElementoDialogoImpl.addTipoElementoDialogo.END");
+		}
 	}
 }
