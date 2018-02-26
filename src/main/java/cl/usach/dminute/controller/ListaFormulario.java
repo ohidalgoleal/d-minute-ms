@@ -52,6 +52,7 @@ public class ListaFormulario {
 		if(log.isInfoEnabled()) {
 			log.info("ListaFormulario.rolesProyecto.FIN");
 		}
+		
 		return listaRetorno; 
 	}
 	
