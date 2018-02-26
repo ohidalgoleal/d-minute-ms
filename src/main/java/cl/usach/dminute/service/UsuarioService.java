@@ -6,13 +6,13 @@ import java.util.List;
 
 public interface UsuarioService {
 
-	Usuario save(Usuario user);
+	public abstract Usuario save(Usuario user);
     
-    List<Usuario> findAll();
+	public abstract List<Usuario> findAll();
     
-    void delete(long id);
+	public abstract void delete(long id);
    
-    Usuario findOne(String username);
+	public abstract Usuario findOne(String username);
 
-    Usuario findById(Long id);
+	public abstract Usuario findById(Long id);
 }
