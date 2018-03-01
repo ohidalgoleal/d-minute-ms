@@ -5,13 +5,13 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import cl.usach.dminute.dto.Constants;
 import cl.usach.dminute.entity.Usuario;
 import cl.usach.dminute.exception.ErrorTecnicoException;
+import cl.usach.dminute.exception.UsPersonException;
 import cl.usach.dminute.repository.UsuarioJpa;
 import cl.usach.dminute.service.UsuarioService;
 import lombok.extern.slf4j.Slf4j;
@@ -31,10 +31,10 @@ public class UsuarioImpl implements UserDetailsService, UsuarioService {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
-	public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
+	public UserDetails loadUserByUsername(String userId) throws UsPersonException {
 		Usuario user = usuarioJpa.findByUsername(userId);
 		if(user == null){
-			throw new UsernameNotFoundException("Invalid username or password.");
+			throw new UsPersonException(Constants.ERROR_USUARIO_EXISTE_COD,"Invalid username or password.");
 		}
 		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), getAuthority());
 	}

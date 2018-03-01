@@ -8,17 +8,17 @@ import cl.usach.dminute.entity.UsuarioProyecto;
 
 public interface ProyectoService {
 	
-	public abstract Proyecto NuevoProyecto(NuevoProyecto guardar);
+	public abstract Proyecto crearNuevoProyecto(NuevoProyecto guardar);
 	
 	public abstract Proyecto guardar(Proyecto guardar);
 	
 	public abstract Proyecto modificar(Proyecto guardar);
 	
+	public abstract List<Proyecto> buscarProyectosByUsuario(String userName);
+	
 	public abstract void eliminar(Proyecto guardar);
 	
-	public abstract List<Proyecto> buscarProyectos();
-	
-	public abstract void saveUsuarioProyecto(List<UsuarioProyecto> usuarioProyecto);  
+	public abstract void saveUsuarioProyecto(UsuarioProyecto usuarioProyecto);  
 	
 
 }

@@ -16,6 +16,7 @@ import lombok.ToString;
 @ToString
 public class NuevoProyecto {
 	
+	private long proyectoId;
 	private String nombre;
 	private String descripcion;
 	private Date fechaInicio;

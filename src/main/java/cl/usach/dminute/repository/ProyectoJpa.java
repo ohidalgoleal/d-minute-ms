@@ -9,5 +9,7 @@ import cl.usach.dminute.entity.Proyecto;
 
 @Repository("proyectoJpa")
 public interface ProyectoJpa extends JpaRepository<Proyecto, Serializable> {
+	
+	public abstract Proyecto findByProyectoId(long proyectoId);
 
 }

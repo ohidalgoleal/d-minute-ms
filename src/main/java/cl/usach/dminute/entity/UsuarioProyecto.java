@@ -9,14 +9,12 @@ import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor
 @ToString
 @Entity
 @Table(name = "usuarioProyecto")
@@ -29,8 +27,14 @@ public class UsuarioProyecto {
 	@ManyToOne
 	private Usuario usuario;
 	@ManyToOne
-	private Proyecto Proyecto;
+	private Proyecto proyecto;
 	@ManyToOne
 	private RolProyecto rolProyecto;
+	
+	public UsuarioProyecto() {
+		this.usuario = new Usuario();
+		this.proyecto = new Proyecto();
+		this.rolProyecto = new RolProyecto();		
+	}
 	
 }
