@@ -44,7 +44,7 @@ public class ProyectoController {
 		
 		if(log.isInfoEnabled()) {
 			log.info("ProyectoController.listarProyectoUsuario.INIT");
-			log.info("ProyectoController.listarProyectoUsuario.getUsername:" + userName);
+			log.info("ProyectoController.listarProyectoUsuario.getUsername: " + userName);
 		}
 		proyectoService.buscarProyectosByUsuario(userName);
 		if(log.isInfoEnabled()) {

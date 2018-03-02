@@ -3,6 +3,7 @@ package cl.usach.dminute.service.impl;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -161,14 +162,12 @@ public class ProyectoImpl implements ProyectoService {
 		List<Proyecto> listaProyecto = null; 
 		Usuario user = new Usuario();
 		user.setUsername(userName);
-		List<UsuarioProyecto> listaUsuario = usuarioProyectoJpa.findByUsuarioUsername(user);
 		
-		
-		
-		for (UsuarioProyecto usuarioProyecto : listaUsuario) {
-			
-			
+		Optional<UsuarioProyecto> listaUsuario = usuarioProyectoJpa.agruparPorUsuario(userName.trim());
+		if(log.isInfoEnabled()) {
+			log.info("ProyectoImpl.buscarProyectosByUsuario.listausuarios: " + listaUsuario.toString());
 		}
+		
 		
 		// TODO Auto-generated method stub
 		return null;
