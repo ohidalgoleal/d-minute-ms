@@ -32,4 +32,25 @@ public class Utilitario {
 		return 0;
 	}
 
+	public static Date formatoFecha(String fechaNacimientoStr) {
+
+		log.info("[Utilitario][formatoFecha][INI][fecha de nacimiento en formato yyyyMMddHHmmss="
+				+ fechaNacimientoStr + "]");
+
+		if (fechaNacimientoStr != null) {
+			SimpleDateFormat formato = new SimpleDateFormat("yyyyMMddHHmmss");
+			try {
+				Date fechaNacimiento = formato.parse(fechaNacimientoStr);
+				Calendar c = new GregorianCalendar();
+				c.setTime(fechaNacimiento);
+				return c.getTime();
+
+			} catch (ParseException e) {
+				log.error(
+						"[Utilitario][formatoFecha][FINEX][Error al calular la edad del cliente, se calcula en 0]");
+			}
+		}
+		return null;
+	}
+
 }

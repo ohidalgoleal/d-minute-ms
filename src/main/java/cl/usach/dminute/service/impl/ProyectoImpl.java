@@ -1,9 +1,7 @@
 package cl.usach.dminute.service.impl;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -17,10 +15,12 @@ import cl.usach.dminute.entity.Usuario;
 import cl.usach.dminute.entity.UsuarioProyecto;
 import cl.usach.dminute.exception.ErrorTecnicoException;
 import cl.usach.dminute.exception.ValidacionesException;
+import cl.usach.dminute.repository.CallStoreProcedureImpl;
 import cl.usach.dminute.repository.ProyectoJpa;
 import cl.usach.dminute.repository.UsuarioProyectoJpa;
 import cl.usach.dminute.service.ProyectoService;
 import cl.usach.dminute.service.UsuarioService;
+import cl.usach.dminute.util.Utilitario;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -38,6 +38,10 @@ public class ProyectoImpl implements ProyectoService {
 	@Autowired
 	@Qualifier("usuarioService")
 	private UsuarioService usuarioService; 
+	
+	@Autowired
+	@Qualifier("callStoreProcedureImpl")
+	private CallStoreProcedureImpl callStoreProcedureImpl; 
 
 	@Override
 	public Proyecto guardar(Proyecto guardar) {
@@ -158,19 +162,31 @@ public class ProyectoImpl implements ProyectoService {
 
 	@Override
 	public List<Proyecto> buscarProyectosByUsuario(String userName) {
-		
+		if(log.isInfoEnabled()) {
+			log.info("ProyectoImpl.buscarProyectosByUsuario.INIT");			
+		}
 		List<Proyecto> listaProyecto = null; 
-		Usuario user = new Usuario();
-		user.setUsername(userName);
-		
-		Optional<UsuarioProyecto> listaUsuario = usuarioProyectoJpa.agruparPorUsuario(userName.trim());
+		List<UsuarioProyecto> listaUsuario = callStoreProcedureImpl.buscarProyectoPorUsuario(userName);
 		if(log.isInfoEnabled()) {
 			log.info("ProyectoImpl.buscarProyectosByUsuario.listausuarios: " + listaUsuario.toString());
 		}
-		
-		
-		// TODO Auto-generated method stub
-		return null;
+		if (listaUsuario != null) {
+			listaProyecto = new ArrayList<Proyecto>();
+			Proyecto proyecto = null;
+			for (UsuarioProyecto usuarioProyecto : listaUsuario) {
+				proyecto = proyectoJpa.findByProyectoId(usuarioProyecto.getProyecto().getProyectoId());
+				
+				proyecto.setFechaFin(Utilitario.formatoFecha(proyecto.getFechaFin().toString()));
+				proyecto.setFechaInicio(Utilitario.formatoFecha(proyecto.getFechaInicio().toString()));
+				if (proyecto != null)
+					listaProyecto.add(proyecto);
+			}
+		}
+		if(log.isInfoEnabled()) {
+			log.info("ProyectoImpl.buscarProyectosByUsuario.proyectos: " + listaProyecto.toString());
+			log.info("ProyectoImpl.buscarProyectosByUsuario.FIN");
+		}
+		return listaProyecto;
 	}
 
 }
