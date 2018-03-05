@@ -1,11 +1,14 @@
 package cl.usach.dminute.configuration;
 
+import cl.usach.dminute.dto.Constants;
 import cl.usach.dminute.entity.Usuario;
+import cl.usach.dminute.exception.ErrorTecnicoException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Clock;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.impl.DefaultClock;
+import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,6 +26,7 @@ import static cl.usach.dminute.dto.Constants.HEADER_STRING;
 import static cl.usach.dminute.dto.Constants.SIGNING_KEY;
 import static cl.usach.dminute.dto.Constants.TOKEN_PREFIX;
 
+@Slf4j
 @Component
 public class JwtTokenUtil implements Serializable {
 
@@ -97,15 +101,24 @@ public class JwtTokenUtil implements Serializable {
     
     public String getUserToken(HttpServletRequest req)
     {
+    	if(log.isInfoEnabled()) {
+			log.info("JwtTokenUtil.getUserToken.INIT");
+		}
     	String header = req.getHeader(HEADER_STRING);
     	String username = null;
         String authToken = null;
     	if (header != null && header.startsWith(TOKEN_PREFIX)) {
     		 authToken = header.replace(TOKEN_PREFIX,"");
     		 username = this.getUsernameFromToken(authToken);
+    		 if(log.isInfoEnabled()) {
+    				log.info("JwtTokenUtil.getUserToken.username: " + username);
+    			}
     		 return username;
     	}
-    	return null;
+    	if(log.isInfoEnabled()) {
+			log.info("JwtTokenUtil.getUserToken.FIN");
+		}
+    	throw new ErrorTecnicoException(Constants.ERROR_TECNICO_GENERICO_COD, Constants.ERROR_USUARIO_INVALIDO);
     }
     
     public String getTokenActivo(HttpServletRequest req)

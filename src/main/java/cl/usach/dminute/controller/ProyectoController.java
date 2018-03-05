@@ -47,17 +47,33 @@ public class ProyectoController {
 		return ResponseEntity.ok(new Salida());
 	}
 	
-	@GetMapping(value = "/listarProyectoUsuario", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Proyecto> listarProyectoUsuario(HttpServletRequest request) throws Exception {
+	@PostMapping(value = "/editarProyecto", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> editar(@RequestBody NuevoProyecto nuevoProyecto) {
 		
-		String userName = jwtTokenUtil.getUserToken(request);
-		if (userName == null)
-			throw new Exception("Usuario invalido"); 
+		if(log.isInfoEnabled()) {
+			log.info("ProyectoController.editarProyecto.INIT");
+			log.info("ProyectoController.editarProyecto.getUsername:" + nuevoProyecto.toString());
+		}
+		proyectoService.editarProyecto(nuevoProyecto);
+		if(log.isInfoEnabled()) {
+			log.info("ProyectoController.editarProyecto.FIN");
+		}		
+		return ResponseEntity.ok(new Salida());
+	}
+	
+	@GetMapping(value = "/listarProyectoUsuario", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Proyecto> listarProyectoUsuario(HttpServletRequest request) {
 		
 		if(log.isInfoEnabled()) {
 			log.info("ProyectoController.listarProyectoUsuario.INIT");
+		}
+		
+		String userName = jwtTokenUtil.getUserToken(request);
+		
+		if(log.isInfoEnabled()) {
 			log.info("ProyectoController.listarProyectoUsuario.getUsername: " + userName);
 		}
+		
 		List<Proyecto> retorno = proyectoService.buscarProyectosByUsuario(userName);
 		
 		if(log.isInfoEnabled()) {

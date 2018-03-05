@@ -9,6 +9,6 @@ import cl.usach.dminute.entity.UsuarioProyecto;
 
 @Repository("usuarioProyectoJpa")
 public interface UsuarioProyectoJpa extends JpaRepository<UsuarioProyecto,Serializable> {
-	
+
 	
 }

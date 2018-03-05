@@ -31,21 +31,11 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/dminute?useSSL=false
     username: root
-    password: 123456
-    #url: jdbc:mysql://us-cdbr-iron-east-05.cleardb.net/heroku_ddeb90f13531d40?reconnect=true
-    #username: bb0c481c17d801
-    #password: 548aed1858602ac
-      
+    password: 123456      
 #Security properties      
 security: 
   oauth2:
     resource:
       service-id: resource
-      prefer-token-info: true
-#Pantalla de error
-#server:
-#  error:
-#    whitelabel:
-#      enabled: true     
-      
+      prefer-token-info: true   
  
