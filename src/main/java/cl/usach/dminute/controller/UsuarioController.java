@@ -31,7 +31,7 @@ public class UsuarioController {
 	@Qualifier("usuarioService")
     private UsuarioService usuarioService;
 
-    @GetMapping(value="/user", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value="/listaUsuarios", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Usuario> listUser(){
     	if(log.isInfoEnabled()) {
 			log.info("UsuarioController.listUser.INIT");
