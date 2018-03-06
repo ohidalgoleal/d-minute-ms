@@ -62,7 +62,7 @@ public class ProyectoController {
 		return ResponseEntity.ok(new Salida());
 	}
 	
-	@PostMapping(value = "/eliminarProyecto/{proyectoid}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "/eliminarProyecto/{proyectoid}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> eliminar(@PathVariable(value = "proyectoid") long proyectoid) {
 		
 		if(log.isInfoEnabled()) {
