@@ -63,7 +63,7 @@ public class ProyectoController {
 	}
 	
 	@PostMapping(value = "/eliminarProyecto/{proyectoid}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> eliminar(@PathVariable(value = "proyectoid") Long proyectoid) {
+    public ResponseEntity<?> eliminar(@PathVariable(value = "proyectoid") long proyectoid) {
 		
 		if(log.isInfoEnabled()) {
 			log.info("ProyectoController.eliminar.INIT");
