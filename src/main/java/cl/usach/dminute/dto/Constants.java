@@ -11,6 +11,7 @@ public class Constants {
 	public static final String ERROR_USUARIO_EXISTE = "El usuario que se intenta guardar ya esta registrado";
 	public static final String ERROR_USUARIO_INVALIDO = "El usuario no existe o su sesion a cadicado";
 	public static final String ERROR_PROYECTO_ERROR = "No ha sido posible guardar el proyecto, intenta mas tarde";
+	public static final String ERROR_PROYECTO_NOEXISTE = "El proyecto no existe, verifique";
 	
 	public static final String ERROR_TECNICO_GENERICO_COD = "001";
 	public static final String ERROR_USUARIO_EXISTE_COD = "002";

@@ -73,7 +73,7 @@ public class ProyectoImpl implements ProyectoService {
 			throw new ValidacionesException(Constants.ERROR_TECNICO_GENERICO_COD, Constants.ERROR_PROYECTO_ERROR, null);
 		}
 		if (log.isInfoEnabled()) {
-			log.info("ProyectoImpl.crearNuevoProyecto.FIN");		
+			log.info("ProyectoImpl.crearNuevoProyecto.FIN");
 		}
 		return proyecto;
 	}
@@ -125,9 +125,39 @@ public class ProyectoImpl implements ProyectoService {
 	}
 
 	@Override
-	public void eliminar(Proyecto guardar) {
-		// TODO Auto-generated method stub
-
+	public void eliminar(long proyectoid) {
+		if (log.isInfoEnabled()) {
+			log.info("ProyectoImpl.eliminar.INIT");
+			log.info("ProyectoImpl.eliminar.proyectoID: " + proyectoid);
+		}
+		try {
+			Proyecto proyecto = proyectoJpa.findByProyectoId(proyectoid);
+			if (proyecto != null) {
+				if (log.isInfoEnabled()) {
+					log.info("ProyectoImpl.eliminar.usuariosProyecto");
+				}
+				callStoreProcedureImpl.eliminarUsuariosProyecto(proyectoid);
+				if (log.isInfoEnabled()) {
+					log.info("ProyectoImpl.eliminar.actas_elementosDialogo");
+				}
+				callStoreProcedureImpl.eliminarActasElementos(proyectoid);
+				if (log.isInfoEnabled()) {
+					log.info("ProyectoImpl.eliminar.proyecto: " + proyecto.toString());				
+				}
+				proyectoJpa.delete(proyecto);
+			} else {
+				throw new ErrorTecnicoException(Constants.ERROR_TECNICO_GENERICO_COD,
+						Constants.ERROR_PROYECTO_NOEXISTE);
+			}
+		} catch (Exception ex) {
+			if (log.isErrorEnabled()) {
+				log.info("ProyectoImpl.eliminar.proyecto.ERROR - " + ex.getMessage());
+			}
+			throw ex;
+		}
+		if (log.isInfoEnabled()) {
+			log.info("ProyectoImpl.eliminar.FIN");
+		}
 	}
 
 	@Override
@@ -213,7 +243,7 @@ public class ProyectoImpl implements ProyectoService {
 			throw new ValidacionesException(Constants.ERROR_TECNICO_GENERICO_COD, Constants.ERROR_PROYECTO_ERROR, null);
 		}
 		if (log.isInfoEnabled()) {
-			log.info("ProyectoImpl.editarProyecto.FIN");		
+			log.info("ProyectoImpl.editarProyecto.FIN");
 		}
 		return proyecto;
 	}
@@ -257,7 +287,7 @@ public class ProyectoImpl implements ProyectoService {
 			throw new ValidacionesException(Constants.ERROR_TECNICO_GENERICO_COD, Constants.ERROR_PROYECTO_ERROR, null);
 		}
 		if (log.isInfoEnabled()) {
-			log.info("ProyectoImpl.procesarUsuarioProyecto.FIN");		
+			log.info("ProyectoImpl.procesarUsuarioProyecto.FIN");
 		}
 	}
 

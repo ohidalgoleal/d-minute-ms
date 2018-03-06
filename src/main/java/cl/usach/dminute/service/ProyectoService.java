@@ -14,12 +14,12 @@ public interface ProyectoService {
 	
 	public abstract Proyecto modificar(Proyecto guardar);
 	
-	public abstract void eliminar(Proyecto guardar);
+	public abstract void eliminar(long proyectoid);
 	
 	public abstract void saveUsuarioProyecto(UsuarioProyecto usuarioProyecto);
 	
 	public abstract List<Proyecto> buscarProyectosByUsuario(String userName);
-	
+		
 	public abstract Proyecto editarProyecto(NuevoProyecto guardar);
 
 }

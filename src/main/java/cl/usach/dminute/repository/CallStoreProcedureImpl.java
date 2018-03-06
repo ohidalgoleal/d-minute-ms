@@ -69,5 +69,20 @@ public class CallStoreProcedureImpl {
 			log.info("CallStoreProcedureImpl.eliminarUsuariosProyecto.FIN");
 		}
 	}
+	
+	@ApiOperation("Método encargado de eliminar las actas y elementos de dialogo.")
+	public void eliminarActasElementos(long proyectoId) {
+		if(log.isInfoEnabled()) {
+			log.info("CallStoreProcedureImpl.eliminarActasElementos.INIT");			
+		}
+		StoredProcedureQuery storedProcedureQuery = em.createStoredProcedureQuery( "XXXXX" );
+		storedProcedureQuery.registerStoredProcedureParameter("_proyectoid",Long.class, ParameterMode.IN);
+		storedProcedureQuery.setParameter("_proyectoid", proyectoId);
+		storedProcedureQuery.execute();
+		if(log.isInfoEnabled()) {
+			log.info("CallStoreProcedureImpl.eliminarActasElementos.SpEjecutado");
+			log.info("CallStoreProcedureImpl.eliminarActasElementos.FIN");
+		}
+	}
 
 }

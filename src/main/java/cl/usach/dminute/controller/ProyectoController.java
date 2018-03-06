@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,7 +39,7 @@ public class ProyectoController {
 		
 		if(log.isInfoEnabled()) {
 			log.info("ProyectoController.nuevoProyecto.INIT");
-			log.info("ProyectoController.nuevoProyecto.getUsername:" + nuevoProyecto.toString());
+			log.info("ProyectoController.nuevoProyecto.proyecto:" + nuevoProyecto.toString());
 		}
 		proyectoService.crearNuevoProyecto(nuevoProyecto);
 		if(log.isInfoEnabled()) {
@@ -52,11 +53,25 @@ public class ProyectoController {
 		
 		if(log.isInfoEnabled()) {
 			log.info("ProyectoController.editarProyecto.INIT");
-			log.info("ProyectoController.editarProyecto.getUsername:" + nuevoProyecto.toString());
+			log.info("ProyectoController.editarProyecto.proyecto:" + nuevoProyecto.toString());
 		}
 		proyectoService.editarProyecto(nuevoProyecto);
 		if(log.isInfoEnabled()) {
 			log.info("ProyectoController.editarProyecto.FIN");
+		}		
+		return ResponseEntity.ok(new Salida());
+	}
+	
+	@PostMapping(value = "/eliminarProyecto/{proyectoid}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> eliminar(@PathVariable(value = "proyectoid") Long proyectoid) {
+		
+		if(log.isInfoEnabled()) {
+			log.info("ProyectoController.eliminar.INIT");
+			log.info("ProyectoController.eliminar.proyectoid:" + proyectoid);
+		}
+		proyectoService.eliminar(proyectoid);
+		if(log.isInfoEnabled()) {
+			log.info("ProyectoController.eliminar.FIN");
 		}		
 		return ResponseEntity.ok(new Salida());
 	}
