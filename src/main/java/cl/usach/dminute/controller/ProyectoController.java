@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 import cl.usach.dminute.configuration.JwtTokenUtil;
 import cl.usach.dminute.dto.NuevoProyecto;
 import cl.usach.dminute.dto.Salida;
-import cl.usach.dminute.entity.Proyecto;
 import cl.usach.dminute.service.ProyectoService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -63,13 +62,15 @@ public class ProyectoController {
 	}
 	
 	@GetMapping(value = "/eliminarProyecto/{proyectoid}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> eliminar(@PathVariable(value = "proyectoid") long proyectoid) {
+    public ResponseEntity<?> eliminar(@PathVariable(value = "proyectoid") Long proyectoid, HttpServletRequest request) {
 		
 		if(log.isInfoEnabled()) {
 			log.info("ProyectoController.eliminar.INIT");
 			log.info("ProyectoController.eliminar.proyectoid:" + proyectoid);
 		}
-		proyectoService.eliminar(proyectoid);
+		String userName = jwtTokenUtil.getUserToken(request);
+		
+		proyectoService.eliminar(proyectoid, userName);
 		if(log.isInfoEnabled()) {
 			log.info("ProyectoController.eliminar.FIN");
 		}		
@@ -77,7 +78,7 @@ public class ProyectoController {
 	}
 	
 	@GetMapping(value = "/listarProyectoUsuario", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Proyecto> listarProyectoUsuario(HttpServletRequest request) {
+    public List<NuevoProyecto> listarProyectoUsuario(HttpServletRequest request) {
 		
 		if(log.isInfoEnabled()) {
 			log.info("ProyectoController.listarProyectoUsuario.INIT");
@@ -89,7 +90,7 @@ public class ProyectoController {
 			log.info("ProyectoController.listarProyectoUsuario.getUsername: " + userName);
 		}
 		
-		List<Proyecto> retorno = proyectoService.buscarProyectosByUsuario(userName);
+		List<NuevoProyecto> retorno = proyectoService.buscarProyectosByUsuario(userName);
 		
 		if(log.isInfoEnabled()) {
 			log.info("ProyectoController.listarProyectoUsuario.ListaProyectos: " + retorno.toString());

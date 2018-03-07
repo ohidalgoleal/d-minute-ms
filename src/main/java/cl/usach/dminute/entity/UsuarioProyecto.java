@@ -28,13 +28,10 @@ public class UsuarioProyecto {
 	private Usuario usuario;
 	@ManyToOne
 	private Proyecto proyecto;
-	@ManyToOne
-	private RolProyecto rolProyecto;
 	
 	public UsuarioProyecto() {
 		this.usuario = new Usuario();
 		this.proyecto = new Proyecto();
-		this.rolProyecto = new RolProyecto();		
 	}
 	
 }
