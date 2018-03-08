@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import cl.usach.dminute.dto.ActaDto;
 import cl.usach.dminute.dto.Constants;
 import cl.usach.dminute.entity.Acta;
+import cl.usach.dminute.entity.Proyecto;
 import cl.usach.dminute.exception.ValidacionesException;
 import cl.usach.dminute.repository.ActaJpa;
 import cl.usach.dminute.repository.CallStoreProcedureImpl;
@@ -34,16 +35,24 @@ public class ActaImpl implements ActaService {
 	private CallStoreProcedureImpl callStoreProcedureImpl;
 	
 	@Override
-	public Acta guardarModificar(Acta guardar) {
+	public Acta guardarModificar(ActaDto guardar) {
 		if (log.isInfoEnabled()) {
 			log.info("ActaImpl.guardarModificarActa.INIT");
 			log.info("ActaImpl.guardarModificarActa.acta: " + guardar.toString());
 		}
 		Acta acta = null;
 		try {
-			if (proyectoJpa.findByProyectoId(guardar.getProyecto().getProyectoId()) != null) {
-				guardar.setEstado(Constants.estadoActivo);
-				acta = actaJpa.save(guardar);
+			if (proyectoJpa.findByProyectoId(guardar.getProyectoId()) != null) {
+				acta = new Acta();
+				acta.setActaId(guardar.getActaId());
+				acta.setCorrelativo(guardar.getCorrelativo());
+				acta.setEstado(Constants.estadoActivo);
+				acta.setFecha(guardar.getFecha());
+				Proyecto _pry = new Proyecto();
+				_pry.setProyectoId(guardar.getProyectoId());
+				acta.setProyecto(_pry);
+				acta.setResumen(guardar.getResumen());
+				acta = actaJpa.save(acta);
 			}			
 			if (acta == null)
 				throw new Exception();			
@@ -60,16 +69,24 @@ public class ActaImpl implements ActaService {
 	}
 
 	@Override
-	public void eliminar(Acta guardar) {
+	public void eliminar(ActaDto guardar) {
 		if (log.isInfoEnabled()) {
 			log.info("ActaImpl.eliminarActa.INIT");
 			log.info("ActaImpl.eliminarActa.acta: " + guardar.toString());
 		}
 		Acta acta = null;
 		try {
-			if (proyectoJpa.findByProyectoId(guardar.getProyecto().getProyectoId()) != null) {
-				guardar.setEstado(Constants.estadoBloqueado);
-				acta = actaJpa.save(guardar);
+			if (proyectoJpa.findByProyectoId(guardar.getProyectoId()) != null) {
+				acta = new Acta();
+				acta.setActaId(guardar.getActaId());
+				acta.setCorrelativo(guardar.getCorrelativo());
+				acta.setEstado(Constants.estadoBloqueado);
+				acta.setFecha(guardar.getFecha());
+				Proyecto _pry = new Proyecto();
+				_pry.setProyectoId(guardar.getProyectoId());
+				acta.setProyecto(_pry);
+				acta.setResumen(guardar.getResumen());				
+				acta = actaJpa.save(acta);
 			}
 			if (acta == null)
 				throw new Exception();			

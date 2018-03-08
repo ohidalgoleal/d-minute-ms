@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import cl.usach.dminute.dto.ActaDto;
 import cl.usach.dminute.dto.SalidaDto;
-import cl.usach.dminute.entity.Acta;
 import cl.usach.dminute.service.ActaService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,7 +28,7 @@ public class ActaController {
 	private ActaService actaService;
 	
 	@PostMapping(value = "/guardarActa", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> registrar(@RequestBody Acta nuevaActa) {
+    public ResponseEntity<?> registrar(@RequestBody ActaDto nuevaActa) {
 		
 		if(log.isInfoEnabled()) {
 			log.info("ActaController.registrar.INIT");
@@ -43,7 +42,7 @@ public class ActaController {
 	}
 	
 	@PostMapping(value = "/eliminarActa", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> eliminar(@RequestBody Acta deleteActa) {
+    public ResponseEntity<?> eliminar(@RequestBody ActaDto deleteActa) {
 		
 		if(log.isInfoEnabled()) {
 			log.info("ActaController.eliminar.INIT");
