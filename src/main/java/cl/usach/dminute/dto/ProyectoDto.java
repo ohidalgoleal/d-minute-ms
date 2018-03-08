@@ -14,14 +14,14 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class NuevoProyecto {
+public class ProyectoDto {
 	
 	private long proyectoId;
 	private String nombre;
 	private String descripcion;
 	private Date fechaInicio;
 	private Date fechaFin;	
-	private List<NuevoProyectoUsuarios> usuariosNuevoProyecto;
+	private List<ProyectoUsuariosDto> usuariosNuevoProyecto;
 	
 
 }

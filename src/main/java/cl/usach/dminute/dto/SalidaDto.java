@@ -7,12 +7,12 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class Salida {
+public class SalidaDto {
 
 	private String retorno;
 	private static final String codigo = "OK";
 	
-	public Salida() {
+	public SalidaDto() {
 		super();
 		this.retorno = codigo;
 	}

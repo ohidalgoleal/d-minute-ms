@@ -2,13 +2,13 @@ package cl.usach.dminute.service;
 
 import java.util.List;
 
-import cl.usach.dminute.dto.NuevoProyecto;
+import cl.usach.dminute.dto.ProyectoDto;
 import cl.usach.dminute.entity.Proyecto;
 import cl.usach.dminute.entity.UsuarioProyecto;
 
 public interface ProyectoService {
 	
-	public abstract Proyecto crearNuevoProyecto(NuevoProyecto guardar);
+	public abstract Proyecto crearNuevoProyecto(ProyectoDto guardar);
 	
 	public abstract Proyecto guardar(Proyecto guardar);
 	
@@ -18,8 +18,8 @@ public interface ProyectoService {
 	
 	public abstract void saveUsuarioProyecto(UsuarioProyecto usuarioProyecto);
 	
-	public List<NuevoProyecto> buscarProyectosByUsuario(String userName);
+	public List<ProyectoDto> buscarProyectosByUsuario(String userName);
 		
-	public abstract Proyecto editarProyecto(NuevoProyecto guardar);
+	public abstract Proyecto editarProyecto(ProyectoDto guardar);
 
 }

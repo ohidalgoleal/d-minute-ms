@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import cl.usach.dminute.configuration.JwtTokenUtil;
-import cl.usach.dminute.dto.NuevoProyecto;
-import cl.usach.dminute.dto.Salida;
+import cl.usach.dminute.dto.ProyectoDto;
+import cl.usach.dminute.dto.SalidaDto;
 import cl.usach.dminute.service.ProyectoService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -34,7 +34,7 @@ public class ProyectoController {
     private JwtTokenUtil jwtTokenUtil;
 
 	@PostMapping(value = "/nuevoProyecto", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> registrar(@RequestBody NuevoProyecto nuevoProyecto) {
+    public ResponseEntity<?> registrar(@RequestBody ProyectoDto nuevoProyecto) {
 		
 		if(log.isInfoEnabled()) {
 			log.info("ProyectoController.nuevoProyecto.INIT");
@@ -44,11 +44,11 @@ public class ProyectoController {
 		if(log.isInfoEnabled()) {
 			log.info("ProyectoController.nuevoProyecto.FIN");
 		}		
-		return ResponseEntity.ok(new Salida());
+		return ResponseEntity.ok(new SalidaDto());
 	}
 	
 	@PostMapping(value = "/editarProyecto", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> editar(@RequestBody NuevoProyecto nuevoProyecto) {
+    public ResponseEntity<?> editar(@RequestBody ProyectoDto nuevoProyecto) {
 		
 		if(log.isInfoEnabled()) {
 			log.info("ProyectoController.editarProyecto.INIT");
@@ -58,7 +58,7 @@ public class ProyectoController {
 		if(log.isInfoEnabled()) {
 			log.info("ProyectoController.editarProyecto.FIN");
 		}		
-		return ResponseEntity.ok(new Salida());
+		return ResponseEntity.ok(new SalidaDto());
 	}
 	
 	@GetMapping(value = "/eliminarProyecto/{proyectoid}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -74,11 +74,11 @@ public class ProyectoController {
 		if(log.isInfoEnabled()) {
 			log.info("ProyectoController.eliminar.FIN");
 		}		
-		return ResponseEntity.ok(new Salida());
+		return ResponseEntity.ok(new SalidaDto());
 	}
 	
 	@GetMapping(value = "/listarProyectoUsuario", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<NuevoProyecto> listarProyectoUsuario(HttpServletRequest request) {
+    public List<ProyectoDto> listarProyectoUsuario(HttpServletRequest request) {
 		
 		if(log.isInfoEnabled()) {
 			log.info("ProyectoController.listarProyectoUsuario.INIT");
@@ -90,7 +90,7 @@ public class ProyectoController {
 			log.info("ProyectoController.listarProyectoUsuario.getUsername: " + userName);
 		}
 		
-		List<NuevoProyecto> retorno = proyectoService.buscarProyectosByUsuario(userName);
+		List<ProyectoDto> retorno = proyectoService.buscarProyectosByUsuario(userName);
 		
 		if(log.isInfoEnabled()) {
 			log.info("ProyectoController.listarProyectoUsuario.ListaProyectos: " + retorno.toString());

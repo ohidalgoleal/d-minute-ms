@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,6 +36,9 @@ public class Acta {
 	private String resumen;
 	@Column(name = "correlativo")
 	private long correlativo;	
+	@JsonIgnore
+	@Column(name = "estado", length = 1)
+	private String estado;
 	@ManyToOne
 	private Proyecto proyecto;
 	

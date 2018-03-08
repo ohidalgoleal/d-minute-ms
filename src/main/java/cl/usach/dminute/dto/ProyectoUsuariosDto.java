@@ -13,10 +13,9 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class NuevoProyectoUsuarios {
+public class ProyectoUsuariosDto {
 
 	@JsonIgnore
 	private long proyectoId;
 	private String username;
-	private String codRol;
 }

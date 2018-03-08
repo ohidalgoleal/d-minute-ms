@@ -11,7 +11,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class AuthToken {
+public class AuthTokenDto {
 
     private String token;
 

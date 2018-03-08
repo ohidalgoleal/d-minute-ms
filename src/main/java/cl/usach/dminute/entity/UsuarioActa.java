@@ -26,10 +26,10 @@ public class UsuarioActa {
 	@GeneratedValue
 	@Column(name = "id")
 	private long id;
-	@Column(name = "asiste")
-	private Boolean asiste;
-	@Column(name = "secretario")
-	private Boolean secretario;
+	@Column(name = "asiste", length = 1)
+	private String asiste;
+	@Column(name = "secretario", length = 1)
+	private String secretario;
 	@ManyToOne
 	private Usuario usuario;
 	@ManyToOne

@@ -1,9 +1,9 @@
 package cl.usach.dminute.controller;
 
 import cl.usach.dminute.configuration.JwtTokenUtil;
-import cl.usach.dminute.dto.AuthToken;
-import cl.usach.dminute.dto.LoginUser;
-import cl.usach.dminute.dto.Salida;
+import cl.usach.dminute.dto.AuthTokenDto;
+import cl.usach.dminute.dto.LoginUserDto;
+import cl.usach.dminute.dto.SalidaDto;
 import cl.usach.dminute.entity.Usuario;
 import cl.usach.dminute.service.UsuarioService;
 import lombok.extern.slf4j.Slf4j;
@@ -38,7 +38,7 @@ public class AuthenticationController {
     private UsuarioService usuarioService;
 
 	@PostMapping(value = "/generate-token", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> register(@RequestBody LoginUser loginUser) throws AuthenticationException {
+    public ResponseEntity<?> register(@RequestBody LoginUserDto loginUser) throws AuthenticationException {
 
     	if(log.isInfoEnabled()) {
 			log.info("AuthenticationController.generate-token.INIT");
@@ -60,7 +60,7 @@ public class AuthenticationController {
         if(log.isInfoEnabled()) {
 			log.info("AuthenticationController.generate-token.Token.OK");
 		}
-        return ResponseEntity.ok(new AuthToken(token));
+        return ResponseEntity.ok(new AuthTokenDto(token));
     }
     
     @PostMapping(value="/usuarioGuardar", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -73,7 +73,7 @@ public class AuthenticationController {
         if(log.isInfoEnabled()) {
 			log.info("AuthenticationController.usuarioGuardar.OK");
 		}
-        return ResponseEntity.ok(new Salida());
+        return ResponseEntity.ok(new SalidaDto());
     }
 
 }

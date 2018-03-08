@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import cl.usach.dminute.dto.Constants;
-import cl.usach.dminute.dto.NuevoProyecto;
-import cl.usach.dminute.dto.NuevoProyectoUsuarios;
+import cl.usach.dminute.dto.ProyectoDto;
+import cl.usach.dminute.dto.ProyectoUsuariosDto;
 import cl.usach.dminute.entity.Proyecto;
 import cl.usach.dminute.entity.Usuario;
 import cl.usach.dminute.entity.UsuarioProyecto;
@@ -45,12 +45,8 @@ public class ProyectoImpl implements ProyectoService {
 	@Qualifier("callStoreProcedureImpl")
 	private CallStoreProcedureImpl callStoreProcedureImpl;
 	
-	private final String estadoActivo = "A";
-	
-	private final String estadoBloqueado = "B";
-
 	@Override
-	public Proyecto crearNuevoProyecto(NuevoProyecto guardar) {
+	public Proyecto crearNuevoProyecto(ProyectoDto guardar) {
 		if (log.isInfoEnabled()) {
 			log.info("ProyectoImpl.crearNuevoProyecto.INIT");
 			log.info("ProyectoImpl.crearNuevoProyecto.proyecto: " + guardar.toString());
@@ -61,7 +57,7 @@ public class ProyectoImpl implements ProyectoService {
 			proyecto.setFechaFin(guardar.getFechaFin());
 			proyecto.setFechaInicio(guardar.getFechaInicio());
 			proyecto.setNombre(guardar.getNombre());
-			proyecto.setEstado(estadoActivo);
+			proyecto.setEstado(Constants.estadoActivo);
 			if (log.isInfoEnabled()) {
 				log.info("ProyectoImpl.crearNuevoProyecto.grabando...: " + proyecto.toString());
 			}
@@ -93,7 +89,7 @@ public class ProyectoImpl implements ProyectoService {
 		}
 		Proyecto proyecto = new Proyecto();
 		try {
-			guardar.setEstado(estadoActivo);
+			guardar.setEstado(Constants.estadoActivo);
 			proyecto = proyectoJpa.save(guardar);
 			if (proyecto.getProyectoId() <= 0)
 				throw new ErrorTecnicoException(Constants.ERROR_TECNICO_GENERICO_COD, Constants.ERROR_TECNICO_MENSAJE);
@@ -117,7 +113,7 @@ public class ProyectoImpl implements ProyectoService {
 		}
 		Proyecto proyecto = new Proyecto();
 		try {
-			guardar.setEstado(estadoActivo);
+			guardar.setEstado(Constants.estadoActivo);
 			proyecto = proyectoJpa.save(guardar);
 			if (proyecto.getProyectoId() <= 0)
 				throw new ErrorTecnicoException(Constants.ERROR_TECNICO_GENERICO_COD, Constants.ERROR_TECNICO_MENSAJE);
@@ -141,7 +137,7 @@ public class ProyectoImpl implements ProyectoService {
 		}
 		try {
 			
-			List<NuevoProyecto> validacion = buscarProyectosByUsuario(userName).stream().filter(a -> Objects.equals(a.getProyectoId(), proyectoid)).collect(Collectors.toList());
+			List<ProyectoDto> validacion = buscarProyectosByUsuario(userName).stream().filter(a -> Objects.equals(a.getProyectoId(), proyectoid)).collect(Collectors.toList());
 			
 			if (!validacion.isEmpty()) {
 				Proyecto proyecto = proyectoJpa.findByProyectoId(proyectoid);
@@ -149,7 +145,7 @@ public class ProyectoImpl implements ProyectoService {
 					if (log.isInfoEnabled()) {
 						log.info("ProyectoImpl.eliminar.usuariosProyecto");
 					}
-					proyecto.setEstado(estadoBloqueado);
+					proyecto.setEstado(Constants.estadoBloqueado);
 					proyecto = proyectoJpa.save(proyecto);
 				} else {
 					throw new ValidacionesException(Constants.ERROR_TECNICO_GENERICO_COD,
@@ -194,28 +190,28 @@ public class ProyectoImpl implements ProyectoService {
 	}
 
 	@Override
-	public List<NuevoProyecto> buscarProyectosByUsuario(String userName) {
+	public List<ProyectoDto> buscarProyectosByUsuario(String userName) {
 
 		if (log.isInfoEnabled()) {
 			log.info("ProyectoImpl.buscarProyectosByUsuario.INIT");
 		}
-		List<NuevoProyecto> listaProyecto = null;
+		List<ProyectoDto> listaProyecto = null;
 		List<UsuarioProyecto> listaUsuario = callStoreProcedureImpl.buscarProyectoPorUsuario(userName);
 		if (log.isInfoEnabled()) {
 			log.info("ProyectoImpl.buscarProyectosByUsuario.listausuarios: " + listaUsuario.toString());
 		}		
-		List<NuevoProyectoUsuarios> listaUsuarioAll = callStoreProcedureImpl.buscarProyectoPorUsuarioAll(userName);
+		List<ProyectoUsuariosDto> listaUsuarioAll = callStoreProcedureImpl.buscarProyectoPorUsuarioAll(userName);
 		if (log.isInfoEnabled()) {
 			log.info("ProyectoImpl.buscarProyectosByUsuario.listausuariosAll: " + listaUsuarioAll.toString());
 		}
 		if (listaUsuario != null) {
-			listaProyecto = new ArrayList<NuevoProyecto>();
+			listaProyecto = new ArrayList<ProyectoDto>();
 			Proyecto proyecto = null;
-			NuevoProyecto retorno = null;
+			ProyectoDto retorno = null;
 			for (UsuarioProyecto usuarioProyecto : listaUsuario) {
 				proyecto = proyectoJpa.findByProyectoId(usuarioProyecto.getProyecto().getProyectoId());
 				if (proyecto != null) {
-					retorno = new NuevoProyecto();
+					retorno = new ProyectoDto();
 					retorno.setDescripcion(proyecto.getDescripcion());
 					retorno.setNombre(proyecto.getNombre());
 					retorno.setProyectoId(proyecto.getProyectoId());
@@ -225,7 +221,7 @@ public class ProyectoImpl implements ProyectoService {
 					if (log.isInfoEnabled()) {
 						log.info("ProyectoImpl.buscarProyectosByUsuario.BuscarUsuarios.Proyecto: " + proyectoid);
 					}
-					List<NuevoProyectoUsuarios> validacion = listaUsuarioAll.stream().filter(a -> Objects.equals(a.getProyectoId(), proyectoid )).collect(Collectors.toList());
+					List<ProyectoUsuariosDto> validacion = listaUsuarioAll.stream().filter(a -> Objects.equals(a.getProyectoId(), proyectoid )).collect(Collectors.toList());
 					retorno.setUsuariosNuevoProyecto(validacion);
 					listaProyecto.add(retorno);
 				}	
@@ -239,7 +235,7 @@ public class ProyectoImpl implements ProyectoService {
 	}
 
 	@Override
-	public Proyecto editarProyecto(NuevoProyecto guardar) {
+	public Proyecto editarProyecto(ProyectoDto guardar) {
 		if (log.isInfoEnabled()) {
 			log.info("ProyectoImpl.editarProyecto.INIT");
 			log.info("ProyectoImpl.editarProyecto.proyecto: " + guardar.toString());
@@ -275,7 +271,7 @@ public class ProyectoImpl implements ProyectoService {
 		return proyecto;
 	}
 
-	private void procesarUsuarioProyecto(long proyectoId, List<NuevoProyectoUsuarios> usuariosNuevoProyecto) {
+	private void procesarUsuarioProyecto(long proyectoId, List<ProyectoUsuariosDto> usuariosNuevoProyecto) {
 		if (log.isInfoEnabled()) {
 			log.info("ProyectoImpl.procesarUsuarioProyecto.INIT");
 			log.info("ProyectoImpl.procesarUsuarioProyecto.proyecto: " + proyectoId);
@@ -285,7 +281,7 @@ public class ProyectoImpl implements ProyectoService {
 				if (log.isInfoEnabled()) {
 					log.info("ProyectoImpl.procesarUsuarioProyecto.grabandoUsuario.iterando.INI");
 				}
-				for (NuevoProyectoUsuarios nuevoProyectoUsuarios : usuariosNuevoProyecto) {
+				for (ProyectoUsuariosDto nuevoProyectoUsuarios : usuariosNuevoProyecto) {
 					UsuarioProyecto usuarioProyecto = new UsuarioProyecto();
 					if (log.isInfoEnabled()) {
 						log.info("ProyectoImpl.procesarUsuarioProyecto.grabandoUsuario.usuarioProyecto.INI:"
