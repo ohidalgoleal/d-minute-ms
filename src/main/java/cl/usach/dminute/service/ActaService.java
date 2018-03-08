@@ -2,7 +2,7 @@ package cl.usach.dminute.service;
 
 import java.util.List;
 
-import cl.usach.dminute.dto.ActaResponse;
+import cl.usach.dminute.dto.ActaDto;
 import cl.usach.dminute.entity.Acta;
 
 public interface ActaService {
@@ -11,6 +11,6 @@ public interface ActaService {
 	
 	public abstract void eliminar(Acta guardar);
 	
-	public abstract List<ActaResponse> listarActa(long proyectoId);
+	public abstract List<ActaDto> listarActa(long proyectoId);
 
 }

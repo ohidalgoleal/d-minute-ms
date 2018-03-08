@@ -22,6 +22,5 @@ public class ProyectoDto {
 	private Date fechaInicio;
 	private Date fechaFin;	
 	private List<ProyectoUsuariosDto> usuariosNuevoProyecto;
-	
 
 }

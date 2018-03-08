@@ -12,9 +12,10 @@ import javax.persistence.StoredProcedureQuery;
 
 import org.springframework.stereotype.Repository;
 
-import cl.usach.dminute.dto.ActaResponse;
+import cl.usach.dminute.dto.ActaDto;
+
 import cl.usach.dminute.dto.ProyectoUsuariosDto;
-import cl.usach.dminute.dto.ActaResponse.UsuarioActaResponse;
+import cl.usach.dminute.dto.UsuarioActaDto;
 import cl.usach.dminute.entity.UsuarioProyecto;
 import cl.usach.dminute.util.Utilitario;
 import io.swagger.annotations.ApiOperation;
@@ -112,7 +113,7 @@ public class CallStoreProcedureImpl {
 	}
 	
 	@ApiOperation("Método encargado de listar las actas de un proyectos activos.")
-	public List<ActaResponse> buscarActasProyecto(long proyectoId) {
+	public List<ActaDto> buscarActasProyecto(long proyectoId) {
 		if(log.isInfoEnabled()) {
 			log.info("CallStoreProcedureImpl.buscarActasProyecto.INIT");			
 		}
@@ -128,20 +129,20 @@ public class CallStoreProcedureImpl {
 		if(log.isInfoEnabled()) {
 			log.info("CallStoreProcedureImpl.buscarActasProyecto.listarActas: " + results.size());			
 		}
-		List<ActaResponse> retorno = null;
+		List<ActaDto> retorno = null;
 		if (results != null) {
-			retorno= new ArrayList<ActaResponse>();
-			ActaResponse acta = null;
+			retorno= new ArrayList<ActaDto>();
+			ActaDto acta = null;
 			int j = 0;
 			if(log.isInfoEnabled()) {
 				log.info("CallStoreProcedureImpl.buscarActasProyecto.usuaiosActa");			
 			}
-			List<UsuarioActaResponse> listaUsuarioActaResponse = buscarUsuarioActaProyectoAll(proyectoId);
+			List<UsuarioActaDto> listaUsuarioActaResponse = buscarUsuarioActaProyectoAll(proyectoId);
 			if(log.isInfoEnabled()) {
 				log.info("CallStoreProcedureImpl.buscarActasProyecto.usuaiosActa lista: " + listaUsuarioActaResponse.toString());			
 			}			
 			for (Object[] row : results) {
-				acta = new ActaResponse();
+				acta = new ActaDto();
 				j = j + 1;
 				long  _acta = Long.parseLong(row[0].toString());
 				acta.setActaId(_acta);
@@ -149,7 +150,7 @@ public class CallStoreProcedureImpl {
 				acta.setFecha(Utilitario.formatoFecha(row[1].toString()));
 				acta.setResumen(row[2].toString());
 				acta.setProyectoId(proyectoId);				
-				List<UsuarioActaResponse> validacion = listaUsuarioActaResponse.stream().filter(a -> Objects.equals(a.getActaId(), _acta )).collect(Collectors.toList());
+				List<UsuarioActaDto> validacion = listaUsuarioActaResponse.stream().filter(a -> Objects.equals(a.getActaId(), _acta )).collect(Collectors.toList());
 				acta.setUsuarioActa(validacion);
 				retorno.add(acta);
 			}
@@ -162,7 +163,7 @@ public class CallStoreProcedureImpl {
 	}
 	
 	@ApiOperation("Método encargado de listar los usuario de actas por proyecto.")
-	public List<UsuarioActaResponse> buscarUsuarioActaProyectoAll(long proyectoId) {
+	public List<UsuarioActaDto> buscarUsuarioActaProyectoAll(long proyectoId) {
 		if(log.isInfoEnabled()) {
 			log.info("CallStoreProcedureImpl.buscarUsuarioActaAll.INIT");			
 		}
@@ -178,11 +179,10 @@ public class CallStoreProcedureImpl {
 		if(log.isInfoEnabled()) {
 			log.info("CallStoreProcedureImpl.buscarUsuarioActaAll.listaUsuarios: " + results.size());			
 		}
-		List<UsuarioActaResponse> retorno = null;
+		List<UsuarioActaDto> retorno = null;
 		if (results != null) {
-			retorno= new ArrayList<UsuarioActaResponse>();
-			ActaResponse acta = new ActaResponse();
-			UsuarioActaResponse usuarioActa = acta.new UsuarioActaResponse();
+			retorno= new ArrayList<UsuarioActaDto>();
+			UsuarioActaDto usuarioActa = new UsuarioActaDto();
 			for (Object[] row : results) {				
 				usuarioActa.setAsiste(row[0].toString());
 				usuarioActa.setSecretario(row[1].toString());

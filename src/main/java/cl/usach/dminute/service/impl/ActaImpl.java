@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import cl.usach.dminute.dto.ActaResponse;
+import cl.usach.dminute.dto.ActaDto;
 import cl.usach.dminute.dto.Constants;
 import cl.usach.dminute.entity.Acta;
 import cl.usach.dminute.exception.ValidacionesException;
@@ -85,12 +85,12 @@ public class ActaImpl implements ActaService {
 	}
 
 	@Override
-	public List<ActaResponse> listarActa(long proyectoId) {
+	public List<ActaDto> listarActa(long proyectoId) {
 		if (log.isInfoEnabled()) {
 			log.info("ActaImpl.listarActa.INIT");
 			log.info("ActaImpl.listarActa.Proyecto: " + proyectoId);
 		}
-		List<ActaResponse> listarActa = new ArrayList<ActaResponse>();
+		List<ActaDto> listarActa = new ArrayList<ActaDto>();
 		try {
 			if (proyectoJpa.findByProyectoId(proyectoId) != null) {
 				listarActa = callStoreProcedureImpl.buscarActasProyecto(proyectoId);

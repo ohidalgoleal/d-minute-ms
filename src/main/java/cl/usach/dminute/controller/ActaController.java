@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import cl.usach.dminute.dto.ActaResponse;
+import cl.usach.dminute.dto.ActaDto;
 import cl.usach.dminute.dto.SalidaDto;
 import cl.usach.dminute.entity.Acta;
 import cl.usach.dminute.service.ActaService;
@@ -57,14 +57,14 @@ public class ActaController {
 	}
 	
 	@GetMapping(value = "/listarActaProyecto/{proyectoid}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<ActaResponse> listarActaProyecto(@PathVariable(value = "proyectoid") Long proyectoid) {
+    public List<ActaDto> listarActaProyecto(@PathVariable(value = "proyectoid") Long proyectoid) {
 		
 		if(log.isInfoEnabled()) {
 			log.info("ActaController.listarActaProyecto.INIT");
 			log.info("ActaController.listarActaProyecto.proyectoid:" + proyectoid);
 		}
 		
-		List<ActaResponse> retorno = actaService.listarActa(proyectoid);		
+		List<ActaDto> retorno = actaService.listarActa(proyectoid);		
 		
 		if(log.isInfoEnabled()) {
 			log.info("ActaController.listarActaProyecto.ListaActa: " + retorno.toString());

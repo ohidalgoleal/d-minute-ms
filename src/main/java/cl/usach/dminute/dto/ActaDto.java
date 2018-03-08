@@ -14,7 +14,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class ActaResponse {
+public class ActaDto {
 	
 	private long actaId;
 	private Date fecha;
@@ -22,20 +22,6 @@ public class ActaResponse {
 	private long correlativo;	
 	private String estado;
 	private long proyectoId;
-	private List<UsuarioActaResponse> usuarioActa;
+	private List<UsuarioActaDto> usuarioActa;
 	
-	
-	@Getter
-	@Setter
-	@AllArgsConstructor
-	@NoArgsConstructor
-	@ToString
-	public class UsuarioActaResponse{
-		
-		private String asiste;
-		private String secretario;
-		private String username;
-		private long actaId;
-		
-	}
 }
