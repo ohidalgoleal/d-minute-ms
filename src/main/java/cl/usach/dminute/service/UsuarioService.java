@@ -13,6 +13,5 @@ public interface UsuarioService {
 	public abstract void delete(long id);
    
 	public abstract Usuario findOne(String username);
-
-	public abstract Usuario findById(Long id);
+	
 }

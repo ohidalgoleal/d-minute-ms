@@ -60,11 +60,6 @@ public class UsuarioImpl implements UserDetailsService, UsuarioService {
 	}
 
 	@Override
-	public Usuario findById(Long id) {
-		return usuarioJpa.findOne(id);
-	}
-
-	@Override
     public Usuario save(Usuario user) {
 		if(log.isInfoEnabled()) {
 			log.info("UsuarioImpl.save.INIT");

@@ -39,12 +39,12 @@ public class UsuarioController {
         return usuarioService.findAll();
     }
 
-    @GetMapping(value = "/user/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Usuario getOne(@PathVariable(value = "id") Long id){
+    @GetMapping(value = "/user/{username}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Usuario getOne(@PathVariable(value = "username") String username){
     	if(log.isInfoEnabled()) {
-			log.info("UsuarioController.getOne.INIT: " + id.toString());
+			log.info("UsuarioController.getOne.INIT: " + username.toString());
 		}
-    	return usuarioService.findById(id);
+    	return usuarioService.findOne(username);
     }
     
     @GetMapping(value="/logout", produces = MediaType.APPLICATION_JSON_VALUE)
