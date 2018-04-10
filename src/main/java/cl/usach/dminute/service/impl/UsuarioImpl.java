@@ -67,6 +67,8 @@ public class UsuarioImpl implements UserDetailsService, UsuarioService {
 		}
 		try {
 			user.setPassword(passwordEncoder.encode(user.getPassword()));
+			user.setNombre(user.getNombre().toUpperCase());
+			user.setApellido(user.getApellido().toUpperCase());
 			Usuario validacion = findOne(user.getUsername()); 
 			if (validacion == null)
 				return usuarioJpa.save(user);

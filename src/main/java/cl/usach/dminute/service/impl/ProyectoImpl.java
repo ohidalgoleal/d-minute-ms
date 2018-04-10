@@ -53,10 +53,10 @@ public class ProyectoImpl implements ProyectoService {
 		}
 		Proyecto proyecto = new Proyecto();
 		try {
-			proyecto.setDescripcion(guardar.getDescripcion());
+			proyecto.setDescripcion(guardar.getDescripcion().toUpperCase());
 			proyecto.setFechaFin(guardar.getFechaFin());
 			proyecto.setFechaInicio(guardar.getFechaInicio());
-			proyecto.setNombre(guardar.getNombre());
+			proyecto.setNombre(guardar.getNombre().toUpperCase());
 			proyecto.setEstado(Constants.estadoActivo);
 			if (log.isInfoEnabled()) {
 				log.info("ProyectoImpl.crearNuevoProyecto.grabando...: " + proyecto.toString());

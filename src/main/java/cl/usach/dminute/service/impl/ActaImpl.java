@@ -51,7 +51,7 @@ public class ActaImpl implements ActaService {
 				Proyecto _pry = new Proyecto();
 				_pry.setProyectoId(guardar.getProyectoId());
 				acta.setProyecto(_pry);
-				acta.setResumen(guardar.getResumen());
+				acta.setResumen(guardar.getResumen().toUpperCase());
 				acta = actaJpa.save(acta);
 			}			
 			if (acta == null)
