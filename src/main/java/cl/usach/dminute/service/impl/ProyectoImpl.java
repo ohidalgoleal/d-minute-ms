@@ -313,4 +313,32 @@ public class ProyectoImpl implements ProyectoService {
 		}
 	}
 
+	@Override
+	public ProyectoDto buscarProyectoById(long proyectoId, String userName) {
+		if (log.isInfoEnabled()) {
+			log.info("ProyectoImpl.buscarProyectoById.INIT");
+			log.info("ProyectoImpl.buscarProyectoById.proyectoId: " + proyectoId);
+		}
+		List<ProyectoDto> lista = null;
+		ProyectoDto retorno = null;
+		try {
+			lista = this.buscarProyectosByUsuario(userName);
+			if (lista == null)
+				throw new ErrorTecnicoException(Constants.ERROR_TECNICO_GENERICO_COD, Constants.ERROR_PROYECTO_NOEXISTE);
+			List<ProyectoDto> validacion = lista.stream().filter(a -> Objects.equals(a.getProyectoId(), proyectoId )).collect(Collectors.toList());
+			retorno = validacion.get(0);
+			if (retorno == null)
+				throw new ErrorTecnicoException(Constants.ERROR_TECNICO_GENERICO_COD, Constants.ERROR_PROYECTO_NOEXISTE);
+		} catch (Exception ex) {
+			if (log.isErrorEnabled()) {
+				log.info("ProyectoImpl.buscarProyectoById.proyecto.ERROR - " + ex.getMessage());
+			}
+			throw ex;
+		}
+		if (log.isInfoEnabled()) {
+			log.info("ProyectoImpl.buscarProyectoById.FIN");
+		}
+		return retorno;
+	}
+
 }

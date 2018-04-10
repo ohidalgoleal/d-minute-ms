@@ -98,5 +98,28 @@ public class ProyectoController {
 		}		
 		return retorno;
 	}	
+	
+	@GetMapping(value = "/proyectoid/{proyectoid}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ProyectoDto proyectoById(@PathVariable(value = "proyectoid") Long proyectoid, HttpServletRequest request) {
+		
+		if(log.isInfoEnabled()) {
+			log.info("ProyectoController.proyectoById.INIT");
+			log.info("ProyectoController.proyectoById.proyectoid:" + proyectoid);
+		}
+		
+		String userName = jwtTokenUtil.getUserToken(request);
+		
+		if(log.isInfoEnabled()) {
+			log.info("ProyectoController.proyectoById.getUsername: " + userName);
+		}
+		
+		ProyectoDto proyectoDto = proyectoService.buscarProyectoById(proyectoid,userName);
+		
+		if(log.isInfoEnabled()) {
+			log.info("ProyectoController.proyectoById.FIN");
+		}		
+		return proyectoDto;
+	}
+
 
 }

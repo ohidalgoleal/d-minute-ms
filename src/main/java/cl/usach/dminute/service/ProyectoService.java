@@ -21,5 +21,7 @@ public interface ProyectoService {
 	public List<ProyectoDto> buscarProyectosByUsuario(String userName);
 		
 	public abstract Proyecto editarProyecto(ProyectoDto guardar);
+	
+	public abstract ProyectoDto buscarProyectoById(long proyectoId, String userName);
 
 }
