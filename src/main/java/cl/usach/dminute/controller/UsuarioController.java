@@ -12,8 +12,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -39,8 +39,8 @@ public class UsuarioController {
         return usuarioService.findAll();
     }
 
-    @GetMapping(value = "/user/{username}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Usuario getOne(@PathVariable(value = "username") String username){
+    @GetMapping(value = "/user", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Usuario getOne(@RequestParam(value = "username", required = true) String username){
     	if(log.isInfoEnabled()) {
 			log.info("UsuarioController.getOne.INIT: " + username.toString());
 		}

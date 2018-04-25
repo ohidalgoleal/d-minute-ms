@@ -32,9 +32,17 @@ public class UsuarioImpl implements UserDetailsService, UsuarioService {
 	private PasswordEncoder passwordEncoder;
 
 	public UserDetails loadUserByUsername(String userId) throws UsPersonException {
+		if(log.isInfoEnabled()) {
+			log.info("UsuarioImpl.loadUserByUsername.INIT");
+			log.info("UsuarioImpl.loadUserByUsername.userId:" + userId.toString());
+		}
 		Usuario user = usuarioJpa.findByUsername(userId);
 		if(user == null){
 			throw new UsPersonException(Constants.ERROR_USUARIO_EXISTE_COD,"Invalid username or password.");
+		}
+		if(log.isInfoEnabled()) {
+			log.info("UsuarioImpl.loadUserByUsername.user: " + user);
+			log.info("UsuarioImpl.loadUserByUsername.FIN");
 		}
 		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), getAuthority());
 	}
@@ -44,8 +52,15 @@ public class UsuarioImpl implements UserDetailsService, UsuarioService {
 	}
 
 	public List<Usuario> findAll() {
+		if(log.isInfoEnabled()) {
+			log.info("UsuarioImpl.findAll.INIT");
+		}
 		List<Usuario> list = new ArrayList<>();
 		usuarioJpa.findAll().iterator().forEachRemaining(list::add);
+		if(log.isInfoEnabled()) {
+			log.info("UsuarioImpl.findAll.lista:" + list.toString());
+			log.info("UsuarioImpl.findAll.FIN");
+		}
 		return list;
 	}
 
@@ -56,7 +71,19 @@ public class UsuarioImpl implements UserDetailsService, UsuarioService {
 
 	@Override
 	public Usuario findOne(String username) {
-		return usuarioJpa.findByUsername(username);
+		if(log.isInfoEnabled()) {
+			log.info("UsuarioImpl.findOne.INIT");
+			log.info("UsuarioImpl.findOne.user: " + username);
+		}
+		Usuario retorno = usuarioJpa.findByUsername(username);
+		if(retorno == null){
+			throw new UsPersonException(Constants.ERROR_USUARIO_EXISTE_COD,"Invalid username.");
+		}
+		retorno.setPassword("");
+		if(log.isInfoEnabled()) {
+			log.info("UsuarioImpl.findOne.FIN: " + retorno.toString());
+		}
+		return retorno;
 	}
 
 	@Override
