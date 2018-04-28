@@ -1,0 +1,601 @@
+{
+	"info": {
+		"_postman_id": "676b7ee2-f979-4bee-97ca-89bf12e448d6",
+		"name": "D-Minute",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "token MS D-Minute",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"ohidalgoleal@gmail.com\",\n    \"password\": \"dinero123\"\n}"
+				},
+				"url": {
+					"raw": "{{host}}/token/generate-token",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"token",
+						"generate-token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "logout MS D-Minute",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvaGlkYWxnb2xlYWxAZ21haWwuY29tbyIsInNjb3BlcyI6W3siYXV0aG9yaXR5IjoiUk9MRV9BRE1JTiJ9XSwiaXNzIjoiaHR0cDovL2RldmdsYW4uY29tIiwiaWF0IjoxNTE5NDQ2NDE1LCJleHAiOjE1MTk0NDgyMTV9.L_sEcPNs0WSO0c1ExQEn0424PfFCTN8ur6xgY6rQ7ys",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{  \r\n   \"datosOperacion\":{  \r\n      \"anosTasaFija\":0,\r\n      \"codMesExclusion\":0,\r\n      \"codMoneda\":998,\r\n      \"codSeguro\":2,\r\n      \"indPrepago\":true,\r\n      \"indicadorReprogramacion\":1,\r\n      \"diaVencimiento\":10,\r\n      \"indDfl2\":false,\r\n      \"indPAC\":false,\r\n      \"canalId\":\"110\",\r\n      \"negociacion\":false,\r\n      \"comision\":0,\r\n      \"costoFondo\":0,\r\n      \"indMontoContenido\":0,\r\n      \"mesesGracia\":2,\r\n      \"montoContenido\":0,\r\n      \"seguroHogarContenido\":false,\r\n      \"seguroCesantia\":false,\r\n      \"seguroEnfermedadGrave\":false,\r\n      \"seguroHospitalizacion\":false,\r\n      \"tasaSegIncendio\":0,\r\n      \"tasaSegDesgravamen\":0,\r\n      \"codeudor\":false,\r\n      \"codeudorConSeguroDesgravamen\":false,\r\n      \"montoRobo\":0,\r\n      \"seguroCesantiaServiu\":0,\r\n      \"seguroCesantiaDobleProtecion\":false,\r\n      \"seguroDesgravamenTitular\":false,\r\n      \"fechaNacimientoTitular\":null,\r\n      \"fechaNacimientoCodeudor\":null,\r\n      \"tasaSimulacion\":0,\r\n      \"incluyeComparacion\":0,\r\n      \"codigoProductoComparacion\":0,\r\n      \"tasaSimulacionComparacion\":0,\r\n      \"tieneReprogramacion\":false,\r\n      \"tramo\":0,\r\n      \"segcod\":0,\r\n      \"montoValorAsegurable\":0,\r\n      \"porcentajeSegDesgravamenCliente\":0,\r\n      \"porcentajeSegDesgravamenCodeudor\":0,\r\n      \"plazo\":20,\r\n      \"pieUf\":400,\r\n      \"renta\":1200000,\r\n      \"codObjetivo\":1,\r\n      \"codAntiguedad\":\"T1\",\r\n      \"codProducto\":23,\r\n      \"region\":13,\r\n      \"comuna\":320501,\r\n      \"valorPropiedadUf\":3000,\r\n      \"valorPropiedadPesos\":79838010,\r\n      \"piePesos\":10645068,\r\n      \"montoCreditoPesos\":69192942,\r\n      \"montoCreditoUf\":2600,\r\n      \"codTipoBienRaiz\":\"0001\",\r\n      \"nombreCliente\":\"EVARISTO\",\r\n      \"apellidoCliente\":\"ESPINA ESPINA\",\r\n      \"emailCliente\":\"jpaineq@bcicert.cl\",\r\n      \"fonoCliente\":83496523,\r\n      \"ciudad\":320,\r\n      \"rutCliente\":9120700,\r\n      \"dvCliente\":\"1\",\r\n      \"tipoFinanciamento\":1,\r\n      \"pjeFinanciamiento\":0.8667,\r\n      \"anoCompra\":2017,\r\n      \"mesCompra\":\"Octubre\"\r\n   },\r\n   \"simulacionSeleccionada\":{  \r\n      \"simulacion\":{  \r\n         \"plazo\":20,\r\n         \"tramo\":null,\r\n         \"tasa\":3.55,\r\n         \"valorReducido\":2600,\r\n         \"dividendo\":15.1942,\r\n         \"montoSegDesg\":0.2288,\r\n         \"montoSegIncSis\":0.3003,\r\n         \"dividendoTotal\":15.7233,\r\n         \"dividendoTotalPesos\":418439,\r\n         \"tasaBase\":2.4,\r\n         \"tasaSpread\":1.15,\r\n         \"tasaIncendio\":0.0001,\r\n         \"tasaDesgravamen\":0.0001,\r\n         \"tasaOfertaMinima\":0.0002,\r\n         \"tasaOfertaMaxima\":0.0003,\r\n         \"totalOfertaMinima\":15.8882,\r\n         \"totalOfertaMaxima\":16.0236,\r\n         \"primaOfertaMinima\":0.4652,\r\n         \"primaOfertaMaxima\":0.6006,\r\n         \"tasaSeguroDesgravamenBasico\":0.0,\r\n         \"tasaSeguroDesgravamenFull\":0.0,\r\n         \"tasaSeguroDesgravamenPlus\":0.0,\r\n         \"primaSeguroDesgravamenBasico\":0.0,\r\n         \"primaSeguroDesgravamenFull\":0.0,\r\n         \"primaSeguroDesgravamenPlus\":0.0,\r\n         \"comparacionConveniencia\":false\r\n      },\r\n      \"gastosEnUF\":{  \r\n         \"tasacion\":2.0,\r\n         \"estudioTitulos\":3.0,\r\n         \"borradorEscritura\":3.0,\r\n         \"notariales\":3.0,\r\n         \"imptoAlMutuo\":21.0,\r\n         \"inscripcionConservador\":15.0,\r\n         \"gestoria\":0.0,\r\n         \"totalGastos\":70045\r\n      },\r\n      \"gastosEnPesos\":{  \r\n         \"tasacion\":70000,\r\n         \"estudioTitulos\":88500,\r\n         \"borradorEscritura\":70000,\r\n         \"notariales\":80000,\r\n         \"imptoAlMutuo\":553544,\r\n         \"inscripcionConservador\":399190,\r\n         \"gestoria\":0.0,\r\n         \"totalGastos\":1261234\r\n      },\r\n      \"datosCAE\":{  \r\n         \"tasaCAE\":3.8456,\r\n         \"costoTotal\":3750.8798,\r\n         \"totalInteres\":1046.8454,\r\n         \"totalSeguroIncendioSismo\":72.6726,\r\n         \"totalSeguroDesgravamen\":31.3618,\r\n         \"tipoTasa\":\"F\",\r\n         \"tasaCAEOfertaMinima\":3.9652,\r\n         \"costoTotalOfertaMinima\":3790.7856,\r\n         \"tasaCAEOfertaMaxima\":4.063,\r\n         \"costoTotalOfertaMaxima\":3823.5524\r\n      }\r\n   }\r\n}"
+				},
+				"url": {
+					"raw": "{{host}}/usuario/logout",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"usuario",
+						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "guardarUsuario MS D-Minute",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvaGlkYWxnb2xlYWxAZ21haWwuY29tIiwic2NvcGVzIjpbeyJhdXRob3JpdHkiOiJST0xFX0FETUlOIn1dLCJpc3MiOiJodHRwOi8vZGV2Z2xhbi5jb20iLCJpYXQiOjE1MjQ5NTcwMDgsImV4cCI6MTUyNDk1ODgwOH0.f-xit6_UP7pP07PIfIA1j8qvUztimDVUGg833GBQC0g",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"nuevo@gmail.com\",\n    \"nombre\": \"nuevo\",\n    \"apellido\": \"hidalgo\",\n    \"password\": \"dinero123\"\n}"
+				},
+				"url": {
+					"raw": "{{host}}/token/usuarioGuardar",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"token",
+						"usuarioGuardar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user MS D-Minute",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvaGlkYWxnb2xlYWxAZ21haWwuY29tIiwic2NvcGVzIjpbeyJhdXRob3JpdHkiOiJST0xFX0FETUlOIn1dLCJpc3MiOiJodHRwOi8vZGV2Z2xhbi5jb20iLCJpYXQiOjE1MjQ2MTI0NTgsImV4cCI6MTUyNDYxNDI1OH0.xv15C-bdyYtPbL6FpEw_AiYT9b6EKmNubzNASCwBrCQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{  \r\n   \"datosOperacion\":{  \r\n      \"anosTasaFija\":0,\r\n      \"codMesExclusion\":0,\r\n      \"codMoneda\":998,\r\n      \"codSeguro\":2,\r\n      \"indPrepago\":true,\r\n      \"indicadorReprogramacion\":1,\r\n      \"diaVencimiento\":10,\r\n      \"indDfl2\":false,\r\n      \"indPAC\":false,\r\n      \"canalId\":\"110\",\r\n      \"negociacion\":false,\r\n      \"comision\":0,\r\n      \"costoFondo\":0,\r\n      \"indMontoContenido\":0,\r\n      \"mesesGracia\":2,\r\n      \"montoContenido\":0,\r\n      \"seguroHogarContenido\":false,\r\n      \"seguroCesantia\":false,\r\n      \"seguroEnfermedadGrave\":false,\r\n      \"seguroHospitalizacion\":false,\r\n      \"tasaSegIncendio\":0,\r\n      \"tasaSegDesgravamen\":0,\r\n      \"codeudor\":false,\r\n      \"codeudorConSeguroDesgravamen\":false,\r\n      \"montoRobo\":0,\r\n      \"seguroCesantiaServiu\":0,\r\n      \"seguroCesantiaDobleProtecion\":false,\r\n      \"seguroDesgravamenTitular\":false,\r\n      \"fechaNacimientoTitular\":null,\r\n      \"fechaNacimientoCodeudor\":null,\r\n      \"tasaSimulacion\":0,\r\n      \"incluyeComparacion\":0,\r\n      \"codigoProductoComparacion\":0,\r\n      \"tasaSimulacionComparacion\":0,\r\n      \"tieneReprogramacion\":false,\r\n      \"tramo\":0,\r\n      \"segcod\":0,\r\n      \"montoValorAsegurable\":0,\r\n      \"porcentajeSegDesgravamenCliente\":0,\r\n      \"porcentajeSegDesgravamenCodeudor\":0,\r\n      \"plazo\":20,\r\n      \"pieUf\":400,\r\n      \"renta\":1200000,\r\n      \"codObjetivo\":1,\r\n      \"codAntiguedad\":\"T1\",\r\n      \"codProducto\":23,\r\n      \"region\":13,\r\n      \"comuna\":320501,\r\n      \"valorPropiedadUf\":3000,\r\n      \"valorPropiedadPesos\":79838010,\r\n      \"piePesos\":10645068,\r\n      \"montoCreditoPesos\":69192942,\r\n      \"montoCreditoUf\":2600,\r\n      \"codTipoBienRaiz\":\"0001\",\r\n      \"nombreCliente\":\"EVARISTO\",\r\n      \"apellidoCliente\":\"ESPINA ESPINA\",\r\n      \"emailCliente\":\"jpaineq@bcicert.cl\",\r\n      \"fonoCliente\":83496523,\r\n      \"ciudad\":320,\r\n      \"rutCliente\":9120700,\r\n      \"dvCliente\":\"1\",\r\n      \"tipoFinanciamento\":1,\r\n      \"pjeFinanciamiento\":0.8667,\r\n      \"anoCompra\":2017,\r\n      \"mesCompra\":\"Octubre\"\r\n   },\r\n   \"simulacionSeleccionada\":{  \r\n      \"simulacion\":{  \r\n         \"plazo\":20,\r\n         \"tramo\":null,\r\n         \"tasa\":3.55,\r\n         \"valorReducido\":2600,\r\n         \"dividendo\":15.1942,\r\n         \"montoSegDesg\":0.2288,\r\n         \"montoSegIncSis\":0.3003,\r\n         \"dividendoTotal\":15.7233,\r\n         \"dividendoTotalPesos\":418439,\r\n         \"tasaBase\":2.4,\r\n         \"tasaSpread\":1.15,\r\n         \"tasaIncendio\":0.0001,\r\n         \"tasaDesgravamen\":0.0001,\r\n         \"tasaOfertaMinima\":0.0002,\r\n         \"tasaOfertaMaxima\":0.0003,\r\n         \"totalOfertaMinima\":15.8882,\r\n         \"totalOfertaMaxima\":16.0236,\r\n         \"primaOfertaMinima\":0.4652,\r\n         \"primaOfertaMaxima\":0.6006,\r\n         \"tasaSeguroDesgravamenBasico\":0.0,\r\n         \"tasaSeguroDesgravamenFull\":0.0,\r\n         \"tasaSeguroDesgravamenPlus\":0.0,\r\n         \"primaSeguroDesgravamenBasico\":0.0,\r\n         \"primaSeguroDesgravamenFull\":0.0,\r\n         \"primaSeguroDesgravamenPlus\":0.0,\r\n         \"comparacionConveniencia\":false\r\n      },\r\n      \"gastosEnUF\":{  \r\n         \"tasacion\":2.0,\r\n         \"estudioTitulos\":3.0,\r\n         \"borradorEscritura\":3.0,\r\n         \"notariales\":3.0,\r\n         \"imptoAlMutuo\":21.0,\r\n         \"inscripcionConservador\":15.0,\r\n         \"gestoria\":0.0,\r\n         \"totalGastos\":70045\r\n      },\r\n      \"gastosEnPesos\":{  \r\n         \"tasacion\":70000,\r\n         \"estudioTitulos\":88500,\r\n         \"borradorEscritura\":70000,\r\n         \"notariales\":80000,\r\n         \"imptoAlMutuo\":553544,\r\n         \"inscripcionConservador\":399190,\r\n         \"gestoria\":0.0,\r\n         \"totalGastos\":1261234\r\n      },\r\n      \"datosCAE\":{  \r\n         \"tasaCAE\":3.8456,\r\n         \"costoTotal\":3750.8798,\r\n         \"totalInteres\":1046.8454,\r\n         \"totalSeguroIncendioSismo\":72.6726,\r\n         \"totalSeguroDesgravamen\":31.3618,\r\n         \"tipoTasa\":\"F\",\r\n         \"tasaCAEOfertaMinima\":3.9652,\r\n         \"costoTotalOfertaMinima\":3790.7856,\r\n         \"tasaCAEOfertaMaxima\":4.063,\r\n         \"costoTotalOfertaMaxima\":3823.5524\r\n      }\r\n   }\r\n}"
+				},
+				"url": {
+					"raw": "{{host}}/usuario/michele@gmail.com",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"usuario",
+						"michele@gmail.com"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user list MS D-Minute",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvaGlkYWxnb2xlYWxAZ21haWwuY29tIiwic2NvcGVzIjpbeyJhdXRob3JpdHkiOiJST0xFX0FETUlOIn1dLCJpc3MiOiJodHRwOi8vZGV2Z2xhbi5jb20iLCJpYXQiOjE1MjQ2MTI0NTgsImV4cCI6MTUyNDYxNDI1OH0.xv15C-bdyYtPbL6FpEw_AiYT9b6EKmNubzNASCwBrCQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{  \r\n   \"datosOperacion\":{  \r\n      \"anosTasaFija\":0,\r\n      \"codMesExclusion\":0,\r\n      \"codMoneda\":998,\r\n      \"codSeguro\":2,\r\n      \"indPrepago\":true,\r\n      \"indicadorReprogramacion\":1,\r\n      \"diaVencimiento\":10,\r\n      \"indDfl2\":false,\r\n      \"indPAC\":false,\r\n      \"canalId\":\"110\",\r\n      \"negociacion\":false,\r\n      \"comision\":0,\r\n      \"costoFondo\":0,\r\n      \"indMontoContenido\":0,\r\n      \"mesesGracia\":2,\r\n      \"montoContenido\":0,\r\n      \"seguroHogarContenido\":false,\r\n      \"seguroCesantia\":false,\r\n      \"seguroEnfermedadGrave\":false,\r\n      \"seguroHospitalizacion\":false,\r\n      \"tasaSegIncendio\":0,\r\n      \"tasaSegDesgravamen\":0,\r\n      \"codeudor\":false,\r\n      \"codeudorConSeguroDesgravamen\":false,\r\n      \"montoRobo\":0,\r\n      \"seguroCesantiaServiu\":0,\r\n      \"seguroCesantiaDobleProtecion\":false,\r\n      \"seguroDesgravamenTitular\":false,\r\n      \"fechaNacimientoTitular\":null,\r\n      \"fechaNacimientoCodeudor\":null,\r\n      \"tasaSimulacion\":0,\r\n      \"incluyeComparacion\":0,\r\n      \"codigoProductoComparacion\":0,\r\n      \"tasaSimulacionComparacion\":0,\r\n      \"tieneReprogramacion\":false,\r\n      \"tramo\":0,\r\n      \"segcod\":0,\r\n      \"montoValorAsegurable\":0,\r\n      \"porcentajeSegDesgravamenCliente\":0,\r\n      \"porcentajeSegDesgravamenCodeudor\":0,\r\n      \"plazo\":20,\r\n      \"pieUf\":400,\r\n      \"renta\":1200000,\r\n      \"codObjetivo\":1,\r\n      \"codAntiguedad\":\"T1\",\r\n      \"codProducto\":23,\r\n      \"region\":13,\r\n      \"comuna\":320501,\r\n      \"valorPropiedadUf\":3000,\r\n      \"valorPropiedadPesos\":79838010,\r\n      \"piePesos\":10645068,\r\n      \"montoCreditoPesos\":69192942,\r\n      \"montoCreditoUf\":2600,\r\n      \"codTipoBienRaiz\":\"0001\",\r\n      \"nombreCliente\":\"EVARISTO\",\r\n      \"apellidoCliente\":\"ESPINA ESPINA\",\r\n      \"emailCliente\":\"jpaineq@bcicert.cl\",\r\n      \"fonoCliente\":83496523,\r\n      \"ciudad\":320,\r\n      \"rutCliente\":9120700,\r\n      \"dvCliente\":\"1\",\r\n      \"tipoFinanciamento\":1,\r\n      \"pjeFinanciamiento\":0.8667,\r\n      \"anoCompra\":2017,\r\n      \"mesCompra\":\"Octubre\"\r\n   },\r\n   \"simulacionSeleccionada\":{  \r\n      \"simulacion\":{  \r\n         \"plazo\":20,\r\n         \"tramo\":null,\r\n         \"tasa\":3.55,\r\n         \"valorReducido\":2600,\r\n         \"dividendo\":15.1942,\r\n         \"montoSegDesg\":0.2288,\r\n         \"montoSegIncSis\":0.3003,\r\n         \"dividendoTotal\":15.7233,\r\n         \"dividendoTotalPesos\":418439,\r\n         \"tasaBase\":2.4,\r\n         \"tasaSpread\":1.15,\r\n         \"tasaIncendio\":0.0001,\r\n         \"tasaDesgravamen\":0.0001,\r\n         \"tasaOfertaMinima\":0.0002,\r\n         \"tasaOfertaMaxima\":0.0003,\r\n         \"totalOfertaMinima\":15.8882,\r\n         \"totalOfertaMaxima\":16.0236,\r\n         \"primaOfertaMinima\":0.4652,\r\n         \"primaOfertaMaxima\":0.6006,\r\n         \"tasaSeguroDesgravamenBasico\":0.0,\r\n         \"tasaSeguroDesgravamenFull\":0.0,\r\n         \"tasaSeguroDesgravamenPlus\":0.0,\r\n         \"primaSeguroDesgravamenBasico\":0.0,\r\n         \"primaSeguroDesgravamenFull\":0.0,\r\n         \"primaSeguroDesgravamenPlus\":0.0,\r\n         \"comparacionConveniencia\":false\r\n      },\r\n      \"gastosEnUF\":{  \r\n         \"tasacion\":2.0,\r\n         \"estudioTitulos\":3.0,\r\n         \"borradorEscritura\":3.0,\r\n         \"notariales\":3.0,\r\n         \"imptoAlMutuo\":21.0,\r\n         \"inscripcionConservador\":15.0,\r\n         \"gestoria\":0.0,\r\n         \"totalGastos\":70045\r\n      },\r\n      \"gastosEnPesos\":{  \r\n         \"tasacion\":70000,\r\n         \"estudioTitulos\":88500,\r\n         \"borradorEscritura\":70000,\r\n         \"notariales\":80000,\r\n         \"imptoAlMutuo\":553544,\r\n         \"inscripcionConservador\":399190,\r\n         \"gestoria\":0.0,\r\n         \"totalGastos\":1261234\r\n      },\r\n      \"datosCAE\":{  \r\n         \"tasaCAE\":3.8456,\r\n         \"costoTotal\":3750.8798,\r\n         \"totalInteres\":1046.8454,\r\n         \"totalSeguroIncendioSismo\":72.6726,\r\n         \"totalSeguroDesgravamen\":31.3618,\r\n         \"tipoTasa\":\"F\",\r\n         \"tasaCAEOfertaMinima\":3.9652,\r\n         \"costoTotalOfertaMinima\":3790.7856,\r\n         \"tasaCAEOfertaMaxima\":4.063,\r\n         \"costoTotalOfertaMaxima\":3823.5524\r\n      }\r\n   }\r\n}"
+				},
+				"url": {
+					"raw": "{{host}}/usuario/listaUsuarios",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"usuario",
+						"listaUsuarios"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "rolesProyecto MS D-Minute",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvaGlkYWxnb2xlYWxAZ21haWwuY29tIiwic2NvcGVzIjpbeyJhdXRob3JpdHkiOiJST0xFX0FETUlOIn1dLCJpc3MiOiJodHRwOi8vZGV2Z2xhbi5jb20iLCJpYXQiOjE1MTk4MzQ5MzcsImV4cCI6MTUxOTgzNjczN30.ty6n2z8Eceidr6tY88Jdn8j-fO-a-gutIJxIMvBbf1M",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{  \r\n   \"datosOperacion\":{  \r\n      \"anosTasaFija\":0,\r\n      \"codMesExclusion\":0,\r\n      \"codMoneda\":998,\r\n      \"codSeguro\":2,\r\n      \"indPrepago\":true,\r\n      \"indicadorReprogramacion\":1,\r\n      \"diaVencimiento\":10,\r\n      \"indDfl2\":false,\r\n      \"indPAC\":false,\r\n      \"canalId\":\"110\",\r\n      \"negociacion\":false,\r\n      \"comision\":0,\r\n      \"costoFondo\":0,\r\n      \"indMontoContenido\":0,\r\n      \"mesesGracia\":2,\r\n      \"montoContenido\":0,\r\n      \"seguroHogarContenido\":false,\r\n      \"seguroCesantia\":false,\r\n      \"seguroEnfermedadGrave\":false,\r\n      \"seguroHospitalizacion\":false,\r\n      \"tasaSegIncendio\":0,\r\n      \"tasaSegDesgravamen\":0,\r\n      \"codeudor\":false,\r\n      \"codeudorConSeguroDesgravamen\":false,\r\n      \"montoRobo\":0,\r\n      \"seguroCesantiaServiu\":0,\r\n      \"seguroCesantiaDobleProtecion\":false,\r\n      \"seguroDesgravamenTitular\":false,\r\n      \"fechaNacimientoTitular\":null,\r\n      \"fechaNacimientoCodeudor\":null,\r\n      \"tasaSimulacion\":0,\r\n      \"incluyeComparacion\":0,\r\n      \"codigoProductoComparacion\":0,\r\n      \"tasaSimulacionComparacion\":0,\r\n      \"tieneReprogramacion\":false,\r\n      \"tramo\":0,\r\n      \"segcod\":0,\r\n      \"montoValorAsegurable\":0,\r\n      \"porcentajeSegDesgravamenCliente\":0,\r\n      \"porcentajeSegDesgravamenCodeudor\":0,\r\n      \"plazo\":20,\r\n      \"pieUf\":400,\r\n      \"renta\":1200000,\r\n      \"codObjetivo\":1,\r\n      \"codAntiguedad\":\"T1\",\r\n      \"codProducto\":23,\r\n      \"region\":13,\r\n      \"comuna\":320501,\r\n      \"valorPropiedadUf\":3000,\r\n      \"valorPropiedadPesos\":79838010,\r\n      \"piePesos\":10645068,\r\n      \"montoCreditoPesos\":69192942,\r\n      \"montoCreditoUf\":2600,\r\n      \"codTipoBienRaiz\":\"0001\",\r\n      \"nombreCliente\":\"EVARISTO\",\r\n      \"apellidoCliente\":\"ESPINA ESPINA\",\r\n      \"emailCliente\":\"jpaineq@bcicert.cl\",\r\n      \"fonoCliente\":83496523,\r\n      \"ciudad\":320,\r\n      \"rutCliente\":9120700,\r\n      \"dvCliente\":\"1\",\r\n      \"tipoFinanciamento\":1,\r\n      \"pjeFinanciamiento\":0.8667,\r\n      \"anoCompra\":2017,\r\n      \"mesCompra\":\"Octubre\"\r\n   },\r\n   \"simulacionSeleccionada\":{  \r\n      \"simulacion\":{  \r\n         \"plazo\":20,\r\n         \"tramo\":null,\r\n         \"tasa\":3.55,\r\n         \"valorReducido\":2600,\r\n         \"dividendo\":15.1942,\r\n         \"montoSegDesg\":0.2288,\r\n         \"montoSegIncSis\":0.3003,\r\n         \"dividendoTotal\":15.7233,\r\n         \"dividendoTotalPesos\":418439,\r\n         \"tasaBase\":2.4,\r\n         \"tasaSpread\":1.15,\r\n         \"tasaIncendio\":0.0001,\r\n         \"tasaDesgravamen\":0.0001,\r\n         \"tasaOfertaMinima\":0.0002,\r\n         \"tasaOfertaMaxima\":0.0003,\r\n         \"totalOfertaMinima\":15.8882,\r\n         \"totalOfertaMaxima\":16.0236,\r\n         \"primaOfertaMinima\":0.4652,\r\n         \"primaOfertaMaxima\":0.6006,\r\n         \"tasaSeguroDesgravamenBasico\":0.0,\r\n         \"tasaSeguroDesgravamenFull\":0.0,\r\n         \"tasaSeguroDesgravamenPlus\":0.0,\r\n         \"primaSeguroDesgravamenBasico\":0.0,\r\n         \"primaSeguroDesgravamenFull\":0.0,\r\n         \"primaSeguroDesgravamenPlus\":0.0,\r\n         \"comparacionConveniencia\":false\r\n      },\r\n      \"gastosEnUF\":{  \r\n         \"tasacion\":2.0,\r\n         \"estudioTitulos\":3.0,\r\n         \"borradorEscritura\":3.0,\r\n         \"notariales\":3.0,\r\n         \"imptoAlMutuo\":21.0,\r\n         \"inscripcionConservador\":15.0,\r\n         \"gestoria\":0.0,\r\n         \"totalGastos\":70045\r\n      },\r\n      \"gastosEnPesos\":{  \r\n         \"tasacion\":70000,\r\n         \"estudioTitulos\":88500,\r\n         \"borradorEscritura\":70000,\r\n         \"notariales\":80000,\r\n         \"imptoAlMutuo\":553544,\r\n         \"inscripcionConservador\":399190,\r\n         \"gestoria\":0.0,\r\n         \"totalGastos\":1261234\r\n      },\r\n      \"datosCAE\":{  \r\n         \"tasaCAE\":3.8456,\r\n         \"costoTotal\":3750.8798,\r\n         \"totalInteres\":1046.8454,\r\n         \"totalSeguroIncendioSismo\":72.6726,\r\n         \"totalSeguroDesgravamen\":31.3618,\r\n         \"tipoTasa\":\"F\",\r\n         \"tasaCAEOfertaMinima\":3.9652,\r\n         \"costoTotalOfertaMinima\":3790.7856,\r\n         \"tasaCAEOfertaMaxima\":4.063,\r\n         \"costoTotalOfertaMaxima\":3823.5524\r\n      }\r\n   }\r\n}"
+				},
+				"url": {
+					"raw": "{{host}}/listaFormulario/rolesProyecto",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"listaFormulario",
+						"rolesProyecto"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "listProyectoUser MS D-Minute",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvaGlkYWxnb2xlYWxAZ21haWwuY29tIiwic2NvcGVzIjpbeyJhdXRob3JpdHkiOiJST0xFX0FETUlOIn1dLCJpc3MiOiJodHRwOi8vZGV2Z2xhbi5jb20iLCJpYXQiOjE1MjQ5NTU1MDAsImV4cCI6MTUyNDk1NzMwMH0.qHLT7T-NR-JFigE99IfNBsYiEuIPAXbuDU9CGWjROqc",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "userName",
+						"value": "ohidalgoleal@gmail.com"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nombre\": \"PROYECTO INVERSIONES\",\n    \"descripcion\": \"PROYECTO PARA INVERTIR\",\n    \"fechaInicio\": \"2018-02-28\",\n    \"fechaFin\": \"2018-05-28\",\n    \"usuariosNuevoProyecto\": \n    [\n    \t{\n    \t\t\"username\":\"ohidalgoleal@gmail.comol\"\n    \t},\n    \t{\n    \t\t\"username\":\"felipe@gmail.como\"\n    \t},\n    \t{\n    \t\t\"username\":\"pedro@gmail.como\"\n    \t}\n    ]\n}"
+				},
+				"url": {
+					"raw": "{{host}}/proyecto/listarProyectoUsuario",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"proyecto",
+						"listarProyectoUsuario"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addProyectoUser MS D-Minute",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvaGlkYWxnb2xlYWxAZ21haWwuY29tIiwic2NvcGVzIjpbeyJhdXRob3JpdHkiOiJST0xFX0FETUlOIn1dLCJpc3MiOiJodHRwOi8vZGV2Z2xhbi5jb20iLCJpYXQiOjE1MjA1NDU3NjIsImV4cCI6MTUyMDU0NzU2Mn0.uHwLTlBQK-ty7y3AHcNna5udMAfKXSCnNqTucsP-xu8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nombre\": \"PROYECTO INVERSIONES\",\n    \"descripcion\": \"PROYECTO PARA INVERTIR\",\n    \"fechaInicio\": \"2018-02-28\",\n    \"fechaFin\": \"2018-05-28\",\n    \"usuariosNuevoProyecto\": \n    [\n    \t{\n    \t\t\"username\":\"felipe@gmail.com\"\n    \t}\n    ]\n}"
+				},
+				"url": {
+					"raw": "{{host}}/proyecto/nuevoProyecto",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"proyecto",
+						"nuevoProyecto"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateProyectoUser MS D-Minute",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvaGlkYWxnb2xlYWxAZ21haWwuY29tIiwic2NvcGVzIjpbeyJhdXRob3JpdHkiOiJST0xFX0FETUlOIn1dLCJpc3MiOiJodHRwOi8vZGV2Z2xhbi5jb20iLCJpYXQiOjE1MjAyODA0MjMsImV4cCI6MTUyMDI4MjIyM30.8vfuN-v2kmvFCOvhQ3Vx8c6vsCrZ2hTWDpeHXuC-Ev4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"proyectoId\": 12,\n    \"nombre\": \"PROYECTO CON MEJORAS PARA UPDATE\",\n    \"descripcion\": \"PROYECTO CON MEJORAS PARA UPDATE\",\n    \"fechaInicio\": \"2019-03-05\",\n    \"fechaFin\": \"2020-05-28\",\n    \"usuariosNuevoProyecto\": \n    [\n    \t{\n    \t\t\"username\":\"felipe@gmail.como\"\n    \t}\n    ]\n}"
+				},
+				"url": {
+					"raw": "{{host}}/proyecto/editarProyecto",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"proyecto",
+						"editarProyecto"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "tiposElementoDialogo MS D-Minute",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{  \r\n   \"datosOperacion\":{  \r\n      \"anosTasaFija\":0,\r\n      \"codMesExclusion\":0,\r\n      \"codMoneda\":998,\r\n      \"codSeguro\":2,\r\n      \"indPrepago\":true,\r\n      \"indicadorReprogramacion\":1,\r\n      \"diaVencimiento\":10,\r\n      \"indDfl2\":false,\r\n      \"indPAC\":false,\r\n      \"canalId\":\"110\",\r\n      \"negociacion\":false,\r\n      \"comision\":0,\r\n      \"costoFondo\":0,\r\n      \"indMontoContenido\":0,\r\n      \"mesesGracia\":2,\r\n      \"montoContenido\":0,\r\n      \"seguroHogarContenido\":false,\r\n      \"seguroCesantia\":false,\r\n      \"seguroEnfermedadGrave\":false,\r\n      \"seguroHospitalizacion\":false,\r\n      \"tasaSegIncendio\":0,\r\n      \"tasaSegDesgravamen\":0,\r\n      \"codeudor\":false,\r\n      \"codeudorConSeguroDesgravamen\":false,\r\n      \"montoRobo\":0,\r\n      \"seguroCesantiaServiu\":0,\r\n      \"seguroCesantiaDobleProtecion\":false,\r\n      \"seguroDesgravamenTitular\":false,\r\n      \"fechaNacimientoTitular\":null,\r\n      \"fechaNacimientoCodeudor\":null,\r\n      \"tasaSimulacion\":0,\r\n      \"incluyeComparacion\":0,\r\n      \"codigoProductoComparacion\":0,\r\n      \"tasaSimulacionComparacion\":0,\r\n      \"tieneReprogramacion\":false,\r\n      \"tramo\":0,\r\n      \"segcod\":0,\r\n      \"montoValorAsegurable\":0,\r\n      \"porcentajeSegDesgravamenCliente\":0,\r\n      \"porcentajeSegDesgravamenCodeudor\":0,\r\n      \"plazo\":20,\r\n      \"pieUf\":400,\r\n      \"renta\":1200000,\r\n      \"codObjetivo\":1,\r\n      \"codAntiguedad\":\"T1\",\r\n      \"codProducto\":23,\r\n      \"region\":13,\r\n      \"comuna\":320501,\r\n      \"valorPropiedadUf\":3000,\r\n      \"valorPropiedadPesos\":79838010,\r\n      \"piePesos\":10645068,\r\n      \"montoCreditoPesos\":69192942,\r\n      \"montoCreditoUf\":2600,\r\n      \"codTipoBienRaiz\":\"0001\",\r\n      \"nombreCliente\":\"EVARISTO\",\r\n      \"apellidoCliente\":\"ESPINA ESPINA\",\r\n      \"emailCliente\":\"jpaineq@bcicert.cl\",\r\n      \"fonoCliente\":83496523,\r\n      \"ciudad\":320,\r\n      \"rutCliente\":9120700,\r\n      \"dvCliente\":\"1\",\r\n      \"tipoFinanciamento\":1,\r\n      \"pjeFinanciamiento\":0.8667,\r\n      \"anoCompra\":2017,\r\n      \"mesCompra\":\"Octubre\"\r\n   },\r\n   \"simulacionSeleccionada\":{  \r\n      \"simulacion\":{  \r\n         \"plazo\":20,\r\n         \"tramo\":null,\r\n         \"tasa\":3.55,\r\n         \"valorReducido\":2600,\r\n         \"dividendo\":15.1942,\r\n         \"montoSegDesg\":0.2288,\r\n         \"montoSegIncSis\":0.3003,\r\n         \"dividendoTotal\":15.7233,\r\n         \"dividendoTotalPesos\":418439,\r\n         \"tasaBase\":2.4,\r\n         \"tasaSpread\":1.15,\r\n         \"tasaIncendio\":0.0001,\r\n         \"tasaDesgravamen\":0.0001,\r\n         \"tasaOfertaMinima\":0.0002,\r\n         \"tasaOfertaMaxima\":0.0003,\r\n         \"totalOfertaMinima\":15.8882,\r\n         \"totalOfertaMaxima\":16.0236,\r\n         \"primaOfertaMinima\":0.4652,\r\n         \"primaOfertaMaxima\":0.6006,\r\n         \"tasaSeguroDesgravamenBasico\":0.0,\r\n         \"tasaSeguroDesgravamenFull\":0.0,\r\n         \"tasaSeguroDesgravamenPlus\":0.0,\r\n         \"primaSeguroDesgravamenBasico\":0.0,\r\n         \"primaSeguroDesgravamenFull\":0.0,\r\n         \"primaSeguroDesgravamenPlus\":0.0,\r\n         \"comparacionConveniencia\":false\r\n      },\r\n      \"gastosEnUF\":{  \r\n         \"tasacion\":2.0,\r\n         \"estudioTitulos\":3.0,\r\n         \"borradorEscritura\":3.0,\r\n         \"notariales\":3.0,\r\n         \"imptoAlMutuo\":21.0,\r\n         \"inscripcionConservador\":15.0,\r\n         \"gestoria\":0.0,\r\n         \"totalGastos\":70045\r\n      },\r\n      \"gastosEnPesos\":{  \r\n         \"tasacion\":70000,\r\n         \"estudioTitulos\":88500,\r\n         \"borradorEscritura\":70000,\r\n         \"notariales\":80000,\r\n         \"imptoAlMutuo\":553544,\r\n         \"inscripcionConservador\":399190,\r\n         \"gestoria\":0.0,\r\n         \"totalGastos\":1261234\r\n      },\r\n      \"datosCAE\":{  \r\n         \"tasaCAE\":3.8456,\r\n         \"costoTotal\":3750.8798,\r\n         \"totalInteres\":1046.8454,\r\n         \"totalSeguroIncendioSismo\":72.6726,\r\n         \"totalSeguroDesgravamen\":31.3618,\r\n         \"tipoTasa\":\"F\",\r\n         \"tasaCAEOfertaMinima\":3.9652,\r\n         \"costoTotalOfertaMinima\":3790.7856,\r\n         \"tasaCAEOfertaMaxima\":4.063,\r\n         \"costoTotalOfertaMaxima\":3823.5524\r\n      }\r\n   }\r\n}"
+				},
+				"url": {
+					"raw": "{{host}}/listaFormulario/tiposElementoDialogo",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"listaFormulario",
+						"tiposElementoDialogo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addTipoElementoDialogo MS D-Minute",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"codRol\": \"JP\",\n    \"descripcion\": \"JEFATURA\"\n}"
+				},
+				"url": {
+					"raw": "{{host}}/listaFormulario/addTipoElementoDialogo",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"listaFormulario",
+						"addTipoElementoDialogo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "listActaProyecto MS D-Minute",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvaGlkYWxnb2xlYWxAZ21haWwuY29tIiwic2NvcGVzIjpbeyJhdXRob3JpdHkiOiJST0xFX0FETUlOIn1dLCJpc3MiOiJodHRwOi8vZGV2Z2xhbi5jb20iLCJpYXQiOjE1MjQ5NTYyNDAsImV4cCI6MTUyNDk1ODA0MH0.yh53EyjGvKEksyNQJmSu5gFMMkuCzOAI6Fzmrq0RumI",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "userName",
+						"value": "ohidalgoleal@gmail.com"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nombre\": \"PROYECTO INVERSIONES\",\n    \"descripcion\": \"PROYECTO PARA INVERTIR\",\n    \"fechaInicio\": \"2018-02-28\",\n    \"fechaFin\": \"2018-05-28\",\n    \"usuariosNuevoProyecto\": \n    [\n    \t{\n    \t\t\"username\":\"ohidalgoleal@gmail.comol\"\n    \t},\n    \t{\n    \t\t\"username\":\"felipe@gmail.como\"\n    \t},\n    \t{\n    \t\t\"username\":\"pedro@gmail.como\"\n    \t}\n    ]\n}"
+				},
+				"url": {
+					"raw": "{{host}}/acta/listarActaProyecto/10",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"acta",
+						"listarActaProyecto",
+						"10"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getActa MS D-Minute",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvaGlkYWxnb2xlYWxAZ21haWwuY29tIiwic2NvcGVzIjpbeyJhdXRob3JpdHkiOiJST0xFX0FETUlOIn1dLCJpc3MiOiJodHRwOi8vZGV2Z2xhbi5jb20iLCJpYXQiOjE1MjQ5NTgzMTEsImV4cCI6MTUyNDk2MDExMX0.W2p6rmpV01qmeI-Lx_aPBUprYGoVUoh1Tz-bLYJ8mjQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "userName",
+						"value": "ohidalgoleal@gmail.com"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nombre\": \"PROYECTO INVERSIONES\",\n    \"descripcion\": \"PROYECTO PARA INVERTIR\",\n    \"fechaInicio\": \"2018-02-28\",\n    \"fechaFin\": \"2018-05-28\",\n    \"usuariosNuevoProyecto\": \n    [\n    \t{\n    \t\t\"username\":\"ohidalgoleal@gmail.comol\"\n    \t},\n    \t{\n    \t\t\"username\":\"felipe@gmail.como\"\n    \t},\n    \t{\n    \t\t\"username\":\"pedro@gmail.como\"\n    \t}\n    ]\n}"
+				},
+				"url": {
+					"raw": "{{host}}/acta/getActa/2",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"acta",
+						"getActa",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getUsuariosActa MS D-Minute",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvaGlkYWxnb2xlYWxAZ21haWwuY29tIiwic2NvcGVzIjpbeyJhdXRob3JpdHkiOiJST0xFX0FETUlOIn1dLCJpc3MiOiJodHRwOi8vZGV2Z2xhbi5jb20iLCJpYXQiOjE1MjQ5NTgzMTEsImV4cCI6MTUyNDk2MDExMX0.W2p6rmpV01qmeI-Lx_aPBUprYGoVUoh1Tz-bLYJ8mjQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "userName",
+						"value": "ohidalgoleal@gmail.com"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nombre\": \"PROYECTO INVERSIONES\",\n    \"descripcion\": \"PROYECTO PARA INVERTIR\",\n    \"fechaInicio\": \"2018-02-28\",\n    \"fechaFin\": \"2018-05-28\",\n    \"usuariosNuevoProyecto\": \n    [\n    \t{\n    \t\t\"username\":\"ohidalgoleal@gmail.comol\"\n    \t},\n    \t{\n    \t\t\"username\":\"felipe@gmail.como\"\n    \t},\n    \t{\n    \t\t\"username\":\"pedro@gmail.como\"\n    \t}\n    ]\n}"
+				},
+				"url": {
+					"raw": "{{host}}/acta/getUsuariosActa/2",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"acta",
+						"getUsuariosActa",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addActaProyecto MS D-Minute",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvaGlkYWxnb2xlYWxAZ21haWwuY29tIiwic2NvcGVzIjpbeyJhdXRob3JpdHkiOiJST0xFX0FETUlOIn1dLCJpc3MiOiJodHRwOi8vZGV2Z2xhbi5jb20iLCJpYXQiOjE1MjQ5NTYyNDAsImV4cCI6MTUyNDk1ODA0MH0.yh53EyjGvKEksyNQJmSu5gFMMkuCzOAI6Fzmrq0RumI",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "userName",
+						"value": "ohidalgoleal@gmail.com"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{  \r\n   \"actaId\":0,\r\n   \"fecha\":\"2019-03-05\",\r\n   \"resumen\":\"CREANDO7ELIMINANDO ACTA CON USUARIOS\",\r\n   \"proyectoId\":10,\r\n   \"usuarioActa\":[  \r\n      {  \r\n      \t \"asiste\":\"S\",\r\n      \t \"secretario\":\"N\",\r\n         \"username\":\"ohidalgoleal@gmail.com\"\r\n      },\r\n      {  \r\n      \t \"asiste\":\"S\",\r\n      \t \"secretario\":\"S\",\r\n         \"username\":\"pedro@gmail.com\"\r\n      }\r\n   ]\r\n}"
+				},
+				"url": {
+					"raw": "{{host}}/acta/guardarActa",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"acta",
+						"guardarActa"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delActaProyecto MS D-Minute",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvaGlkYWxnb2xlYWxAZ21haWwuY29tIiwic2NvcGVzIjpbeyJhdXRob3JpdHkiOiJST0xFX0FETUlOIn1dLCJpc3MiOiJodHRwOi8vZGV2Z2xhbi5jb20iLCJpYXQiOjE1MjA1NDY3MDUsImV4cCI6MTUyMDU0ODUwNX0.9o0V04_xoN-HB_5f6h-tydusFu5Tme4KK8Hf7A-ky3U",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "userName",
+						"value": "ohidalgoleal@gmail.com"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"actaId\": 5,\n\t\"fecha\": \"2019-03-05\",\n\t\"resumen\": \"CREANDO ACTA POR POSTMAND\",\n\t\"proyectoId\": 10\n}"
+				},
+				"url": {
+					"raw": "{{host}}/acta/eliminarActa",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"acta",
+						"eliminarActa"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
