@@ -67,7 +67,7 @@ public class CallStoreProcedureImpl {
 		if(log.isInfoEnabled()) {
 			log.info("CallStoreProcedureImpl.eliminarUsuariosProyecto.INIT");			
 		}
-		StoredProcedureQuery storedProcedureQuery = em.createStoredProcedureQuery( "deleteallusuariosProyecto" );
+		StoredProcedureQuery storedProcedureQuery = em.createStoredProcedureQuery( "deleteallusuariosproyecto" );
 		storedProcedureQuery.registerStoredProcedureParameter("_proyectoid",Long.class, ParameterMode.IN);
 		storedProcedureQuery.setParameter("_proyectoid", proyectoId);
 		storedProcedureQuery.execute();
@@ -149,6 +149,7 @@ public class CallStoreProcedureImpl {
 				acta.setCorrelativo(j);
 				acta.setFecha(Utilitario.formatoFecha(row[1].toString()));
 				acta.setResumen(row[2].toString());
+				acta.setEstado(row[3].toString());
 				acta.setProyectoId(proyectoId);				
 				List<UsuarioActaDto> validacion = listaUsuarioActaResponse.stream().filter(a -> Objects.equals(a.getActaId(), _acta )).collect(Collectors.toList());
 				acta.setUsuarioActa(validacion);
@@ -182,12 +183,13 @@ public class CallStoreProcedureImpl {
 		List<UsuarioActaDto> retorno = null;
 		if (results != null) {
 			retorno= new ArrayList<UsuarioActaDto>();
-			UsuarioActaDto usuarioActa = new UsuarioActaDto();
-			for (Object[] row : results) {				
+			for (Object[] row : results) {
+				UsuarioActaDto usuarioActa = new UsuarioActaDto();
 				usuarioActa.setAsiste(row[0].toString());
 				usuarioActa.setSecretario(row[1].toString());
 				usuarioActa.setUsername(row[2].toString());
 				usuarioActa.setActaId(Long.parseLong(row[3].toString()));
+				usuarioActa.setNombre(row[4].toString() + " " +  row[4].toString());
 				retorno.add(usuarioActa);
 			}
 		}
@@ -196,6 +198,21 @@ public class CallStoreProcedureImpl {
 			log.info("CallStoreProcedureImpl.buscarUsuarioActaAll.FIN");
 		}
 		return retorno;
+	}
+	
+	@ApiOperation("Método encargado de eliminar los usuarios de un acta.")
+	public void eliminarUsuariosActa(long actaId) {
+		if(log.isInfoEnabled()) {
+			log.info("CallStoreProcedureImpl.eliminarUsuariosActa.INIT");			
+		}
+		StoredProcedureQuery storedProcedureQuery = em.createStoredProcedureQuery( "deleteallusuariosacta" );
+		storedProcedureQuery.registerStoredProcedureParameter("_actaid",Long.class, ParameterMode.IN);
+		storedProcedureQuery.setParameter("_actaid", actaId);
+		storedProcedureQuery.execute();
+		if(log.isInfoEnabled()) {
+			log.info("CallStoreProcedureImpl.eliminarUsuariosActa.SpEjecutado");
+			log.info("CallStoreProcedureImpl.eliminarUsuariosActa.FIN");
+		}
 	}
 
 }

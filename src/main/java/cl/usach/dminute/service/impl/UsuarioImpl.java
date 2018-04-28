@@ -77,9 +77,9 @@ public class UsuarioImpl implements UserDetailsService, UsuarioService {
 		}
 		Usuario retorno = usuarioJpa.findByUsername(username);
 		if(retorno == null){
-			throw new UsPersonException(Constants.ERROR_USUARIO_EXISTE_COD,"Invalid username.");
+			log.info("UsuarioImpl.findOne.ERROR: " + Constants.ERROR_USUARIO_EXISTE_COD + "Invalid username.");	
+			return null;
 		}
-		retorno.setPassword("");
 		if(log.isInfoEnabled()) {
 			log.info("UsuarioImpl.findOne.FIN: " + retorno.toString());
 		}

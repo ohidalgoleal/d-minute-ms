@@ -10,10 +10,14 @@ BEGIN
 		select asiste, 
 			secretario, 
 			usuario_username,
-            acta_acta_id
+            acta_acta_id,
+            usuario.nombre,
+            usuario.apellido
 		from usuario_acta  
 		inner join acta
 		on usuario_acta.acta_acta_id = acta.acta_id
+		inner join usuario
+        on usuario.username = usuario_acta.usuario_username
 		where acta.acta_id
 		in (
 			select distinct _acta.acta_id

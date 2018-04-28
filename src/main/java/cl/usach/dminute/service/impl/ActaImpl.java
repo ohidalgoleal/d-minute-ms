@@ -2,6 +2,8 @@ package cl.usach.dminute.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -9,13 +11,18 @@ import org.springframework.stereotype.Service;
 
 import cl.usach.dminute.dto.ActaDto;
 import cl.usach.dminute.dto.Constants;
+import cl.usach.dminute.dto.UsuarioActaDto;
 import cl.usach.dminute.entity.Acta;
 import cl.usach.dminute.entity.Proyecto;
+import cl.usach.dminute.entity.Usuario;
+import cl.usach.dminute.entity.UsuarioActa;
 import cl.usach.dminute.exception.ValidacionesException;
 import cl.usach.dminute.repository.ActaJpa;
 import cl.usach.dminute.repository.CallStoreProcedureImpl;
 import cl.usach.dminute.repository.ProyectoJpa;
 import cl.usach.dminute.service.ActaService;
+import cl.usach.dminute.service.UsuarioActaService;
+import cl.usach.dminute.service.UsuarioService;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -34,6 +41,14 @@ public class ActaImpl implements ActaService {
 	@Qualifier("callStoreProcedureImpl")
 	private CallStoreProcedureImpl callStoreProcedureImpl;
 	
+	@Autowired
+	@Qualifier("usuarioActaService")
+	private UsuarioActaService usuarioActaService;
+	
+	@Autowired
+	@Qualifier("usuarioService")
+	private UsuarioService usuarioService;
+	
 	@Override
 	public Acta guardarModificar(ActaDto guardar) {
 		if (log.isInfoEnabled()) {
@@ -41,6 +56,7 @@ public class ActaImpl implements ActaService {
 			log.info("ActaImpl.guardarModificarActa.acta: " + guardar.toString());
 		}
 		Acta acta = null;
+		List<UsuarioActaDto> listaUsuario = guardar.getUsuarioActa(); 
 		try {
 			if (proyectoJpa.findByProyectoId(guardar.getProyectoId()) != null) {
 				acta = new Acta();
@@ -55,7 +71,44 @@ public class ActaImpl implements ActaService {
 				acta = actaJpa.save(acta);
 			}			
 			if (acta == null)
-				throw new Exception();			
+				throw new Exception();
+			else {
+				if (log.isInfoEnabled()) {
+					log.info("ActaImpl.guardarModificarActa.acta: " + acta.toString());
+					log.info("ActaImpl.guardarModificarActa.eliminarUsuario");
+				}
+				usuarioActaService.delete(acta.getActaId());
+				if (log.isInfoEnabled()) {
+					log.info("ActaImpl.guardarModificarActa.recorriendoUsuarios");
+				}
+				for (UsuarioActaDto usuarioActaDto : listaUsuario) {
+					if (log.isInfoEnabled()) {
+						log.info("ActaImpl.guardarModificarActa.grabandoUsuario.INI");						
+					}
+					Usuario validacion = null;
+					try {
+						validacion = usuarioService.findOne(usuarioActaDto.getUsername());
+					} catch (Exception ex) {
+						if (log.isErrorEnabled()) {
+							log.info("ActaImpl.guardarModificarActa.grabandoUsuario.usuarioInvalido: " + usuarioActaDto.getUsername());
+						}
+					}
+					if (validacion != null) {
+						UsuarioActa usuarioActa = new UsuarioActa();
+						usuarioActa.setActa(acta);
+						usuarioActa.setAsiste(usuarioActaDto.getAsiste());
+						usuarioActa.setSecretario(usuarioActaDto.getSecretario());
+						usuarioActa.setUsuario(validacion);
+						if (log.isInfoEnabled()) {
+							log.info("ActaImpl.guardarModificarActa.grabandoUsuario: " + usuarioActa);						
+						}
+						usuarioActaService.save(usuarioActa);
+					}
+					if (log.isInfoEnabled()) {
+						log.info("ActaImpl.guardarModificarActa.grabandoUsuario.FIN");						
+					}						
+				}
+			}
 		} catch (Exception ex) {
 			if (log.isErrorEnabled()) {
 				log.info("ActaImpl.guardarModificarActa.ERROR - " + ex.getMessage());
@@ -102,10 +155,10 @@ public class ActaImpl implements ActaService {
 	}
 
 	@Override
-	public List<ActaDto> listarActa(long proyectoId) {
+	public List<ActaDto> listarActaProyecto(long proyectoId) {
 		if (log.isInfoEnabled()) {
-			log.info("ActaImpl.listarActa.INIT");
-			log.info("ActaImpl.listarActa.Proyecto: " + proyectoId);
+			log.info("ActaImpl.listarActaProyecto.INIT");
+			log.info("ActaImpl.listarActaProyecto.Proyecto: " + proyectoId);
 		}
 		List<ActaDto> listarActa = new ArrayList<ActaDto>();
 		try {
@@ -116,14 +169,49 @@ public class ActaImpl implements ActaService {
 			}				
 		} catch (Exception ex) {
 			if (log.isErrorEnabled()) {
-				log.info("ActaImpl.listarActa.ERROR - " + ex.getMessage());
+				log.info("ActaImpl.listarActaProyecto.ERROR - " + ex.getMessage());
 			}
 			throw ex;			
 		}
 		if (log.isInfoEnabled()) {
-			log.info("ActaImpl.listarActa.FIN");
+			log.info("ActaImpl.listarActaProyecto.FIN");
 		}
 		return listarActa;
+	}
+
+	@Override
+	public ActaDto getActa(long actaId) {
+		if (log.isInfoEnabled()) {
+			log.info("ActaImpl.getActa.INIT");
+			log.info("ActaImpl.getActa.Proyecto: " + actaId);
+		}
+		ActaDto actaDto = new ActaDto();
+		try {
+			Acta acta = actaJpa.findByActaId(actaId);
+			if (acta == null) 
+				throw new ValidacionesException(Constants.ERROR_TECNICO_GENERICO_COD, Constants.ERROR_ACTA_ERROR, null);
+			actaDto.setActaId(acta.getActaId());
+			actaDto.setCorrelativo(acta.getCorrelativo());
+			actaDto.setEstado(acta.getEstado());
+			actaDto.setFecha(acta.getFecha());
+			actaDto.setProyectoId(acta.getProyecto().getProyectoId());
+			actaDto.setResumen(acta.getResumen());
+			List<UsuarioActaDto> listaUsuarioActaResponse = callStoreProcedureImpl.buscarUsuarioActaProyectoAll(actaDto.getProyectoId());
+			List<UsuarioActaDto> validacion = listaUsuarioActaResponse.stream().filter(a -> Objects.equals(a.getActaId(), actaDto.getActaId() )).collect(Collectors.toList());
+			actaDto.setUsuarioActa(validacion);
+			if (log.isInfoEnabled()) {
+				log.info("ActaImpl.getActa.retorno:" + actaDto);
+			}
+		} catch (Exception ex) {
+			if (log.isErrorEnabled()) {
+				log.info("ActaImpl.getActa.ERROR - " + ex.getMessage());
+			}
+			throw ex;			
+		}
+		if (log.isInfoEnabled()) {
+			log.info("ActaImpl.getActa.FIN");
+		}
+		return actaDto;
 	}
 
 }

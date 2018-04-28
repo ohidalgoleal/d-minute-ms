@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import cl.usach.dminute.dto.ActaDto;
 import cl.usach.dminute.dto.SalidaDto;
+import cl.usach.dminute.dto.UsuarioActaDto;
 import cl.usach.dminute.service.ActaService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -61,15 +62,46 @@ public class ActaController {
 		if(log.isInfoEnabled()) {
 			log.info("ActaController.listarActaProyecto.INIT");
 			log.info("ActaController.listarActaProyecto.proyectoid:" + proyectoid);
-		}
-		
-		List<ActaDto> retorno = actaService.listarActa(proyectoid);		
+		}		
+		List<ActaDto> retorno = actaService.listarActaProyecto(proyectoid);		
 		
 		if(log.isInfoEnabled()) {
 			log.info("ActaController.listarActaProyecto.ListaActa: " + retorno.toString());
 			log.info("ActaController.listarActaProyecto.FIN");
 		}		
 		return retorno;
-	}	
+	}
+	
+	@GetMapping(value = "/getActa/{actaid}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ActaDto getActa(@PathVariable(value = "actaid") Long actaid) {
+		
+		if(log.isInfoEnabled()) {
+			log.info("ActaController.getActa.INIT");
+			log.info("ActaController.getActa.actaid:" + actaid);
+		}		
+		ActaDto retorno = actaService.getActa(actaid);		
+		
+		if(log.isInfoEnabled()) {
+			log.info("ActaController.listarActaProyecto.Acta: " + retorno.toString());
+			log.info("ActaController.listarActaProyecto.FIN");
+		}		
+		return retorno;
+	}
+	
+	@GetMapping(value = "/getUsuariosActa/{actaid}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<UsuarioActaDto> getUsuarioActa(@PathVariable(value = "actaid") Long actaid) {
+		
+		if(log.isInfoEnabled()) {
+			log.info("ActaController.getUsuarioActa.INIT");
+			log.info("ActaController.getUsuarioActa.actaid:" + actaid);
+		}		
+		List<UsuarioActaDto> retorno = actaService.getActa(actaid).getUsuarioActa();		
+		
+		if(log.isInfoEnabled()) {
+			log.info("ActaController.listarActaProyecto.Usuarios: " + retorno.toString());
+			log.info("ActaController.listarActaProyecto.FIN");
+		}		
+		return retorno;
+	}
 	
 }

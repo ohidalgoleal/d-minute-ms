@@ -16,6 +16,7 @@ public class UsuarioActaDto {
 	private String asiste;
 	private String secretario;
 	private String username;
+	private String nombre;
 	private long actaId;
 	
 

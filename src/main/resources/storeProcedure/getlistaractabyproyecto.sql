@@ -8,7 +8,8 @@ BEGIN
 		if exists(select * from proyecto where proyecto_id =  _proyectoid and estado = 'A') then 
 			select acta_id, 
 				fecha,  
-                resumen
+                resumen,
+                estado
             from acta where proyecto_proyecto_id = _proyectoid
             and estado = 'A'
             order by fecha desc;

@@ -8,5 +8,7 @@ import cl.usach.dminute.entity.Acta;
 
 public interface ActaJpa extends JpaRepository<Acta, Serializable> {
 	
+	public abstract Acta findByActaId(long actaId);
+	
 
 }

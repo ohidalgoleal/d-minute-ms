@@ -11,6 +11,8 @@ public interface ActaService {
 	
 	public abstract void eliminar(ActaDto guardar);
 	
-	public abstract List<ActaDto> listarActa(long proyectoId);
+	public abstract List<ActaDto> listarActaProyecto(long proyectoId);
+	
+	public abstract ActaDto getActa(long actaId);
 
 }

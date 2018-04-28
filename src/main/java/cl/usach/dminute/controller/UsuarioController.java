@@ -44,7 +44,9 @@ public class UsuarioController {
     	if(log.isInfoEnabled()) {
 			log.info("UsuarioController.getOne.INIT: " + username.toString());
 		}
-    	return usuarioService.findOne(username);
+    	Usuario retorno = usuarioService.findOne(username);
+    	retorno.setPassword("");
+    	return retorno;
     }
     
     @GetMapping(value="/logout", produces = MediaType.APPLICATION_JSON_VALUE)

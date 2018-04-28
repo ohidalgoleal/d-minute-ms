@@ -1,9 +1,9 @@
 USE `heroku_ddeb90f13531d40`;
-DROP procedure IF EXISTS `deleteallusuariosProyecto`;
+DROP procedure IF EXISTS `deleteallusuariosproyecto`;
 
 DELIMITER $$
 USE `heroku_ddeb90f13531d40`$$
-CREATE PROCEDURE `deleteallusuariosProyecto`(IN _proyectoid bigint(20))
+CREATE PROCEDURE `deleteallusuariosproyecto`(IN _proyectoid bigint(20))
 BEGIN
 	
 		if exists(select * from proyecto where proyecto_id =  _proyectoid) then 
