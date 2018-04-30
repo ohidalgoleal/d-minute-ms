@@ -21,6 +21,7 @@ import cl.usach.dminute.repository.ActaJpa;
 import cl.usach.dminute.repository.CallStoreProcedureImpl;
 import cl.usach.dminute.repository.ProyectoJpa;
 import cl.usach.dminute.service.ActaService;
+import cl.usach.dminute.service.TemaService;
 import cl.usach.dminute.service.UsuarioActaService;
 import cl.usach.dminute.service.UsuarioService;
 import lombok.extern.slf4j.Slf4j;
@@ -48,6 +49,10 @@ public class ActaImpl implements ActaService {
 	@Autowired
 	@Qualifier("usuarioService")
 	private UsuarioService usuarioService;
+	
+	@Autowired
+	@Qualifier("temaService")
+	private TemaService temaService;
 	
 	@Override
 	public Acta guardarModificar(ActaDto guardar) {
@@ -199,6 +204,7 @@ public class ActaImpl implements ActaService {
 			List<UsuarioActaDto> listaUsuarioActaResponse = callStoreProcedureImpl.buscarUsuarioActaProyectoAll(actaDto.getProyectoId());
 			List<UsuarioActaDto> validacion = listaUsuarioActaResponse.stream().filter(a -> Objects.equals(a.getActaId(), actaDto.getActaId() )).collect(Collectors.toList());
 			actaDto.setUsuarioActa(validacion);
+			actaDto.setTemaActa(temaService.listarTemaActa(actaId));
 			if (log.isInfoEnabled()) {
 				log.info("ActaImpl.getActa.retorno:" + actaDto);
 			}

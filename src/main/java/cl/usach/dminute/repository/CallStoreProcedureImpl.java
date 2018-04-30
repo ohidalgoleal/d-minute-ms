@@ -2,8 +2,6 @@ package cl.usach.dminute.repository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
 import javax.persistence.ParameterMode;
@@ -15,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import cl.usach.dminute.dto.ActaDto;
 
 import cl.usach.dminute.dto.ProyectoUsuariosDto;
+import cl.usach.dminute.dto.TemaDto;
 import cl.usach.dminute.dto.UsuarioActaDto;
 import cl.usach.dminute.entity.UsuarioProyecto;
 import cl.usach.dminute.util.Utilitario;
@@ -137,10 +136,6 @@ public class CallStoreProcedureImpl {
 			if(log.isInfoEnabled()) {
 				log.info("CallStoreProcedureImpl.buscarActasProyecto.usuaiosActa");			
 			}
-			List<UsuarioActaDto> listaUsuarioActaResponse = buscarUsuarioActaProyectoAll(proyectoId);
-			if(log.isInfoEnabled()) {
-				log.info("CallStoreProcedureImpl.buscarActasProyecto.usuaiosActa lista: " + listaUsuarioActaResponse.toString());			
-			}			
 			for (Object[] row : results) {
 				acta = new ActaDto();
 				j = j + 1;
@@ -151,8 +146,8 @@ public class CallStoreProcedureImpl {
 				acta.setResumen(row[2].toString());
 				acta.setEstado(row[3].toString());
 				acta.setProyectoId(proyectoId);				
-				List<UsuarioActaDto> validacion = listaUsuarioActaResponse.stream().filter(a -> Objects.equals(a.getActaId(), _acta )).collect(Collectors.toList());
-				acta.setUsuarioActa(validacion);
+				acta.setUsuarioActa(new ArrayList<UsuarioActaDto>());
+				acta.setTemaActa(new ArrayList<TemaDto>());
 				retorno.add(acta);
 			}
 		}

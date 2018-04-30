@@ -11,7 +11,9 @@ public class Constants {
 	public static final String ERROR_USUARIO_EXISTE = "El usuario que se intenta guardar ya esta registrado";
 	public static final String ERROR_USUARIO_INVALIDO = "El usuario no existe o su sesion a cadicado";
 	public static final String ERROR_PROYECTO_ERROR = "No ha sido posible guardar el proyecto, intenta mas tarde";
-	public static final String ERROR_ACTA_ERROR = "No ha sido posible guardar el acta asociada al proyecto, intenta mas tarde";	
+	public static final String ERROR_ACTA_ERROR = "No ha sido posible guardar el acta asociada al proyecto, intenta mas tarde";
+	public static final String ERROR_TEMA_DEL_ERROR = "No ha sido posible eliminar el tema asociada al acta, intenta mas tarde";
+	public static final String ERROR_TEMA_ERROR = "No ha sido posible guardar el tema asociada al acta, intenta mas tarde";
 	public static final String ERROR_PROYECTO_NOEXISTE = "El proyecto no existe, verifique";
 	public static final String ERROR_PROYECTO_NODUENO = "El proyecto no pertenece al usuario, verifique";
 	

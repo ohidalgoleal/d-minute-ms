@@ -23,5 +23,6 @@ public class ActaDto {
 	private String estado;
 	private long proyectoId;
 	private List<UsuarioActaDto> usuarioActa;
+	public List<TemaDto> temaActa;
 	
 }
