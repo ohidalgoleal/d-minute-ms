@@ -184,24 +184,27 @@ public class ActaImpl implements ActaService {
 		return listarActa;
 	}
 
-	@Override
+		@Override
 	public ActaDto getActa(long actaId) {
 		if (log.isInfoEnabled()) {
 			log.info("ActaImpl.getActa.INIT");
-			log.info("ActaImpl.getActa.Proyecto: " + actaId);
+			log.info("ActaImpl.getActa.NumeroActa: " + actaId);
 		}
 		ActaDto actaDto = new ActaDto();
 		try {
 			Acta acta = actaJpa.findByActaId(actaId);
 			if (acta == null) 
 				throw new ValidacionesException(Constants.ERROR_TECNICO_GENERICO_COD, Constants.ERROR_ACTA_ERROR, null);
+			if (log.isInfoEnabled()) {
+				log.info("ActaImpl.getActa.acta: " + acta.toString());
+			}
 			actaDto.setActaId(acta.getActaId());
 			actaDto.setCorrelativo(acta.getCorrelativo());
 			actaDto.setEstado(acta.getEstado());
 			actaDto.setFecha(acta.getFecha());
 			actaDto.setProyectoId(acta.getProyecto().getProyectoId());
 			actaDto.setResumen(acta.getResumen());
-			List<UsuarioActaDto> listaUsuarioActaResponse = callStoreProcedureImpl.buscarUsuarioActaProyectoAll(actaDto.getProyectoId());
+			List<UsuarioActaDto> listaUsuarioActaResponse = callStoreProcedureImpl.buscarUsuarioActaProyectoAll(acta.getProyecto().getProyectoId());
 			List<UsuarioActaDto> validacion = listaUsuarioActaResponse.stream().filter(a -> Objects.equals(a.getActaId(), actaDto.getActaId() )).collect(Collectors.toList());
 			actaDto.setUsuarioActa(validacion);
 			actaDto.setTemaActa(temaService.listarTemaActa(actaId));
