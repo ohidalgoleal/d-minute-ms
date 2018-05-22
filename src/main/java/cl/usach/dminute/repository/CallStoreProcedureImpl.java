@@ -161,19 +161,19 @@ public class CallStoreProcedureImpl {
 	@ApiOperation("Método encargado de listar los usuario de actas por proyecto.")
 	public List<UsuarioActaDto> buscarUsuarioActaProyectoAll(long proyectoId) {
 		if(log.isInfoEnabled()) {
-			log.info("CallStoreProcedureImpl.buscarUsuarioActaAll.INIT");			
+			log.info("CallStoreProcedureImpl.buscarUsuarioActaProyectoAll.INIT");			
 		}
 		StoredProcedureQuery storedProcedureQuery = em.createStoredProcedureQuery( "getlistaractausuariosbyproyecto" );
 		storedProcedureQuery.registerStoredProcedureParameter("_proyectoid",Long.class, ParameterMode.IN);
 		storedProcedureQuery.setParameter("_proyectoid", proyectoId);
 		storedProcedureQuery.execute();
 		if(log.isInfoEnabled()) {
-			log.info("CallStoreProcedureImpl.buscarUsuarioActaAll.SpEjecutado");			
+			log.info("CallStoreProcedureImpl.buscarUsuarioActaProyectoAll.SpEjecutado");			
 		}
 		@SuppressWarnings("unchecked")		
 		List<Object[]> results = storedProcedureQuery.getResultList();
 		if(log.isInfoEnabled()) {
-			log.info("CallStoreProcedureImpl.buscarUsuarioActaAll.listaUsuarios: " + results.size());			
+			log.info("CallStoreProcedureImpl.buscarUsuarioActaProyectoAll.listaUsuarios: " + results.size());			
 		}
 		List<UsuarioActaDto> retorno = null;
 		if (results != null) {
@@ -184,12 +184,12 @@ public class CallStoreProcedureImpl {
 				usuarioActa.setSecretario(row[1].toString());
 				usuarioActa.setUsername(row[2].toString());
 				usuarioActa.setActaId(Long.parseLong(row[3].toString()));
-				usuarioActa.setNombre(row[4].toString() + " " +  row[4].toString());
+				usuarioActa.setNombre(row[4].toString() + " " +  row[5].toString());
 				retorno.add(usuarioActa);
 			}
 		}
 		if(log.isInfoEnabled()) {
-			log.info("CallStoreProcedureImpl.buscarUsuarioActaAll.retorno: " + retorno.toString());
+			log.info("CallStoreProcedureImpl.buscarUsuarioActaProyectoAll.retorno: " + retorno.toString());
 			log.info("CallStoreProcedureImpl.buscarUsuarioActaAll.FIN");
 		}
 		return retorno;
