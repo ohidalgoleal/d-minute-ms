@@ -190,7 +190,7 @@ public class CallStoreProcedureImpl {
 		}
 		if(log.isInfoEnabled()) {
 			log.info("CallStoreProcedureImpl.buscarUsuarioActaProyectoAll.retorno: " + retorno.toString());
-			log.info("CallStoreProcedureImpl.buscarUsuarioActaAll.FIN");
+			log.info("CallStoreProcedureImpl.buscarUsuarioActaProyectoAll.FIN");
 		}
 		return retorno;
 	}

@@ -184,7 +184,7 @@ public class ActaImpl implements ActaService {
 		return listarActa;
 	}
 
-	@Override
+		@Override
 	public ActaDto getActa(long actaId) {
 		if (log.isInfoEnabled()) {
 			log.info("ActaImpl.getActa.INIT");
