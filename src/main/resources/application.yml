@@ -1,5 +1,25 @@
+# HTTP Server
+server:
+  port: ${PORT:8080}   # HTTP port
+  
+logging:
+  file: logs/${spring.application.name}.log
+  level:
+    com.netflix.discovery: 'OFF'
+    org.springframework.cloud: 'INFO'
+    org.springframework.web: 'INFO'
+    com.atsistemas: 'DEBUG'
+
+# Discovery Server Access
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_ENDPOINT}
+          
 #Spring properties 
-spring:  
+spring: 
+  application:
+    name: dminutems 
   aop:
     auto: true
     proxy-target-class: false
