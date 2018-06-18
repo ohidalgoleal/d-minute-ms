@@ -15,8 +15,6 @@ eureka:
   client:
     serviceUrl:
       defaultZone: ${EUREKA_ENDPOINT}
-  instance:
-    hostname: ${DOMAIN_NAME}
 
 #Spring properties 
 spring: 
@@ -64,3 +62,9 @@ security:
       service-id: resource
       prefer-token-info: true   
  
+---
+spring:
+  profiles: heroku
+eureka:
+  instance:
+    hostname: ${DOMAIN_NAME}
