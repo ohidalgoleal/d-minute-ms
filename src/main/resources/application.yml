@@ -17,6 +17,7 @@ eureka:
       defaultZone: ${EUREKA_ENDPOINT}
   instance:
     hostname: ${DOMAIN_NAME}
+    nonSecurePort: 80
 #Spring properties 
 spring: 
   application:
@@ -69,3 +70,4 @@ spring:
 eureka:
   instance:
     hostname: ${DOMAIN_NAME}
+    nonSecurePort: 80
