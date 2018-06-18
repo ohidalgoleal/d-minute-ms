@@ -1,8 +1,4 @@
 spring:
   application:
     name: dminutems
-  cloud:
-    config:
-      failFast: true
-      uri: ${CONFIG_SERVER_DMINUTE}
       
