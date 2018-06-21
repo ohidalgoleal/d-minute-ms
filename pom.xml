@@ -6,6 +6,7 @@
 	<groupId>cl.usach</groupId>
 	<artifactId>d-minute-ms</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
 
 	<name>d-minute-ms</name>
 	<description>Proyecto MS para D-Minute</description>
