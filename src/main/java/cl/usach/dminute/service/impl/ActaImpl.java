@@ -194,7 +194,7 @@ public class ActaImpl implements ActaService {
 		try {
 			Acta acta = actaJpa.findByActaId(actaId);
 			if (acta == null) 
-				throw new ValidacionesException(Constants.ERROR_TECNICO_GENERICO_COD, Constants.ERROR_ACTA_ERROR, null);
+				throw new ValidacionesException(Constants.ERROR_TECNICO_GENERICO_COD, Constants.ERROR_ACTA_NOEXISTE, null);
 			if (log.isInfoEnabled()) {
 				log.info("ActaImpl.getActa.acta: " + acta.toString());
 			}
