@@ -1,8 +1,8 @@
-USE `heroku_ddeb90f13531d40`;
+USE `heroku_8e6f58dd6a16279`;
 DROP procedure IF EXISTS `deleteallusuariosacta`;
 
 DELIMITER $$
-USE `heroku_ddeb90f13531d40`$$
+USE `heroku_8e6f58dd6a16279`$$
 CREATE PROCEDURE `deleteallusuariosacta`(IN _actaid bigint(20))
 BEGIN
 	
