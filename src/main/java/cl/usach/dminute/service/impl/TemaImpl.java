@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import cl.usach.dminute.dto.Constants;
+import cl.usach.dminute.dto.ElementoDialogoDto;
 import cl.usach.dminute.dto.TemaDto;
 import cl.usach.dminute.entity.Acta;
 import cl.usach.dminute.entity.Tema;
@@ -106,6 +107,19 @@ public class TemaImpl implements TemaService {
 				temaDto.setDiscusion(tema.getDiscusion());
 				temaDto.setId(tema.getId());
 				temaDto.setNombre(tema.getNombre());
+				if (log.isInfoEnabled()) {
+					log.info("TemaImpl.findByIdTema.Obtener elementos de dialogo");
+				}	
+				//TODO falta desarrollar esta seccoión
+				List<ElementoDialogoDto> listaElemento = new ArrayList<ElementoDialogoDto>();
+				ElementoDialogoDto elementoDialogoDto = new ElementoDialogoDto();
+				elementoDialogoDto.setCodRol("CO");
+				elementoDialogoDto.setIdElemento(12);
+				elementoDialogoDto.setDescripcion("MODIFICANDO ELEMENTO DE DIALOGO DEL TEMA 22, ACUERDO");
+				listaElemento.add(elementoDialogoDto);
+				temaDto.setElementoDialogoDto(listaElemento);
+				//TODO falta desarrollar esta seccoión
+				
 				lista.add(temaDto);
 			}						
 		} catch (Exception ex) {
@@ -119,6 +133,37 @@ public class TemaImpl implements TemaService {
 			log.info("TemaImpl.listarTemaActa.FIN");
 		}		
 		return lista;
+	}
+
+	@Override
+	public TemaDto findByIdTema(long temaId) {
+		if (log.isInfoEnabled()) {
+			log.info("TemaImpl.findByIdTema.INIT");
+			log.info("TemaImpl.findByIdTema.temaId: " + temaId);
+		}
+		TemaDto temaDto = null;
+		try {
+			Tema tema = temaJpa.findOne(temaId);
+			if (tema != null) {
+				temaDto = new TemaDto();
+				temaDto.setActaId(tema.getActa().getActaId());
+				temaDto.setDiscusion(tema.getDiscusion());
+				temaDto.setId(tema.getId());
+				temaDto.setNombre(tema.getNombre());
+				if (log.isInfoEnabled()) {
+					log.info("TemaImpl.findByIdTema.tema: " + temaDto.toString());
+				}	
+			}						
+		} catch (Exception ex) {
+			if (log.isErrorEnabled()) {
+				log.info("TemaImpl.findByIdTema.ERROR - " + ex.getMessage());
+			}
+			throw new ValidacionesException(Constants.ERROR_TECNICO_GENERICO_COD, Constants.ERROR_TECNICO_MENSAJE, null);
+		}
+		if (log.isInfoEnabled()) {
+			log.info("TemaImpl.findByIdTema.FIN");
+		}		
+		return temaDto;
 	}
 
 }

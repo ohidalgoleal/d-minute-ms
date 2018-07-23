@@ -32,7 +32,7 @@ public class ElementoDialogo {
 	private Date fechaCompromiso;
 	@Column(name = "descripcion")
 	private String descripcion;
-	@Column(name = "estado", length = 3)
+	@Column(name = "estado", length = 5) //TODO-DOING-DONE-DEL
 	private String estado;
 	@ManyToOne
 	private TipoElementoDialogo tipoElementoDialogo;

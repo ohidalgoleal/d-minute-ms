@@ -1,5 +1,7 @@
 package cl.usach.dminute.dto;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,5 +19,6 @@ public class TemaDto {
 	private String nombre;
 	private String discusion;
 	private long actaId;	
+	private List<ElementoDialogoDto> elementoDialogoDto;
 
 }

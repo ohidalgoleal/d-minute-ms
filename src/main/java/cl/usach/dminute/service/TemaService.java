@@ -11,5 +11,7 @@ public interface TemaService {
 	public abstract void eliminar(TemaDto guardar);
 	
 	public abstract List<TemaDto> listarTemaActa(long actaId);
+	
+	public abstract TemaDto findByIdTema(long temaId);
 
 }
