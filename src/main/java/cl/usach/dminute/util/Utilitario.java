@@ -41,9 +41,10 @@ public class Utilitario {
 		if (fechaStr != null) {
 			
 			try {
-				Locale spanishLocale=new Locale("es", "ES");
-				SimpleDateFormat formatoSpanish = new SimpleDateFormat("dd-MM-yyyy",spanishLocale);
-				Date date = formatoSpanish.parse(fechaStr);
+				SimpleDateFormat formatoDelTexto = new SimpleDateFormat("yyyy-MM-dd HH:mm",Locale.ENGLISH);
+				//Locale spanishLocale=new Locale("es", "ES");
+				//SimpleDateFormat formatoSpanish = new SimpleDateFormat("dd-MM-yyyy",spanishLocale);
+				Date date = formatoDelTexto.parse(fechaStr);
 			    log.info("[Utilitario][formatoFecha][fecha:]" + date);
 			   return date;
 			} catch (ParseException e) {
