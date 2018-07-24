@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -32,25 +33,24 @@ public class Utilitario {
 		return 0;
 	}
 
-	public static Date formatoFecha(String fechaNacimientoStr) {
+	public static Date formatoFecha(String fechaStr) {
 
-		log.info("[Utilitario][formatoFecha][INI][fecha de nacimiento en formato yyyyMMddHHmmss="
-				+ fechaNacimientoStr + "]");
+		log.info("[Utilitario][formatoFecha][INI][fecha en formato yyyyMMddHHmmss="
+				+ fechaStr + "]");
 
-		if (fechaNacimientoStr != null) {
-			SimpleDateFormat formato = new SimpleDateFormat("yyyyMMddHHmmss");
+		if (fechaStr != null) {
+			
 			try {
-				Date fechaNacimiento = formato.parse(fechaNacimientoStr);
-				Calendar c = new GregorianCalendar();
-				c.setTime(fechaNacimiento);
-				return c.getTime();
-
+				Locale spanishLocale=new Locale("es", "ES");
+				SimpleDateFormat formatoSpanish = new SimpleDateFormat("dd-MM-yyyy",spanishLocale);
+				Date date = formatoSpanish.parse(fechaStr);
+			    log.info("[Utilitario][formatoFecha][fecha:]" + date);
+			   return date;
 			} catch (ParseException e) {
 				log.error(
-						"[Utilitario][formatoFecha][FINEX][Error al calular la edad del cliente, se calcula en 0]");
+						"[Utilitario][formatoFecha][FINEX][Error al calular fecha]");
 			}
 		}
 		return null;
 	}
-
 }

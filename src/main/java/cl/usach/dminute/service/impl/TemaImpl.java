@@ -2,6 +2,8 @@ package cl.usach.dminute.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -15,6 +17,7 @@ import cl.usach.dminute.entity.Tema;
 import cl.usach.dminute.exception.ValidacionesException;
 import cl.usach.dminute.repository.ActaJpa;
 import cl.usach.dminute.repository.TemaJpa;
+import cl.usach.dminute.service.ElementoDialogoService;
 import cl.usach.dminute.service.TemaService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,6 +32,10 @@ public class TemaImpl implements TemaService {
 	@Autowired
 	@Qualifier("actaJpa")
 	private ActaJpa actaJpa;
+	
+	@Autowired
+	@Qualifier("elementoDialogoService")
+	private ElementoDialogoService elementoDialogoService;
 	
 	@Override
 	public TemaDto guardarModificar(TemaDto guardar) {
@@ -101,6 +108,11 @@ public class TemaImpl implements TemaService {
 				throw new Exception();
 			}
 			List<Tema> retorno = temaJpa.findByActaActaId(actaId);
+			List<ElementoDialogoDto> listaElementos = elementoDialogoService.getListaAllElementoDialogoActa(actaId);
+			if (log.isInfoEnabled()) {
+				log.info("TemaImpl.findByIdTema.listaRetornoElementos: + " + listaElementos);
+			}	
+			
 			for (Tema tema : retorno) {
 				TemaDto temaDto = new TemaDto();
 				temaDto.setActaId(tema.getActa().getActaId());
@@ -108,18 +120,10 @@ public class TemaImpl implements TemaService {
 				temaDto.setId(tema.getId());
 				temaDto.setNombre(tema.getNombre());
 				if (log.isInfoEnabled()) {
-					log.info("TemaImpl.findByIdTema.Obtener elementos de dialogo");
+					log.info("TemaImpl.findByIdTema.ObteniendoElementos.Tema: " + tema.getId());
 				}	
-				//TODO falta desarrollar esta seccoión
-				List<ElementoDialogoDto> listaElemento = new ArrayList<ElementoDialogoDto>();
-				ElementoDialogoDto elementoDialogoDto = new ElementoDialogoDto();
-				elementoDialogoDto.setCodRol("CO");
-				elementoDialogoDto.setIdElemento(12);
-				elementoDialogoDto.setDescripcion("MODIFICANDO ELEMENTO DE DIALOGO DEL TEMA 22, ACUERDO");
-				listaElemento.add(elementoDialogoDto);
-				temaDto.setElementoDialogoDto(listaElemento);
-				//TODO falta desarrollar esta seccoión
-				
+				List<ElementoDialogoDto> validacion = listaElementos.stream().filter(a -> Objects.equals(a.getTemaId(), tema.getId())).collect(Collectors.toList());
+				temaDto.setElementoDialogoDto(validacion);
 				lista.add(temaDto);
 			}						
 		} catch (Exception ex) {

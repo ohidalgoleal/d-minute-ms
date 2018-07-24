@@ -11,7 +11,7 @@ import javax.persistence.StoredProcedureQuery;
 import org.springframework.stereotype.Repository;
 
 import cl.usach.dminute.dto.ActaDto;
-
+import cl.usach.dminute.dto.ElementoDialogoDto;
 import cl.usach.dminute.dto.ProyectoUsuariosDto;
 import cl.usach.dminute.dto.TemaDto;
 import cl.usach.dminute.dto.UsuarioActaDto;
@@ -208,6 +208,45 @@ public class CallStoreProcedureImpl {
 			log.info("CallStoreProcedureImpl.eliminarUsuariosActa.SpEjecutado");
 			log.info("CallStoreProcedureImpl.eliminarUsuariosActa.FIN");
 		}
+	}
+	
+	@ApiOperation("Método encargado de listar todos los elementos de dialogo de un acta.")
+	public List<ElementoDialogoDto> buscarElementosDialogoTemasDeActaProyectoAll(long actaId) {
+		if(log.isInfoEnabled()) {
+			log.info("CallStoreProcedureImpl.buscarElementosDialogoTemasDeActaProyectoAll.INIT");			
+		}
+		StoredProcedureQuery storedProcedureQuery = em.createStoredProcedureQuery( "getelementosdialogoacta" );
+		storedProcedureQuery.registerStoredProcedureParameter("_actaid",Long.class, ParameterMode.IN);
+		storedProcedureQuery.setParameter("_actaid", actaId);
+		storedProcedureQuery.execute();
+		if(log.isInfoEnabled()) {
+			log.info("CallStoreProcedureImpl.buscarElementosDialogoTemasDeActaProyectoAll.SpEjecutado");			
+		}
+		@SuppressWarnings("unchecked")		
+		List<Object[]> results = storedProcedureQuery.getResultList();
+		if(log.isInfoEnabled()) {
+			log.info("CallStoreProcedureImpl.buscarElementosDialogoTemasDeActaProyectoAll.listaElementosDialogo: " + results.size());			
+		}
+		List<ElementoDialogoDto> retorno = null;
+		if (results != null) {
+			retorno= new ArrayList<ElementoDialogoDto>();
+			for (Object[] row : results) {
+				ElementoDialogoDto elementoDialogoDto = new ElementoDialogoDto();
+				elementoDialogoDto.setCodRol(row[0].toString());
+				elementoDialogoDto.setDescripcion(row[1].toString());
+				elementoDialogoDto.setEstado(row[2].toString());
+				elementoDialogoDto.setFechaCompromiso(Utilitario.formatoFecha(row[3].toString()));
+				elementoDialogoDto.setIdElemento(Long.parseLong(row[4].toString()));
+				elementoDialogoDto.setTemaId(Long.parseLong(row[5].toString()));
+				elementoDialogoDto.setUsername(row[6].toString());
+				retorno.add(elementoDialogoDto);
+			}
+		}
+		if(log.isInfoEnabled()) {
+			log.info("CallStoreProcedureImpl.buscarElementosDialogoTemasDeActaProyectoAll.retorno: " + retorno.toString());
+			log.info("CallStoreProcedureImpl.buscarElementosDialogoTemasDeActaProyectoAll.FIN");
+		}
+		return retorno;
 	}
 
 }

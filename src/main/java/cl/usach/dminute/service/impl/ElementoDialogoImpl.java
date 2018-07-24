@@ -1,5 +1,8 @@
 package cl.usach.dminute.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -11,6 +14,7 @@ import cl.usach.dminute.entity.Tema;
 import cl.usach.dminute.entity.TipoElementoDialogo;
 import cl.usach.dminute.entity.Usuario;
 import cl.usach.dminute.exception.ValidacionesException;
+import cl.usach.dminute.repository.CallStoreProcedureImpl;
 import cl.usach.dminute.repository.ElementoDialogoJpa;
 import cl.usach.dminute.service.ElementoDialogoService;
 import cl.usach.dminute.service.TemaService;
@@ -27,6 +31,10 @@ public class ElementoDialogoImpl implements ElementoDialogoService {
 	@Autowired
 	@Qualifier("temaService")
 	private TemaService temaService;
+	
+	@Autowired
+	@Qualifier("callStoreProcedureImpl")
+	private CallStoreProcedureImpl callStoreProcedureImpl;
 	
 	@Override
 	public ElementoDialogo guardarModificar(ElementoDialogoDto guardar) {
@@ -125,5 +133,27 @@ public class ElementoDialogoImpl implements ElementoDialogoService {
 			log.info("ElementoDialogoImpl.getElemento.FIN");
 		}
 		return elementoDialogoDto;
+	}
+
+	@Override
+	public List<ElementoDialogoDto> getListaAllElementoDialogoActa(long actaId) {
+		if (log.isInfoEnabled()) {
+			log.info("ElementoDialogoImpl.listaAllElementoDialogoActa.INIT");
+			log.info("ElementoDialogoImpl.listaAllElementoDialogoActa.idActa: " + actaId);
+		}
+		List<ElementoDialogoDto> lista = new ArrayList<ElementoDialogoDto>();
+		try {
+			lista=callStoreProcedureImpl.buscarElementosDialogoTemasDeActaProyectoAll(actaId);
+		} catch (Exception ex) {
+			if (log.isErrorEnabled()) {
+				log.info("ElementoDialogoImpl.listaAllElementoDialogoActa.ERROR - " + ex.getMessage());
+			}
+			throw ex;
+		}
+		if (log.isInfoEnabled()) {
+			log.info("ElementoDialogoImpl.listaAllElementoDialogoActa.lista: " + lista);
+			log.info("ElementoDialogoImpl.listaAllElementoDialogoActa.FIN");
+		}
+		return lista;
 	} 
 }
