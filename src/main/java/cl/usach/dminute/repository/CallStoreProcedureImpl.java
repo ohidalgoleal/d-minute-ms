@@ -233,7 +233,7 @@ public class CallStoreProcedureImpl {
 			for (Object[] row : results) {
 				ElementoDialogoDto elementoDialogoDto = new ElementoDialogoDto();
 				elementoDialogoDto.setCodRol(row[0].toString());
-				elementoDialogoDto.setDescripcion(row[1].toString());
+				elementoDialogoDto.setDescripcion(row[1].toString().substring(0, 50) + "...");
 				elementoDialogoDto.setEstado(row[2].toString());
 				elementoDialogoDto.setFechaCompromiso(Utilitario.formatoFecha(row[3].toString()));
 				elementoDialogoDto.setIdElemento(Long.parseLong(row[4].toString()));
