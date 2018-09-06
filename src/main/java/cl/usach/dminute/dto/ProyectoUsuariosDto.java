@@ -18,5 +18,6 @@ public class ProyectoUsuariosDto {
 	@JsonIgnore
 	private long proyectoId;
 	private String username;
+	private String nombre;
 
 }
