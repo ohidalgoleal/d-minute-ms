@@ -19,10 +19,12 @@ public class ActaDto {
 	private long actaId;
 	private Date fecha;
 	private String resumen;
+	private String horaInicio;
+	private String horaFin;
 	private long correlativo;	
 	private String estado;
 	private long proyectoId;
 	private List<UsuarioActaDto> usuarioActa;
 	public List<TemaDto> temaActa;
-	
+	public List<ElementoDialogoDto> tareaPendiente;	
 }
