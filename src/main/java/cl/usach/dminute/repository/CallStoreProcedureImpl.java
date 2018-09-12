@@ -231,13 +231,19 @@ public class CallStoreProcedureImpl {
 		List<ElementoDialogoDto> retorno = null;
 		if (results != null) {
 			retorno= new ArrayList<ElementoDialogoDto>();
+			int c = 50;
 			for (Object[] row : results) {
 				ElementoDialogoDto elementoDialogoDto = new ElementoDialogoDto();
 				elementoDialogoDto.setCodRol(row[0].toString());
-				elementoDialogoDto.setDescripcion(row[1].toString().substring(0, 50) + "...");
+				if (row[1].toString().length() < c){
+					elementoDialogoDto.setDescripcion(row[1].toString().substring(0, row[1].toString().length()) + "...");
+				}
+				else
+					elementoDialogoDto.setDescripcion(row[1].toString().substring(0, c) + "...");
 				elementoDialogoDto.setEstado(row[2].toString());
 				elementoDialogoDto.setFechaCompromiso(Utilitario.formatoFecha(row[3].toString()));
-				elementoDialogoDto.setIdElemento(Long.parseLong(row[4].toString()));
+				if (row[4] != null)
+					elementoDialogoDto.setIdElemento(Long.parseLong(row[4].toString()));
 				elementoDialogoDto.setTemaId(Long.parseLong(row[5].toString()));
 				elementoDialogoDto.setUsername(row[6].toString());
 				retorno.add(elementoDialogoDto);

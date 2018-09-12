@@ -17,7 +17,7 @@ BEGIN
 				el.tipo_elemento_dialogo_cod_rol,
 				el.usuario_username
 			FROM elemento_dialogo el
-            WHERE el.tema_id in (select acta_id from acta where acta_id =  _actaid)
+            WHERE el.tema_id in (select id from tema where acta_acta_id =  _actaid)
             AND el.estado <> "DEL"
             ORDER BY el.tema_id, el.id;
 

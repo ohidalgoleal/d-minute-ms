@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import cl.usach.dminute.dto.ElementoDialogoDto;
+import cl.usach.dminute.entity.*;
+import cl.usach.dminute.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -12,18 +15,10 @@ import org.springframework.stereotype.Service;
 import cl.usach.dminute.dto.ActaDto;
 import cl.usach.dminute.dto.Constants;
 import cl.usach.dminute.dto.UsuarioActaDto;
-import cl.usach.dminute.entity.Acta;
-import cl.usach.dminute.entity.Proyecto;
-import cl.usach.dminute.entity.Usuario;
-import cl.usach.dminute.entity.UsuarioActa;
 import cl.usach.dminute.exception.ValidacionesException;
 import cl.usach.dminute.repository.ActaJpa;
 import cl.usach.dminute.repository.CallStoreProcedureImpl;
 import cl.usach.dminute.repository.ProyectoJpa;
-import cl.usach.dminute.service.ActaService;
-import cl.usach.dminute.service.TemaService;
-import cl.usach.dminute.service.UsuarioActaService;
-import cl.usach.dminute.service.UsuarioService;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -53,6 +48,10 @@ public class ActaImpl implements ActaService {
 	@Autowired
 	@Qualifier("temaService")
 	private TemaService temaService;
+
+	@Autowired
+	@Qualifier("elementoDialogoService")
+	private ElementoDialogoService elementoDialogoService;
 	
 	@Override
 	public Acta guardarModificar(ActaDto guardar) {
@@ -206,6 +205,9 @@ public class ActaImpl implements ActaService {
 			actaDto.setResumen(acta.getResumen());
 			List<UsuarioActaDto> listaUsuarioActaResponse = callStoreProcedureImpl.buscarUsuarioActaProyectoAll(acta.getProyecto().getProyectoId());
 			List<UsuarioActaDto> validacion = listaUsuarioActaResponse.stream().filter(a -> Objects.equals(a.getActaId(), actaDto.getActaId() )).collect(Collectors.toList());
+			List<ElementoDialogoDto> elementoDialogoDto = elementoDialogoService.getListaAllElementoDialogoActa(acta.getActaId());
+			actaDto.setTareaPendiente(elementoDialogoDto);
+
 			actaDto.setUsuarioActa(validacion);
 			actaDto.setTemaActa(temaService.listarTemaActa(actaId));
 			if (log.isInfoEnabled()) {
