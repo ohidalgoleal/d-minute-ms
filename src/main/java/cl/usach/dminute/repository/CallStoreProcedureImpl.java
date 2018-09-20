@@ -1,6 +1,8 @@
 package cl.usach.dminute.repository;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -50,7 +52,7 @@ public class CallStoreProcedureImpl {
 			UsuarioProyecto usuarioProyecto = null;
 			for (Object[] row : results) {
 				usuarioProyecto = new UsuarioProyecto();
-				usuarioProyecto.getProyecto().setProyectoId(Long.parseLong(row[1].toString()));
+				usuarioProyecto.getProyecto().setProyectoId(Long.parseLong(row[0].toString()));
 				retorno.add(usuarioProyecto);
 			}
 		}
@@ -143,14 +145,20 @@ public class CallStoreProcedureImpl {
 				long  _acta = Long.parseLong(row[0].toString());
 				acta.setActaId(_acta);
 				acta.setCorrelativo(j);
-				acta.setFecha(Utilitario.formatoFecha(row[1].toString()));
+				Date createdDate = (Date) row[1];
+				acta.setFecha(Utilitario.formatoFecha(createdDate));
 				acta.setResumen(row[2].toString());
 				acta.setEstado(row[3].toString());
-				acta.setProyectoId(proyectoId);				
+				acta.setProyectoId(proyectoId);	
+				acta.setHoraInicio(row[4].toString());
+				acta.setHoraFin(row[5].toString());
+				Date order = Utilitario.formatoFechaHora(acta.getFecha() + " "  + acta.getHoraInicio());
+				acta.setOrdenFechaHora(order);
 				acta.setUsuarioActa(new ArrayList<UsuarioActaDto>());
 				acta.setTemaActa(new ArrayList<TemaDto>());
 				retorno.add(acta);
 			}
+			retorno.sort(Comparator.comparing(ActaDto::getOrdenFechaHora).reversed());
 		}
 		if(log.isInfoEnabled()) {
 			log.info("CallStoreProcedureImpl.buscarActasProyecto.retorno: " + retorno.toString());

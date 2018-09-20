@@ -54,8 +54,8 @@ public class ProyectoImpl implements ProyectoService {
 		Proyecto proyecto = new Proyecto();
 		try {
 			proyecto.setDescripcion(guardar.getDescripcion().toUpperCase());
-			proyecto.setFechaFin(guardar.getFechaFin());
-			proyecto.setFechaInicio(guardar.getFechaInicio());
+			proyecto.setFechaFin(Utilitario.formatoFecha(guardar.getFechaFin()));
+			proyecto.setFechaInicio(Utilitario.formatoFecha(guardar.getFechaInicio()));
 			proyecto.setNombre(guardar.getNombre().toUpperCase());
 			proyecto.setEstado(Constants.estadoActivo);
 			if (log.isInfoEnabled()) {
@@ -215,8 +215,8 @@ public class ProyectoImpl implements ProyectoService {
 					retorno.setDescripcion(proyecto.getDescripcion());
 					retorno.setNombre(proyecto.getNombre());
 					retorno.setProyectoId(proyecto.getProyectoId());
-					retorno.setFechaFin(Utilitario.formatoFecha(proyecto.getFechaFin().toString()));
-					retorno.setFechaInicio(Utilitario.formatoFecha(proyecto.getFechaInicio().toString()));
+					retorno.setFechaFin(Utilitario.formatoFecha(proyecto.getFechaFin()));
+					retorno.setFechaInicio(Utilitario.formatoFecha(proyecto.getFechaInicio()));
 					long proyectoid = proyecto.getProyectoId();
 					if (log.isInfoEnabled()) {
 						log.info("ProyectoImpl.buscarProyectosByUsuario.BuscarUsuarios.Proyecto: " + proyectoid);
@@ -242,10 +242,10 @@ public class ProyectoImpl implements ProyectoService {
 		}
 		Proyecto proyecto = new Proyecto();
 		try {
-			proyecto.setDescripcion(guardar.getDescripcion());
-			proyecto.setFechaFin(guardar.getFechaFin());
-			proyecto.setFechaInicio(guardar.getFechaInicio());
-			proyecto.setNombre(guardar.getNombre());
+			proyecto.setDescripcion(guardar.getDescripcion().toUpperCase());
+			proyecto.setFechaFin(Utilitario.formatoFecha(guardar.getFechaFin()));
+			proyecto.setFechaInicio(Utilitario.formatoFecha(guardar.getFechaInicio()));
+			proyecto.setNombre(guardar.getNombre().toUpperCase());
 			proyecto.setProyectoId(guardar.getProyectoId());
 			if (log.isInfoEnabled()) {
 				log.info("ProyectoImpl.editarProyecto.modificando...:" + proyecto.toString());

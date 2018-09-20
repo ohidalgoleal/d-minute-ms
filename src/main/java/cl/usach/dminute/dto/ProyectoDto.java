@@ -1,6 +1,5 @@
 package cl.usach.dminute.dto;
 
-import java.util.Date;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -19,8 +18,8 @@ public class ProyectoDto {
 	private long proyectoId;
 	private String nombre;
 	private String descripcion;
-	private Date fechaInicio;
-	private Date fechaFin;	
+	private String fechaInicio;
+	private String fechaFin;	
 	private List<ProyectoUsuariosDto> usuariosNuevoProyecto;
 
 }

@@ -9,7 +9,9 @@ BEGIN
 			select acta_id, 
 				fecha,  
                 resumen,
-                estado
+                estado,
+                hora_incio,
+                hora_fin
             from acta where proyecto_proyecto_id = _proyectoid
             and estado = 'A'
             order by fecha desc;

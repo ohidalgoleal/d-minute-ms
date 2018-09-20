@@ -45,7 +45,7 @@ public class BffController {
 			retorno.setListaActa(actaController.listarActaProyecto(proyectoid));
 			
 			if (retorno.getListaActa().size()>0) {
-				retorno.setActaDto(retorno.getListaActa().get(0));
+				retorno.setActaDto(actaController.getActa(retorno.getListaActa().get(0).getActaId()));
 			}
 		}
 			

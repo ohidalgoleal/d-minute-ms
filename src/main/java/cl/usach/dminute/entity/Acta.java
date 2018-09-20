@@ -32,6 +32,10 @@ public class Acta {
 	private long actaId;
 	@Column(name = "fecha")
 	private Date fecha;
+	@Column(name = "horaIncio")
+	private String horaIncio;
+	@Column(name = "horaFin")
+	private String horaFin;
 	@Column(name = "resumen")
 	private String resumen;
 	@Column(name = "correlativo")

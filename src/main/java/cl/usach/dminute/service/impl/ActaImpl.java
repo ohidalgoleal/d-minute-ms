@@ -8,6 +8,8 @@ import java.util.stream.Collectors;
 import cl.usach.dminute.dto.ElementoDialogoDto;
 import cl.usach.dminute.entity.*;
 import cl.usach.dminute.service.*;
+import cl.usach.dminute.util.Utilitario;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -67,7 +69,9 @@ public class ActaImpl implements ActaService {
 				acta.setActaId(guardar.getActaId());
 				acta.setCorrelativo(guardar.getCorrelativo());
 				acta.setEstado(Constants.estadoActivo);
-				acta.setFecha(guardar.getFecha());
+				acta.setFecha(Utilitario.formatoFecha(guardar.getFecha()));
+				acta.setHoraIncio(guardar.getHoraInicio());
+				acta.setHoraFin(guardar.getHoraFin());
 				Proyecto _pry = new Proyecto();
 				_pry.setProyectoId(guardar.getProyectoId());
 				acta.setProyecto(_pry);
@@ -138,7 +142,7 @@ public class ActaImpl implements ActaService {
 				acta.setActaId(guardar.getActaId());
 				acta.setCorrelativo(guardar.getCorrelativo());
 				acta.setEstado(Constants.estadoBloqueado);
-				acta.setFecha(guardar.getFecha());
+				acta.setFecha(Utilitario.formatoFecha(guardar.getFecha()));
 				Proyecto _pry = new Proyecto();
 				_pry.setProyectoId(guardar.getProyectoId());
 				acta.setProyecto(_pry);
@@ -200,9 +204,11 @@ public class ActaImpl implements ActaService {
 			actaDto.setActaId(acta.getActaId());
 			actaDto.setCorrelativo(acta.getCorrelativo());
 			actaDto.setEstado(acta.getEstado());
-			actaDto.setFecha(acta.getFecha());
+			actaDto.setFecha(Utilitario.formatoFecha(acta.getFecha()));
 			actaDto.setProyectoId(acta.getProyecto().getProyectoId());
 			actaDto.setResumen(acta.getResumen());
+			actaDto.setHoraInicio(acta.getHoraIncio());
+			actaDto.setHoraFin(acta.getHoraFin());
 			List<UsuarioActaDto> listaUsuarioActaResponse = callStoreProcedureImpl.buscarUsuarioActaProyectoAll(acta.getProyecto().getProyectoId());
 			List<UsuarioActaDto> validacion = listaUsuarioActaResponse.stream().filter(a -> Objects.equals(a.getActaId(), actaDto.getActaId() )).collect(Collectors.toList());
 			List<ElementoDialogoDto> elementoDialogoDto = elementoDialogoService.getListaAllElementoDialogoActa(acta.getActaId());
