@@ -104,6 +104,7 @@ public class CallStoreProcedureImpl {
 				usuarioProyecto.setProyectoId(Long.parseLong(row[1].toString()));
 				usuarioProyecto.setUsername(row[2].toString());
 				usuarioProyecto.setNombre(row[3].toString() + " " +  row[4].toString());
+				usuarioProyecto.setFullName(row[3].toString() + " " +  row[4].toString());
 				retorno.add(usuarioProyecto);
 			}
 		}

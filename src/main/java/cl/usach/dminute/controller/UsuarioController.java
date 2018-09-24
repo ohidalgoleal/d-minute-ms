@@ -36,7 +36,7 @@ public class UsuarioController {
     	if(log.isInfoEnabled()) {
 			log.info("UsuarioController.listUser.INIT");
 		}
-        return usuarioService.findAll();
+    	return usuarioService.findAll();	
     }
 
     @GetMapping(value = "/user", produces = MediaType.APPLICATION_JSON_VALUE)

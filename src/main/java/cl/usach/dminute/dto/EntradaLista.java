@@ -1,7 +1,5 @@
 package cl.usach.dminute.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,12 +11,9 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class ProyectoUsuariosDto {
-	
-	@JsonIgnore
-	private long proyectoId;
-	private String username;
-	private String nombre;
-	private String fullName;
+public class EntradaLista {
+
+    private String tipo; //PROY-ACTA-TODO
+    private long numero;
 
 }
