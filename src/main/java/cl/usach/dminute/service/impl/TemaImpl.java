@@ -51,6 +51,7 @@ public class TemaImpl implements TemaService {
 				nuevo.setActa(acta);
 				nuevo.setDiscusion(guardar.getDiscusion().toUpperCase());
 				nuevo.setNombre(guardar.getNombre().toUpperCase());
+				nuevo.setEstado(Constants.estadoActivo);
 				nuevo = temaJpa.save(nuevo);
 				guardar.setId(nuevo.getId());
 			}else {
@@ -78,8 +79,10 @@ public class TemaImpl implements TemaService {
 			Acta acta = actaJpa.findByActaId(guardar.getActaId());
 			if (acta != null) {
 				Tema delete = temaJpa.findOne(guardar.getId());
-				if (delete != null)
-					temaJpa.delete(delete);
+				if (delete != null) {
+					delete.setEstado(Constants.estadoBloqueado);
+					temaJpa.save(delete);
+				}	
 				else
 					throw new Exception();
 			}else
@@ -114,17 +117,19 @@ public class TemaImpl implements TemaService {
 			}	
 			
 			for (Tema tema : retorno) {
-				TemaDto temaDto = new TemaDto();
-				temaDto.setActaId(tema.getActa().getActaId());
-				temaDto.setDiscusion(tema.getDiscusion());
-				temaDto.setId(tema.getId());
-				temaDto.setNombre(tema.getNombre());
-				if (log.isInfoEnabled()) {
-					log.info("TemaImpl.findByIdTema.ObteniendoElementos.Tema: " + tema.getId());
-				}	
-				List<ElementoDialogoDto> validacion = listaElementos.stream().filter(a -> Objects.equals(a.getTemaId(), tema.getId())).collect(Collectors.toList());
-				temaDto.setElementoDialogoDto(validacion);
-				lista.add(temaDto);
+				if (tema.getEstado().equalsIgnoreCase(Constants.estadoActivo)) {
+					TemaDto temaDto = new TemaDto();
+					temaDto.setActaId(tema.getActa().getActaId());
+					temaDto.setDiscusion(tema.getDiscusion());
+					temaDto.setId(tema.getId());
+					temaDto.setNombre(tema.getNombre());
+					if (log.isInfoEnabled()) {
+						log.info("TemaImpl.findByIdTema.ObteniendoElementos.Tema: " + tema.getId());
+					}	
+					List<ElementoDialogoDto> validacion = listaElementos.stream().filter(a -> Objects.equals(a.getTemaId(), tema.getId())).collect(Collectors.toList());
+					temaDto.setElementoDialogoDto(validacion);
+					lista.add(temaDto);
+				}
 			}						
 		} catch (Exception ex) {
 			if (log.isErrorEnabled()) {

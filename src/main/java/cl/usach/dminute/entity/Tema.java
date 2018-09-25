@@ -32,5 +32,7 @@ public class Tema {
 	private String discusion;
 	@ManyToOne
 	private Acta acta;	
+	@Column(name = "estado", length = 1)
+	private String estado;
 	
 }
