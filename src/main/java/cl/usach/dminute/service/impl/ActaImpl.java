@@ -147,6 +147,8 @@ public class ActaImpl implements ActaService {
 				_pry.setProyectoId(guardar.getProyectoId());
 				acta.setProyecto(_pry);
 				acta.setResumen(guardar.getResumen());				
+				acta.setHoraIncio(guardar.getHoraInicio());
+				acta.setHoraFin(guardar.getHoraFin());
 				acta = actaJpa.save(acta);
 			}
 			if (acta == null)

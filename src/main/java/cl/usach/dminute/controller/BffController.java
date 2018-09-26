@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import cl.usach.dminute.dto.ActaDto;
 import cl.usach.dminute.dto.EntradaLista;
+import cl.usach.dminute.dto.EstadoElemento;
 import cl.usach.dminute.dto.ListarActaDialogica;
 import cl.usach.dminute.dto.ProyectoDto;
 import cl.usach.dminute.dto.ProyectoUsuariosDto;
@@ -53,10 +54,18 @@ public class BffController {
 		
 		ProyectoDto proyectoDto = proyectoController.proyectoById(proyectoid, request);
 		
+		if(log.isInfoEnabled()) {
+			log.info("BffController.listarMinutaProyectoById.proyectoDto:" + proyectoDto.toString());
+		}
+		
 		if (proyectoDto != null){
 			retorno.setProyectoDto(proyectoDto);
 			
 			retorno.setListaActa(actaController.listarActaProyecto(proyectoid));
+			
+			if(log.isInfoEnabled()) {
+				log.info("BffController.listarMinutaProyectoById.retorno:" + retorno.toString());
+			}
 			
 			if (retorno.getListaActa().size()>0) {
 				ActaDto actaDto = actaController.getActa(retorno.getListaActa().get(0).getActaId());
@@ -87,9 +96,10 @@ public class BffController {
 	}
 	
     @PostMapping(value="/listaUsuarioFiltro", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Usuario> listUser(@RequestBody EntradaLista entradaLista, HttpServletRequest request){
+    public List<Usuario> listaUsuarioFiltro(@RequestBody EntradaLista entradaLista, HttpServletRequest request){
     	if(log.isInfoEnabled()) {
-			log.info("UsuarioController.listUser.INIT");
+			log.info("BffController.listaUsuarioFiltro.INIT");
+			log.info("BffController.listaUsuarioFiltro.entradaLista:" + entradaLista.toString());
 		}
     	List<Usuario> listaRespuesta = usuarioController.listUser();
     	List<Usuario> listaRetorno = new ArrayList<Usuario>();
@@ -111,7 +121,41 @@ public class BffController {
     	else{
     		listaRetorno = listaRespuesta; 
     	}
-    		
+    	
+    	if(log.isInfoEnabled()) {
+			log.info("BffController.listaUsuarioFiltro.retorno:" + listaRetorno.toString());
+			log.info("BffController.listaUsuarioFiltro.FIN");
+		}	
+    	return listaRetorno;
+    }
+    
+    @GetMapping(value="/estadoElemento", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<EstadoElemento> estadoElemento(){
+    	if(log.isInfoEnabled()) {
+			log.info("BffController.estadoElemento.INIT");
+		}
+    	List<EstadoElemento> listaRetorno = new ArrayList<EstadoElemento>();
+    	EstadoElemento estadoElemento = new EstadoElemento();
+    	estadoElemento.setEstado("TODO");
+    	estadoElemento.setDetalle("PENDIENTE POR ASIGNAR");
+    	listaRetorno.add(estadoElemento);
+    	estadoElemento = new EstadoElemento();
+    	estadoElemento.setEstado("DOING");
+    	estadoElemento.setDetalle("ASIGNADO");
+    	listaRetorno.add(estadoElemento);
+    	estadoElemento = new EstadoElemento();
+    	estadoElemento.setEstado("DONE");
+    	estadoElemento.setDetalle("COMPLETADO");
+    	listaRetorno.add(estadoElemento);
+    	estadoElemento = new EstadoElemento();
+    	estadoElemento.setEstado("DELE");
+    	estadoElemento.setDetalle("ELIMINADO");
+    	listaRetorno.add(estadoElemento);
+    	
+    	if(log.isInfoEnabled()) {
+			log.info("BffController.estadoElemento.retorno:" + listaRetorno.toString());
+			log.info("BffController.estadoElemento.FIN");
+		}	
     	return listaRetorno;
     }
 	
