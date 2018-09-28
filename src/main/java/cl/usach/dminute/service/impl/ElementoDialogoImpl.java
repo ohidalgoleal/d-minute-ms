@@ -18,6 +18,7 @@ import cl.usach.dminute.repository.CallStoreProcedureImpl;
 import cl.usach.dminute.repository.ElementoDialogoJpa;
 import cl.usach.dminute.service.ElementoDialogoService;
 import cl.usach.dminute.service.TemaService;
+import cl.usach.dminute.util.Utilitario;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -50,7 +51,7 @@ public class ElementoDialogoImpl implements ElementoDialogoService {
 				elementoDialogo.setDescripcion(guardar.getDescripcion().toUpperCase());
 				elementoDialogo.setElementoDialogo(null);
 				elementoDialogo.setEstado(guardar.getEstado());
-				elementoDialogo.setFechaCompromiso(guardar.getFechaCompromiso());
+				elementoDialogo.setFechaCompromiso(Utilitario.formatoFecha(guardar.getFechaCompromiso()));
 				elementoDialogo.setId(guardar.getIdElemento());
 				Tema tema = new Tema();
 				tema.setId(guardar.getTemaId());
@@ -118,7 +119,7 @@ public class ElementoDialogoImpl implements ElementoDialogoService {
 				elementoDialogoDto.setCodRol(elementoDialogo.getTipoElementoDialogo().getCodRol());
 				elementoDialogoDto.setDescripcion(elementoDialogo.getDescripcion());
 				elementoDialogoDto.setEstado(elementoDialogo.getEstado());
-				elementoDialogoDto.setFechaCompromiso(elementoDialogo.getFechaCompromiso());
+				elementoDialogoDto.setFechaCompromiso(Utilitario.formatoFecha(elementoDialogo.getFechaCompromiso()));
 				elementoDialogoDto.setIdElemento(elementoId);
 				elementoDialogoDto.setTemaId(elementoDialogo.getTema().getId());
 				elementoDialogoDto.setUsername(elementoDialogo.getUsuario().getUsername());

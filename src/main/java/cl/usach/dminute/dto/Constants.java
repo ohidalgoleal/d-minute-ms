@@ -24,7 +24,7 @@ public class Constants {
 	public static final String ERROR_USUARIO_EXISTE_COD = "002";
 	public static final String estadoActivo = "A";
 	public static final String estadoBloqueado = "B";
-	public static final String estadoEliminadoElementoDialogo = "DEL";
+	public static final String estadoEliminadoElementoDialogo = "DELE";
 	
 	
 }

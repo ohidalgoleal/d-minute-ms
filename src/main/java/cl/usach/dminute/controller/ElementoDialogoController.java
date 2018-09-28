@@ -56,7 +56,7 @@ public class ElementoDialogoController {
 	}
 	
 	@GetMapping(value = "/getElementoDialogoTema/{elementoid}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ElementoDialogoDto getActa(@PathVariable(value = "elementoid") Long elementoid) {
+    public ElementoDialogoDto getElementoDialogoTema(@PathVariable(value = "elementoid") Long elementoid) {
 		
 		if(log.isInfoEnabled()) {
 			log.info("ElementoDialogoController.getElemento.INIT");

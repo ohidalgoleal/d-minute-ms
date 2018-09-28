@@ -28,7 +28,7 @@ public class Tema {
 	private long id;
 	@Column(name = "nombre", length = 60)
 	private String nombre;
-	@Column(name = "discusion", length = 500)
+	@Column(name = "discusion", length = 2000)
 	private String discusion;
 	@ManyToOne
 	private Acta acta;	

@@ -1,7 +1,5 @@
 package cl.usach.dminute.dto;
 
-import java.util.Date;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,7 +14,7 @@ import lombok.ToString;
 public class ElementoDialogoDto {
 
 	private long idElemento;
-	private Date fechaCompromiso;
+	private String fechaCompromiso;
 	private String descripcion;
 	private String estado; //TODO-DOING-DONE-DEL
 	private String username;

@@ -69,5 +69,22 @@ public class TemaController {
 			log.info("TemaController.listarTemaActa.FIN");
 		}		
 		return retorno;
+	}
+	
+	@GetMapping(value = "/getTema/{temaid}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public TemaDto getTema(@PathVariable(value = "temaid") Long temaid) {
+		
+		if(log.isInfoEnabled()) {
+			log.info("TemaController.getTema.INIT");
+			log.info("TemaController.getTema.temaid:" + temaid);
+		}		
+		
+		TemaDto retorno = temaService.findByIdTema(temaid);		
+		
+		if(log.isInfoEnabled()) {
+			log.info("TemaController.getTema.TemaDto: " + retorno.toString());
+			log.info("TemaController.getTema.FIN");
+		}		
+		return retorno;
 	}	
 }

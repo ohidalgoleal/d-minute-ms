@@ -16,11 +16,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import cl.usach.dminute.dto.ActaDto;
+import cl.usach.dminute.dto.ElementoDialogoDto;
 import cl.usach.dminute.dto.EntradaLista;
 import cl.usach.dminute.dto.EstadoElemento;
 import cl.usach.dminute.dto.ListarActaDialogica;
 import cl.usach.dminute.dto.ProyectoDto;
 import cl.usach.dminute.dto.ProyectoUsuariosDto;
+import cl.usach.dminute.dto.TemaDto;
 import cl.usach.dminute.dto.UsuarioActaDto;
 import cl.usach.dminute.entity.Usuario;
 import lombok.extern.slf4j.Slf4j;
@@ -41,6 +43,14 @@ public class BffController {
 	@Autowired
 	@Qualifier("usuarioController")
 	private UsuarioController usuarioController;
+	
+	@Autowired
+	@Qualifier("elementoDialogoController")
+	private ElementoDialogoController elementoDialogoController;
+	
+	@Autowired
+	@Qualifier("temaController")
+	private TemaController temaController;
 	
 	@GetMapping(value = "/listarMinutaProyecto/{proyectoid}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ListarActaDialogica listarMinutaProyectoById(@PathVariable(value = "proyectoid") Long proyectoid, HttpServletRequest request) {
@@ -157,6 +167,29 @@ public class BffController {
 			log.info("BffController.estadoElemento.FIN");
 		}	
     	return listaRetorno;
+    }
+    
+    @GetMapping(value="/listaActaFiltroElemento/{elementoId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ActaDto listaActaFiltroElemento(@PathVariable(value = "elementoId") Long elementoId){
+    	if(log.isInfoEnabled()) {
+			log.info("BffController.listaActaFiltroElemento.INIT");
+			log.info("BffController.listaActaFiltroElemento.actaid:" + elementoId);
+		}
+    	ElementoDialogoDto elementoDialogoDto = elementoDialogoController.getElementoDialogoTema(elementoId);
+    	TemaDto temaDto = temaController.getTema(elementoDialogoDto.getTemaId());
+    	ActaDto actaDto = actaController.getActa(temaDto.getActaId());
+    	List<TemaDto> listaTema = new ArrayList<TemaDto>();
+    	List<ElementoDialogoDto> listaElemento = new ArrayList<ElementoDialogoDto>();
+    	listaElemento.add(elementoDialogoDto);
+    	temaDto.setElementoDialogoDto(listaElemento);
+    	listaTema.add(temaDto);
+    	actaDto.setTemaActa(listaTema);
+
+    	if(log.isInfoEnabled()) {
+			log.info("BffController.listaActaFiltroElemento.retorno:" + actaDto.toString());
+			log.info("BffController.listaActaFiltroElemento.FIN");
+		}	
+    	return actaDto;
     }
 	
 }

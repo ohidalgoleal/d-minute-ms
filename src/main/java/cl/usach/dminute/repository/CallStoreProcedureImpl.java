@@ -13,6 +13,7 @@ import javax.persistence.StoredProcedureQuery;
 import org.springframework.stereotype.Repository;
 
 import cl.usach.dminute.dto.ActaDto;
+import cl.usach.dminute.dto.Constants;
 import cl.usach.dminute.dto.ElementoDialogoDto;
 import cl.usach.dminute.dto.ProyectoUsuariosDto;
 import cl.usach.dminute.dto.TemaDto;
@@ -242,20 +243,21 @@ public class CallStoreProcedureImpl {
 			retorno= new ArrayList<ElementoDialogoDto>();
 			int c = 50;
 			for (Object[] row : results) {
-				ElementoDialogoDto elementoDialogoDto = new ElementoDialogoDto();
-				elementoDialogoDto.setCodRol(row[0].toString());
-				if (row[1].toString().length() < c){
-					elementoDialogoDto.setDescripcion(row[1].toString().substring(0, row[1].toString().length()) + "...");
+				if (!row[2].toString().equalsIgnoreCase(Constants.estadoEliminadoElementoDialogo)){
+					ElementoDialogoDto elementoDialogoDto = new ElementoDialogoDto();
+					elementoDialogoDto.setIdElemento(Long.parseLong(row[0].toString()));
+					Date createdDate = (Date) row[3];
+					elementoDialogoDto.setFechaCompromiso(Utilitario.formatoFecha(createdDate));
+					if (row[1].toString().length() < c)
+						elementoDialogoDto.setDescripcion(row[1].toString().substring(0, row[1].toString().length()) + "...");
+					else
+						elementoDialogoDto.setDescripcion(row[1].toString().substring(0, c) + "...");
+					elementoDialogoDto.setEstado(row[2].toString());
+					elementoDialogoDto.setCodRol(row[6].toString());
+					elementoDialogoDto.setTemaId(Long.parseLong(row[5].toString()));
+					elementoDialogoDto.setUsername(row[7].toString());
+					retorno.add(elementoDialogoDto);
 				}
-				else
-					elementoDialogoDto.setDescripcion(row[1].toString().substring(0, c) + "...");
-				elementoDialogoDto.setEstado(row[2].toString());
-				elementoDialogoDto.setFechaCompromiso(Utilitario.formatoFecha(row[3].toString()));
-				if (row[4] != null)
-					elementoDialogoDto.setIdElemento(Long.parseLong(row[4].toString()));
-				elementoDialogoDto.setTemaId(Long.parseLong(row[5].toString()));
-				elementoDialogoDto.setUsername(row[6].toString());
-				retorno.add(elementoDialogoDto);
 			}
 		}
 		if(log.isInfoEnabled()) {

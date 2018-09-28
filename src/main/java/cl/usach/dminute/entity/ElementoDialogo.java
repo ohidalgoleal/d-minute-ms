@@ -30,7 +30,7 @@ public class ElementoDialogo {
 	private long id;
 	@Column(name = "fechaCompromiso")
 	private Date fechaCompromiso;
-	@Column(name = "descripcion")
+	@Column(name = "descripcion", length = 1000)
 	private String descripcion;
 	@Column(name = "estado", length = 5) //TODO-DOING-DONE-DEL
 	private String estado;
