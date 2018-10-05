@@ -28,4 +28,5 @@ public class ActaDto {
 	private List<UsuarioActaDto> usuarioActa;
 	public List<TemaDto> temaActa;
 	public List<ElementoDialogoDto> tareaPendiente;	
+	private String username;
 }

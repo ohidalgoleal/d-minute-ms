@@ -1,8 +1,8 @@
-USE `heroku_8e6f58dd6a16279`;
+USE `heroku_97b21c584329283`;
 DROP procedure IF EXISTS `deleteallusuariosproyecto`;
 
 DELIMITER $$
-USE `heroku_8e6f58dd6a16279`$$
+USE `heroku_97b21c584329283`$$
 CREATE PROCEDURE `deleteallusuariosproyecto`(IN _proyectoid bigint(20))
 BEGIN
 	

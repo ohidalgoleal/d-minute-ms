@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -37,4 +38,6 @@ public class Proyecto {
 	private Date fechaFin;
 	@Column(name = "estado", length = 1)
 	private String estado;
+	@ManyToOne
+	private Usuario usuario;
 }

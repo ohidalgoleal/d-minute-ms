@@ -177,7 +177,7 @@ public class BffController {
 		}
     	ElementoDialogoDto elementoDialogoDto = elementoDialogoController.getElementoDialogoTema(elementoId);
     	TemaDto temaDto = temaController.getTema(elementoDialogoDto.getTemaId());
-    	ActaDto actaDto = actaController.getActa(temaDto.getActaId());
+    	ActaDto actaDto = actaController.getActaId(temaDto.getActaId());
     	List<TemaDto> listaTema = new ArrayList<TemaDto>();
     	List<ElementoDialogoDto> listaElemento = new ArrayList<ElementoDialogoDto>();
     	listaElemento.add(elementoDialogoDto);

@@ -88,6 +88,22 @@ public class ActaController {
 		return retorno;
 	}
 	
+	@GetMapping(value = "/getActaId/{actaid}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ActaDto getActaId(@PathVariable(value = "actaid") Long actaid) {
+		
+		if(log.isInfoEnabled()) {
+			log.info("ActaController.getActa.INIT");
+			log.info("ActaController.getActa.actaid:" + actaid);
+		}		
+		ActaDto retorno = actaService.getActaId(actaid);		
+		
+		if(log.isInfoEnabled()) {
+			log.info("ActaController.listarActaProyecto.Acta: " + retorno.toString());
+			log.info("ActaController.listarActaProyecto.FIN");
+		}		
+		return retorno;
+	}
+	
 	@GetMapping(value = "/getUsuariosActa/{actaid}", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<UsuarioActaDto> getUsuarioActa(@PathVariable(value = "actaid") Long actaid) {
 		

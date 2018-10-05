@@ -58,6 +58,9 @@ public class ProyectoImpl implements ProyectoService {
 			proyecto.setFechaInicio(Utilitario.formatoFecha(guardar.getFechaInicio()));
 			proyecto.setNombre(guardar.getNombre().toUpperCase());
 			proyecto.setEstado(Constants.estadoActivo);
+			Usuario lider = new Usuario();
+			lider.setUsername(guardar.getUsername());
+			proyecto.setUsuario(lider);
 			if (log.isInfoEnabled()) {
 				log.info("ProyectoImpl.crearNuevoProyecto.grabando...: " + proyecto.toString());
 			}
@@ -217,6 +220,7 @@ public class ProyectoImpl implements ProyectoService {
 					retorno.setProyectoId(proyecto.getProyectoId());
 					retorno.setFechaFin(Utilitario.formatoFecha(proyecto.getFechaFin()));
 					retorno.setFechaInicio(Utilitario.formatoFecha(proyecto.getFechaInicio()));
+					retorno.setUsername(proyecto.getUsuario().getUsername());
 					long proyectoid = proyecto.getProyectoId();
 					if (log.isInfoEnabled()) {
 						log.info("ProyectoImpl.buscarProyectosByUsuario.BuscarUsuarios.Proyecto: " + proyectoid);
@@ -247,6 +251,9 @@ public class ProyectoImpl implements ProyectoService {
 			proyecto.setFechaInicio(Utilitario.formatoFecha(guardar.getFechaInicio()));
 			proyecto.setNombre(guardar.getNombre().toUpperCase());
 			proyecto.setProyectoId(guardar.getProyectoId());
+			Usuario lider = new Usuario();
+			lider.setUsername(guardar.getUsername());
+			proyecto.setUsuario(lider);
 			if (log.isInfoEnabled()) {
 				log.info("ProyectoImpl.editarProyecto.modificando...:" + proyecto.toString());
 			}

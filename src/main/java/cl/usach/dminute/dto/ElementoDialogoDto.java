@@ -20,5 +20,6 @@ public class ElementoDialogoDto {
 	private String username;
 	private long temaId;
 	private String codRol;	
+	private String titulo;
 	
 }

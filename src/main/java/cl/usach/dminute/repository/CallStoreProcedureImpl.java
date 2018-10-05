@@ -13,7 +13,6 @@ import javax.persistence.StoredProcedureQuery;
 import org.springframework.stereotype.Repository;
 
 import cl.usach.dminute.dto.ActaDto;
-import cl.usach.dminute.dto.Constants;
 import cl.usach.dminute.dto.ElementoDialogoDto;
 import cl.usach.dminute.dto.ProyectoUsuariosDto;
 import cl.usach.dminute.dto.TemaDto;
@@ -158,6 +157,7 @@ public class CallStoreProcedureImpl {
 				acta.setOrdenFechaHora(order);
 				acta.setUsuarioActa(new ArrayList<UsuarioActaDto>());
 				acta.setTemaActa(new ArrayList<TemaDto>());
+				acta.setUsername(row[6].toString());
 				retorno.add(acta);
 			}
 			retorno.sort(Comparator.comparing(ActaDto::getOrdenFechaHora).reversed());
@@ -243,7 +243,6 @@ public class CallStoreProcedureImpl {
 			retorno= new ArrayList<ElementoDialogoDto>();
 			int c = 50;
 			for (Object[] row : results) {
-				if (!row[2].toString().equalsIgnoreCase(Constants.estadoEliminadoElementoDialogo)){
 					ElementoDialogoDto elementoDialogoDto = new ElementoDialogoDto();
 					elementoDialogoDto.setIdElemento(Long.parseLong(row[0].toString()));
 					Date createdDate = (Date) row[3];
@@ -256,8 +255,8 @@ public class CallStoreProcedureImpl {
 					elementoDialogoDto.setCodRol(row[6].toString());
 					elementoDialogoDto.setTemaId(Long.parseLong(row[5].toString()));
 					elementoDialogoDto.setUsername(row[7].toString());
+					elementoDialogoDto.setTitulo(row[8].toString());
 					retorno.add(elementoDialogoDto);
-				}
 			}
 		}
 		if(log.isInfoEnabled()) {

@@ -1,8 +1,8 @@
-USE `heroku_8e6f58dd6a16279`;
+USE `heroku_97bd21c584329283`;
 DROP procedure IF EXISTS `getlistaractabyproyecto`;
 
 DELIMITER $$
-USE `heroku_8e6f58dd6a16279`$$
+USE `heroku_97b21c584329283`$$
 CREATE PROCEDURE `getlistaractabyproyecto`(IN _proyectoid bigint(20))
 BEGIN
 		if exists(select * from proyecto where proyecto_id =  _proyectoid and estado = 'A') then 
@@ -11,7 +11,8 @@ BEGIN
                 resumen,
                 estado,
                 hora_incio,
-                hora_fin
+                hora_fin,
+                usuario_username
             from acta where proyecto_proyecto_id = _proyectoid
             and estado = 'A'
             order by fecha desc;

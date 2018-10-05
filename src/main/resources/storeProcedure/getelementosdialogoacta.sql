@@ -1,8 +1,8 @@
-USE `heroku_8e6f58dd6a16279`;
+USE `heroku_97b21c584329283`;
 DROP procedure IF EXISTS `getelementosdialogoacta`;
 
 DELIMITER $$
-USE `heroku_8e6f58dd6a16279`$$
+USE `heroku_97b21c584329283`$$
 CREATE PROCEDURE `getelementosdialogoacta`(IN _actaid bigint(20))
 BEGIN
 	
@@ -15,7 +15,8 @@ BEGIN
 				el.elemento_dialogo_id,
 				el.tema_id,
 				el.tipo_elemento_dialogo_cod_rol,
-				el.usuario_username
+				el.usuario_username,
+                el.titulo
 			FROM elemento_dialogo el
             WHERE el.tema_id in (select id from tema where acta_acta_id =  _actaid)
             AND el.estado <> "DEL"

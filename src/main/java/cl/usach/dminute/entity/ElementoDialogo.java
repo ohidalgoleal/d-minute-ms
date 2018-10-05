@@ -42,5 +42,7 @@ public class ElementoDialogo {
 	private Tema tema;	
 	@ManyToOne
 	private ElementoDialogo elementoDialogo;	
+	@Column(name = "titulo", length = 50)
+	private String titulo;
 	
 }

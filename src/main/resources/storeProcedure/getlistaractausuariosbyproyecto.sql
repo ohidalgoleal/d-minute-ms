@@ -1,15 +1,15 @@
-USE `heroku_8e6f58dd6a16279`;
+USE `heroku_97b21c584329283`;
 DROP procedure IF EXISTS `getlistaractausuariosbyproyecto`;
 
 DELIMITER $$
-USE `heroku_8e6f58dd6a16279`$$
+USE `heroku_97b21c584329283`$$
 CREATE PROCEDURE `getlistaractausuariosbyproyecto`(IN _proyectoid bigint(20))
 BEGIN
 	if exists(select * from proyecto where proyecto_id =  _proyectoid and estado = 'A') then 
     
 		select asiste, 
 			secretario, 
-			usuario_username,
+			usuario_acta.usuario_username,
             acta_acta_id,
             usuario.nombre,
             usuario.apellido

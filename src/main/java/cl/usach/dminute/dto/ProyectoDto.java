@@ -21,5 +21,6 @@ public class ProyectoDto {
 	private String fechaInicio;
 	private String fechaFin;	
 	private List<ProyectoUsuariosDto> usuariosNuevoProyecto;
+	private String username;
 
 }

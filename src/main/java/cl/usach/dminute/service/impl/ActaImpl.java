@@ -76,6 +76,9 @@ public class ActaImpl implements ActaService {
 				_pry.setProyectoId(guardar.getProyectoId());
 				acta.setProyecto(_pry);
 				acta.setResumen(guardar.getResumen().toUpperCase());
+				Usuario lider = new Usuario();
+				lider.setUsername(guardar.getUsername());
+				acta.setUsuario(lider);
 				acta = actaJpa.save(acta);
 			}			
 			if (acta == null)
@@ -149,6 +152,9 @@ public class ActaImpl implements ActaService {
 				acta.setResumen(guardar.getResumen());				
 				acta.setHoraIncio(guardar.getHoraInicio());
 				acta.setHoraFin(guardar.getHoraFin());
+				Usuario lider = new Usuario();
+				lider.setUsername(guardar.getUsername());
+				acta.setUsuario(lider);
 				acta = actaJpa.save(acta);
 			}
 			if (acta == null)
@@ -211,6 +217,7 @@ public class ActaImpl implements ActaService {
 			actaDto.setResumen(acta.getResumen());
 			actaDto.setHoraInicio(acta.getHoraIncio());
 			actaDto.setHoraFin(acta.getHoraFin());
+			actaDto.setUsername(acta.getUsuario().getUsername());
 			List<UsuarioActaDto> listaUsuarioActaResponse = callStoreProcedureImpl.buscarUsuarioActaProyectoAll(acta.getProyecto().getProyectoId());
 			List<UsuarioActaDto> validacion = listaUsuarioActaResponse.stream().filter(a -> Objects.equals(a.getActaId(), actaDto.getActaId() )).collect(Collectors.toList());
 			List<ElementoDialogoDto> elementoDialogoDto = elementoDialogoService.getListaAllElementoDialogoActa(acta.getActaId());
@@ -232,5 +239,42 @@ public class ActaImpl implements ActaService {
 		}
 		return actaDto;
 	}
+		
+		public ActaDto getActaId(long actaId) {
+			if (log.isInfoEnabled()) {
+				log.info("ActaImpl.getActa.INIT");
+				log.info("ActaImpl.getActa.NumeroActa: " + actaId);
+			}
+			ActaDto actaDto = new ActaDto();
+			try {
+				Acta acta = actaJpa.findByActaId(actaId);
+				if (acta == null) 
+					throw new ValidacionesException(Constants.ERROR_TECNICO_GENERICO_COD, Constants.ERROR_ACTA_NOEXISTE, null);
+				if (log.isInfoEnabled()) {
+					log.info("ActaImpl.getActa.acta: " + acta.toString());
+				}
+				actaDto.setActaId(acta.getActaId());
+				actaDto.setCorrelativo(acta.getCorrelativo());
+				actaDto.setEstado(acta.getEstado());
+				actaDto.setFecha(Utilitario.formatoFecha(acta.getFecha()));
+				actaDto.setProyectoId(acta.getProyecto().getProyectoId());
+				actaDto.setResumen(acta.getResumen());
+				actaDto.setHoraInicio(acta.getHoraIncio());
+				actaDto.setHoraFin(acta.getHoraFin());
+				actaDto.setUsername(acta.getUsuario().getUsername());
+				if (log.isInfoEnabled()) {
+					log.info("ActaImpl.getActa.retorno:" + actaDto);
+				}
+			} catch (Exception ex) {
+				if (log.isErrorEnabled()) {
+					log.info("ActaImpl.getActa.ERROR - " + ex.getMessage());
+				}
+				throw ex;			
+			}
+			if (log.isInfoEnabled()) {
+				log.info("ActaImpl.getActa.FIN");
+			}
+			return actaDto;
+		}
 
 }

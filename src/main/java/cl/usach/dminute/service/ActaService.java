@@ -14,5 +14,7 @@ public interface ActaService {
 	public abstract List<ActaDto> listarActaProyecto(long proyectoId);
 	
 	public abstract ActaDto getActa(long actaId);
+	
+	public abstract ActaDto getActaId(long actaId);
 
 }

@@ -45,5 +45,7 @@ public class Acta {
 	private String estado;
 	@ManyToOne
 	private Proyecto proyecto;
+	@ManyToOne
+	private Usuario usuario;
 	
 }

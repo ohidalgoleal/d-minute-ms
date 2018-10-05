@@ -48,7 +48,11 @@ public class ElementoDialogoImpl implements ElementoDialogoService {
 		try {
 			if (temaService.findByIdTema(guardar.getTemaId()) != null) {
 				elementoDialogo = new ElementoDialogo();
-				elementoDialogo.setDescripcion(guardar.getDescripcion().toUpperCase());
+				String cadena = "";
+				if ((guardar.getDescripcion() != null) || (guardar.getDescripcion() != ""))
+					cadena = guardar.getDescripcion();
+				elementoDialogo.setDescripcion(cadena.toUpperCase());
+				elementoDialogo.setTitulo(guardar.getTitulo().toUpperCase());
 				elementoDialogo.setElementoDialogo(null);
 				elementoDialogo.setEstado(guardar.getEstado());
 				elementoDialogo.setFechaCompromiso(Utilitario.formatoFecha(guardar.getFechaCompromiso()));
@@ -62,6 +66,9 @@ public class ElementoDialogoImpl implements ElementoDialogoService {
 				Usuario usuario = new Usuario();
 				usuario.setUsername(guardar.getUsername());
 				elementoDialogo.setUsuario(usuario);
+				if (log.isInfoEnabled()) {
+					log.info("ElementoDialogoImpl.guardarModificarElementoDialogo.GUARDAR: " + elementoDialogo.toString());
+				}
 				elementoDialogo = elementoDialogoJpa.save(elementoDialogo);
 			}			
 			if (elementoDialogo == null)
@@ -111,7 +118,7 @@ public class ElementoDialogoImpl implements ElementoDialogoService {
 		ElementoDialogoDto elementoDialogoDto = null;
 		try {
 			ElementoDialogo elementoDialogo = elementoDialogoJpa.findOne(elementoId);
-			if ((elementoDialogo != null) && (!elementoDialogo.getEstado().equals(Constants.estadoEliminadoElementoDialogo))) {
+			if (elementoDialogo != null){
 				if (log.isInfoEnabled()) {
 					log.info("ElementoDialogoImpl.getElemento.elementoDialogo: " + elementoDialogo.toString());
 				}
@@ -123,6 +130,7 @@ public class ElementoDialogoImpl implements ElementoDialogoService {
 				elementoDialogoDto.setIdElemento(elementoId);
 				elementoDialogoDto.setTemaId(elementoDialogo.getTema().getId());
 				elementoDialogoDto.setUsername(elementoDialogo.getUsuario().getUsername());
+				elementoDialogoDto.setTitulo(elementoDialogo.getTitulo());
 			}
 		} catch (Exception ex) {
 			if (log.isErrorEnabled()) {
