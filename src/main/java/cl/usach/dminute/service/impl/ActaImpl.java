@@ -55,12 +55,18 @@ public class ActaImpl implements ActaService {
 	@Qualifier("elementoDialogoService")
 	private ElementoDialogoService elementoDialogoService;
 	
+	private static final String ACT = "ACT";
+	
 	@Override
-	public Acta guardarModificar(ActaDto guardar) {
+	public Acta guardarModificar(ActaDto guardar, String userName) {
 		if (log.isInfoEnabled()) {
 			log.info("ActaImpl.guardarModificarActa.INIT");
 			log.info("ActaImpl.guardarModificarActa.acta: " + guardar.toString());
 		}
+		if (guardar.getActaId() > 0)
+			if (!callStoreProcedureImpl.validaPermiso(guardar.getActaId(), userName, ACT))
+				throw new ValidacionesException(Constants.ERROR_PERMISO_GENERICO_COD, Constants.ERROR_PERMISO_ERROR, null);
+		
 		Acta acta = null;
 		List<UsuarioActaDto> listaUsuario = guardar.getUsuarioActa(); 
 		try {
@@ -133,11 +139,14 @@ public class ActaImpl implements ActaService {
 	}
 
 	@Override
-	public void eliminar(ActaDto guardar) {
+	public void eliminar(ActaDto guardar, String userName) {
 		if (log.isInfoEnabled()) {
 			log.info("ActaImpl.eliminarActa.INIT");
 			log.info("ActaImpl.eliminarActa.acta: " + guardar.toString());
 		}
+		if (!callStoreProcedureImpl.validaPermiso(guardar.getActaId(), userName, ACT))
+			throw new ValidacionesException(Constants.ERROR_PERMISO_GENERICO_COD, Constants.ERROR_PERMISO_ERROR, null);
+		
 		Acta acta = null;
 		try {
 			if (proyectoJpa.findByProyectoId(guardar.getProyectoId()) != null) {

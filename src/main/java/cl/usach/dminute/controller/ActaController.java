@@ -2,6 +2,8 @@ package cl.usach.dminute.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import cl.usach.dminute.configuration.JwtTokenUtil;
 import cl.usach.dminute.dto.ActaDto;
 import cl.usach.dminute.dto.SalidaDto;
 import cl.usach.dminute.dto.UsuarioActaDto;
@@ -28,14 +31,25 @@ public class ActaController {
 	@Qualifier("actaService")
 	private ActaService actaService;
 	
+	@Autowired
+    private JwtTokenUtil jwtTokenUtil;
+	
 	@PostMapping(value = "/guardarActa", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> registrar(@RequestBody ActaDto nuevaActa) {
+    public ResponseEntity<?> registrar(@RequestBody ActaDto nuevaActa, HttpServletRequest request) {
 		
 		if(log.isInfoEnabled()) {
 			log.info("ActaController.registrar.INIT");
 			log.info("ActaController.registrar.acta:" + nuevaActa.toString());
 		}
-		actaService.guardarModificar(nuevaActa);
+		
+		String userName = jwtTokenUtil.getUserToken(request);
+		
+		if(log.isInfoEnabled()) {
+			log.info("ActaController.registrar.usuario:" + userName.toString());
+		}
+		
+		actaService.guardarModificar(nuevaActa, userName);
+		
 		if(log.isInfoEnabled()) {
 			log.info("ActaController.registrar.FIN");
 		}		
@@ -43,13 +57,20 @@ public class ActaController {
 	}
 	
 	@PostMapping(value = "/eliminarActa", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> eliminar(@RequestBody ActaDto deleteActa) {
+    public ResponseEntity<?> eliminar(@RequestBody ActaDto deleteActa, HttpServletRequest request) {
 		
 		if(log.isInfoEnabled()) {
 			log.info("ActaController.eliminar.INIT");
 			log.info("ActaController.eliminar.acta:" + deleteActa.toString());
 		}
-		actaService.eliminar(deleteActa);
+		
+		String userName = jwtTokenUtil.getUserToken(request);
+		
+		if(log.isInfoEnabled()) {
+			log.info("ActaController.eliminar.usuario:" + userName.toString());
+		}
+		
+		actaService.eliminar(deleteActa, userName);
 		if(log.isInfoEnabled()) {
 			log.info("ActaController.eliminar.FIN");
 		}		

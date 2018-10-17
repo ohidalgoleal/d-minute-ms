@@ -19,9 +19,11 @@ public class Constants {
 	public static final String ERROR_PROYECTO_NOEXISTE = "El proyecto no existe, verifique";
 	public static final String ERROR_ELEMENTO_NOEXISTE = "El elemento de dialogo no existe, verifique";
 	public static final String ERROR_PROYECTO_NODUENO = "El proyecto no pertenece al usuario, verifique";
+	public static final String ERROR_PERMISO_ERROR = "Usted no posee los privilegios para realizar esta actualización";
 	
 	public static final String ERROR_TECNICO_GENERICO_COD = "001";
 	public static final String ERROR_USUARIO_EXISTE_COD = "002";
+	public static final String ERROR_PERMISO_GENERICO_COD = "003";
 	public static final String estadoActivo = "A";
 	public static final String estadoBloqueado = "B";
 	public static final String estadoEliminadoElementoDialogo = "DELE";

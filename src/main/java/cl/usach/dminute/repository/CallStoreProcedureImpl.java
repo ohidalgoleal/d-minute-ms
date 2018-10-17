@@ -241,16 +241,12 @@ public class CallStoreProcedureImpl {
 		List<ElementoDialogoDto> retorno = null;
 		if (results != null) {
 			retorno= new ArrayList<ElementoDialogoDto>();
-			int c = 50;
 			for (Object[] row : results) {
 					ElementoDialogoDto elementoDialogoDto = new ElementoDialogoDto();
 					elementoDialogoDto.setIdElemento(Long.parseLong(row[0].toString()));
 					Date createdDate = (Date) row[3];
 					elementoDialogoDto.setFechaCompromiso(Utilitario.formatoFecha(createdDate));
-					if (row[1].toString().length() < c)
-						elementoDialogoDto.setDescripcion(row[1].toString().substring(0, row[1].toString().length()) + "...");
-					else
-						elementoDialogoDto.setDescripcion(row[1].toString().substring(0, c) + "...");
+					elementoDialogoDto.setDescripcion(row[1].toString());	
 					elementoDialogoDto.setEstado(row[2].toString());
 					elementoDialogoDto.setCodRol(row[6].toString());
 					elementoDialogoDto.setTemaId(Long.parseLong(row[5].toString()));
@@ -265,5 +261,80 @@ public class CallStoreProcedureImpl {
 		}
 		return retorno;
 	}
+
+	@ApiOperation("Método encargado de validar si un usuario puede editar o eliminar un acta o proyecto.")
+	public Boolean validaPermiso(long id, String usuario, String tipo) {
+		if(log.isInfoEnabled()) {
+			log.info("CallStoreProcedureImpl.validaPermiso.INIT");			
+		}
+		StoredProcedureQuery storedProcedureQuery = em.createStoredProcedureQuery( "validapermisos" );
+		storedProcedureQuery.registerStoredProcedureParameter("_id",Long.class, ParameterMode.IN);
+		storedProcedureQuery.setParameter("_id", id);
+		storedProcedureQuery.registerStoredProcedureParameter("_usuario",String.class, ParameterMode.IN);
+		storedProcedureQuery.setParameter("_usuario", usuario);
+		storedProcedureQuery.registerStoredProcedureParameter("_tipo",String.class, ParameterMode.IN);
+		storedProcedureQuery.setParameter("_tipo", tipo);
+		storedProcedureQuery.execute();
+		if(log.isInfoEnabled()) {
+			log.info("CallStoreProcedureImpl.validaPermiso.SpEjecutado");			
+		}
+		@SuppressWarnings("unchecked")		
+		List<Object[]> results = storedProcedureQuery.getResultList();
+		if(log.isInfoEnabled()) {
+			log.info("CallStoreProcedureImpl.validaPermiso.resultado: " + results.toString());			
+		}
+		Boolean retorno = false;
+		if (results != null) {
+			if (results.toString().equalsIgnoreCase("[1]"))
+				retorno = true;
+		}
+		if(log.isInfoEnabled()) {
+			log.info("CallStoreProcedureImpl.buscarElementosDialogoTemasDeActaProyectoAll.retorno: " + retorno.toString());
+			log.info("CallStoreProcedureImpl.buscarElementosDialogoTemasDeActaProyectoAll.FIN");
+		}
+		return retorno;
+	}
+	
+	@ApiOperation("Método encargado de listar todos los elementos de dialogo de un proyecto para el kanban.")
+	public List<ElementoDialogoDto> buscarElementosDialogoTemasDeProyectoAll(long proyectoId) {
+		if(log.isInfoEnabled()) {
+			log.info("CallStoreProcedureImpl.buscarElementosDialogoTemasDeProyectoAll.INIT");			
+		}
+		StoredProcedureQuery storedProcedureQuery = em.createStoredProcedureQuery( "getelementosdialogoproyecto" );
+		storedProcedureQuery.registerStoredProcedureParameter("_proyectoid",Long.class, ParameterMode.IN);
+		storedProcedureQuery.setParameter("_proyectoid", proyectoId);
+		storedProcedureQuery.execute();
+		if(log.isInfoEnabled()) {
+			log.info("CallStoreProcedureImpl.buscarElementosDialogoTemasDeProyectoAll.SpEjecutado");			
+		}
+		@SuppressWarnings("unchecked")		
+		List<Object[]> results = storedProcedureQuery.getResultList();
+		if(log.isInfoEnabled()) {
+			log.info("CallStoreProcedureImpl.buscarElementosDialogoTemasDeProyectoAll.listaElementosDialogo: " + results.size());			
+		}
+		List<ElementoDialogoDto> retorno = null;
+		if (results != null) {
+			retorno= new ArrayList<ElementoDialogoDto>();
+			for (Object[] row : results) {
+					ElementoDialogoDto elementoDialogoDto = new ElementoDialogoDto();
+					elementoDialogoDto.setIdElemento(Long.parseLong(row[0].toString()));
+					Date createdDate = (Date) row[3];
+					elementoDialogoDto.setFechaCompromiso(Utilitario.formatoFecha(createdDate));
+					elementoDialogoDto.setDescripcion(row[1].toString());
+					elementoDialogoDto.setEstado(row[2].toString());
+					elementoDialogoDto.setCodRol(row[6].toString());
+					elementoDialogoDto.setTemaId(Long.parseLong(row[5].toString()));
+					elementoDialogoDto.setUsername(row[7].toString());
+					elementoDialogoDto.setTitulo(row[8].toString());
+					retorno.add(elementoDialogoDto);
+			}
+		}
+		if(log.isInfoEnabled()) {
+			log.info("CallStoreProcedureImpl.buscarElementosDialogoTemasDeProyectoAll.retorno: " + retorno.toString());
+			log.info("CallStoreProcedureImpl.buscarElementosDialogoTemasDeProyectoAll.FIN");
+		}
+		return retorno;
+	}
+
 
 }

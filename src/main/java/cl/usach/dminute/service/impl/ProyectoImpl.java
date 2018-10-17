@@ -45,6 +45,8 @@ public class ProyectoImpl implements ProyectoService {
 	@Qualifier("callStoreProcedureImpl")
 	private CallStoreProcedureImpl callStoreProcedureImpl;
 	
+	private static final String PRY = "PRY";
+	
 	@Override
 	public Proyecto crearNuevoProyecto(ProyectoDto guardar) {
 		if (log.isInfoEnabled()) {
@@ -138,6 +140,10 @@ public class ProyectoImpl implements ProyectoService {
 			log.info("ProyectoImpl.eliminar.INIT");
 			log.info("ProyectoImpl.eliminar.proyectoID: " + proyectoid);
 		}
+		
+		if (!callStoreProcedureImpl.validaPermiso(proyectoid, userName, PRY))
+			throw new ValidacionesException(Constants.ERROR_PERMISO_GENERICO_COD, Constants.ERROR_PERMISO_ERROR, null);
+		
 		try {
 			
 			List<ProyectoDto> validacion = buscarProyectosByUsuario(userName).stream().filter(a -> Objects.equals(a.getProyectoId(), proyectoid)).collect(Collectors.toList());
@@ -239,11 +245,14 @@ public class ProyectoImpl implements ProyectoService {
 	}
 
 	@Override
-	public Proyecto editarProyecto(ProyectoDto guardar) {
+	public Proyecto editarProyecto(ProyectoDto guardar, String userName) {
 		if (log.isInfoEnabled()) {
 			log.info("ProyectoImpl.editarProyecto.INIT");
 			log.info("ProyectoImpl.editarProyecto.proyecto: " + guardar.toString());
 		}
+		if (!callStoreProcedureImpl.validaPermiso(guardar.getProyectoId(), userName, PRY))
+			throw new ValidacionesException(Constants.ERROR_PERMISO_GENERICO_COD, Constants.ERROR_PERMISO_ERROR, null);
+		
 		Proyecto proyecto = new Proyecto();
 		try {
 			proyecto.setDescripcion(guardar.getDescripcion().toUpperCase());

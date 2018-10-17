@@ -18,5 +18,8 @@ public class ListarActaDialogica {
 	private ProyectoDto proyectoDto;
 	private List<ActaDto> listaActa;
 	private ActaDto actaDto;
+	private List<ElementoDialogoDto> kanbanTareasTodo;
+	private List<ElementoDialogoDto> kanbanTareasDoing;
+	private List<ElementoDialogoDto> kanbanTareasDone;
 
 }

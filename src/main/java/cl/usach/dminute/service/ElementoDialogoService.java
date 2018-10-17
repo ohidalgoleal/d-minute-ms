@@ -15,4 +15,6 @@ public interface ElementoDialogoService {
 	
 	public abstract List<ElementoDialogoDto> getListaAllElementoDialogoActa(long actaId);
 	
+	public abstract List<ElementoDialogoDto> getListaAllElementoDialogoProyecto(long proyectoId);
+	
 }

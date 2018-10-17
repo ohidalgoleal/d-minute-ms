@@ -2,6 +2,8 @@ package cl.usach.dminute.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -25,6 +27,7 @@ import cl.usach.dminute.dto.ProyectoUsuariosDto;
 import cl.usach.dminute.dto.TemaDto;
 import cl.usach.dminute.dto.UsuarioActaDto;
 import cl.usach.dminute.entity.Usuario;
+import cl.usach.dminute.service.ElementoDialogoService;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -51,6 +54,10 @@ public class BffController {
 	@Autowired
 	@Qualifier("temaController")
 	private TemaController temaController;
+	
+	@Autowired
+	@Qualifier("elementoDialogoService")
+	private ElementoDialogoService elementoDialogoService;
 	
 	@GetMapping(value = "/listarMinutaProyecto/{proyectoid}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ListarActaDialogica listarMinutaProyectoById(@PathVariable(value = "proyectoid") Long proyectoid, HttpServletRequest request) {
@@ -92,6 +99,10 @@ public class BffController {
 						listaRetorno.add(usuario);
 					}
 				}
+				List<ElementoDialogoDto> listaKanban = elementoDialogoService.getListaAllElementoDialogoProyecto(proyectoid);
+				retorno.setKanbanTareasTodo(listaKanban.stream().filter(a -> Objects.equals(a.getEstado(), "TODO" )).collect(Collectors.toList()));
+				retorno.setKanbanTareasDoing(listaKanban.stream().filter(a -> Objects.equals(a.getEstado(), "DOING" )).collect(Collectors.toList()));
+				retorno.setKanbanTareasDone(listaKanban.stream().filter(a -> Objects.equals(a.getEstado(), "DONE" )).collect(Collectors.toList()));
 				retorno.getProyectoDto().setUsuariosNuevoProyecto(listaRetorno);
 				retorno.setActaDto(actaDto);
 			}

@@ -164,5 +164,27 @@ public class ElementoDialogoImpl implements ElementoDialogoService {
 			log.info("ElementoDialogoImpl.listaAllElementoDialogoActa.FIN");
 		}
 		return lista;
-	} 
+	}
+	
+	@Override
+	public List<ElementoDialogoDto> getListaAllElementoDialogoProyecto(long proyectoId) {
+		if (log.isInfoEnabled()) {
+			log.info("ElementoDialogoImpl.getListaAllElementoDialogoProyecto.INIT");
+			log.info("ElementoDialogoImpl.getListaAllElementoDialogoProyecto.proyectoId: " + proyectoId);
+		}
+		List<ElementoDialogoDto> lista = new ArrayList<ElementoDialogoDto>();
+		try {
+			lista=callStoreProcedureImpl.buscarElementosDialogoTemasDeProyectoAll(proyectoId);
+		} catch (Exception ex) {
+			if (log.isErrorEnabled()) {
+				log.info("ElementoDialogoImpl.getListaAllElementoDialogoProyecto.ERROR - " + ex.getMessage());
+			}
+			throw ex;
+		}
+		if (log.isInfoEnabled()) {
+			log.info("ElementoDialogoImpl.getListaAllElementoDialogoProyecto.lista: " + lista);
+			log.info("ElementoDialogoImpl.getListaAllElementoDialogoProyecto.FIN");
+		}
+		return lista;
+	}
 }

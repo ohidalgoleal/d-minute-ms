@@ -48,13 +48,19 @@ public class ProyectoController {
 	}
 	
 	@PostMapping(value = "/editarProyecto", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> editar(@RequestBody ProyectoDto nuevoProyecto) {
+    public ResponseEntity<?> editar(@RequestBody ProyectoDto nuevoProyecto, HttpServletRequest request) {
 		
 		if(log.isInfoEnabled()) {
 			log.info("ProyectoController.editarProyecto.INIT");
 			log.info("ProyectoController.editarProyecto.proyecto:" + nuevoProyecto.toString());
 		}
-		proyectoService.editarProyecto(nuevoProyecto);
+		String userName = jwtTokenUtil.getUserToken(request);
+		
+		if(log.isInfoEnabled()) {
+			log.info("ProyectoController.editarProyecto.usuario:" + userName.toString());
+		}
+		
+		proyectoService.editarProyecto(nuevoProyecto, userName);
 		if(log.isInfoEnabled()) {
 			log.info("ProyectoController.editarProyecto.FIN");
 		}		
@@ -69,6 +75,10 @@ public class ProyectoController {
 			log.info("ProyectoController.eliminar.proyectoid:" + proyectoid);
 		}
 		String userName = jwtTokenUtil.getUserToken(request);
+		
+		if(log.isInfoEnabled()) {
+			log.info("ProyectoController.eliminar.usuario:" + userName.toString());
+		}
 		
 		proyectoService.eliminar(proyectoid, userName);
 		if(log.isInfoEnabled()) {
