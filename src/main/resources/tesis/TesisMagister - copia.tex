@@ -1,0 +1,84 @@
+%\documentclass[10pt]{book}%
+\documentclass[a4paper,openright,12pt]{book}
+
+
+%PACKAGE%
+\usepackage[latin1]{inputenc}
+\usepackage{blindtext}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{helvet}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage[breaklinks=true]{hyperref}
+\usepackage{multirow}
+\usepackage{apacite}
+\usepackage{booktabs}
+\usepackage[utf8]{inputenc} 
+
+%CONFIGURACIONES%
+\setcounter{secnumdepth}{3} %para que ponga 1.1.1.1 en subsubsecciones
+\setcounter{tocdepth}{3} % para que ponga subsubsecciones en el indice
+\renewcommand{\baselinestretch}{1,5} %Interlineado
+\pagestyle{fancy}
+% Clear the header and footer
+\fancyhead{}
+\fancyfoot{}
+\renewcommand{\familydefault}{\sfdefault} 
+\makeatletter
+% we use \prefix@<level> only if it is defined
+\renewcommand{\@seccntformat}[1]{%
+  \ifcsname prefix@#1\endcsname
+    \csname prefix@#1\endcsname
+  \else
+    \csname the#1\endcsname\quad
+  \fi}
+% define \prefix@section
+\newcommand\prefix@section{CAPITULO \thesection. }
+\makeatother
+
+
+%DOCUMENTO%
+\begin{document}
+
+\begin{titlepage}
+\begin{center}
+\begin{Huge}
+\textsc{Un buen título es muy importante}
+\end{Huge}
+\end{center}
+\end{titlepage}
+
+% para crear una cara en blanco
+\newpage
+$\ $
+\thispagestyle{empty} % para que no se numere esta página
+
+\include{dedicatoria}
+
+\include{1-resumen}
+
+\tableofcontents % indice de contenidos
+
+\cleardoublepage
+\addcontentsline{toc}{chapter}{Lista de figuras} % para que aparezca en el indice de contenidos
+\listoffigures % indice de figuras
+
+\cleardoublepage
+\addcontentsline{toc}{chapter}{Lista de tablas} % para que aparezca en el indice de contenidos
+\listoftables % indice de tablas 
+
+
+\include{introduccion}
+
+
+
+%----------------------------------------------------------------------------------------
+%	BIBLIOGRAPHY
+%----------------------------------------------------------------------------------------
+\bibliographystyle{apacite}
+\bibliography{TesisMagister}
+\nocite{*}
+
+%----------------------------------------------------------------------------------------
+
+\end{document}
