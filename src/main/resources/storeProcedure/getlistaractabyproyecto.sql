@@ -12,7 +12,8 @@ BEGIN
                 estado,
                 hora_incio,
                 hora_fin,
-                usuario_username
+                usuario_username,
+                correlativo
             from acta where proyecto_proyecto_id = _proyectoid
             and estado = 'A'
             order by fecha desc;

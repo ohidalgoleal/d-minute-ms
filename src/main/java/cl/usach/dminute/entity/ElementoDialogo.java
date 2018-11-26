@@ -44,5 +44,7 @@ public class ElementoDialogo {
 	private ElementoDialogo elementoDialogo;	
 	@Column(name = "titulo", length = 50)
 	private String titulo;
+	@Column(name = "correlativo")
+	private long correlativo;	
 	
 }
