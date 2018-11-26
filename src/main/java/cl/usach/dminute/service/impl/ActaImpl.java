@@ -30,23 +30,23 @@ public class ActaImpl implements ActaService {
 	@Autowired
 	@Qualifier("actaJpa")
 	private ActaJpa actaJpa;
-	
+
 	@Autowired
 	@Qualifier("proyectoJpa")
 	private ProyectoJpa proyectoJpa;
-	
+
 	@Autowired
 	@Qualifier("callStoreProcedureImpl")
 	private CallStoreProcedureImpl callStoreProcedureImpl;
-	
+
 	@Autowired
 	@Qualifier("usuarioActaService")
 	private UsuarioActaService usuarioActaService;
-	
+
 	@Autowired
 	@Qualifier("usuarioService")
 	private UsuarioService usuarioService;
-	
+
 	@Autowired
 	@Qualifier("temaService")
 	private TemaService temaService;
@@ -54,9 +54,9 @@ public class ActaImpl implements ActaService {
 	@Autowired
 	@Qualifier("elementoDialogoService")
 	private ElementoDialogoService elementoDialogoService;
-	
+
 	private static final String ACT = "ACT";
-	
+
 	@Override
 	public Acta guardarModificar(ActaDto guardar, String userName) {
 		if (log.isInfoEnabled()) {
@@ -65,15 +65,15 @@ public class ActaImpl implements ActaService {
 		}
 		if (guardar.getActaId() > 0)
 			if (!callStoreProcedureImpl.validaPermiso(guardar.getActaId(), userName, ACT))
-				throw new ValidacionesException(Constants.ERROR_PERMISO_GENERICO_COD, Constants.ERROR_PERMISO_ERROR, null);
-		
+				throw new ValidacionesException(Constants.ERROR_PERMISO_GENERICO_COD, Constants.ERROR_PERMISO_ERROR,
+						null);
+
 		Acta acta = null;
-		List<UsuarioActaDto> listaUsuario = guardar.getUsuarioActa(); 
+		List<UsuarioActaDto> listaUsuario = guardar.getUsuarioActa();
 		try {
 			if (proyectoJpa.findByProyectoId(guardar.getProyectoId()) != null) {
 				acta = new Acta();
 				acta.setActaId(guardar.getActaId());
-				acta.setCorrelativo(guardar.getCorrelativo());
 				acta.setEstado(Constants.estadoActivo);
 				acta.setFecha(Utilitario.formatoFecha(guardar.getFecha()));
 				acta.setHoraIncio(guardar.getHoraInicio());
@@ -85,8 +85,9 @@ public class ActaImpl implements ActaService {
 				Usuario lider = new Usuario();
 				lider.setUsername(guardar.getUsername());
 				acta.setUsuario(lider);
+				acta.setCorrelativo(countActasProyecto(guardar.getProyectoId()));
 				acta = actaJpa.save(acta);
-			}			
+			}
 			if (acta == null)
 				throw new Exception();
 			else {
@@ -100,14 +101,15 @@ public class ActaImpl implements ActaService {
 				}
 				for (UsuarioActaDto usuarioActaDto : listaUsuario) {
 					if (log.isInfoEnabled()) {
-						log.info("ActaImpl.guardarModificarActa.grabandoUsuario.INI");						
+						log.info("ActaImpl.guardarModificarActa.grabandoUsuario.INI");
 					}
 					Usuario validacion = null;
 					try {
 						validacion = usuarioService.findOne(usuarioActaDto.getUsername());
 					} catch (Exception ex) {
 						if (log.isErrorEnabled()) {
-							log.info("ActaImpl.guardarModificarActa.grabandoUsuario.usuarioInvalido: " + usuarioActaDto.getUsername());
+							log.info("ActaImpl.guardarModificarActa.grabandoUsuario.usuarioInvalido: "
+									+ usuarioActaDto.getUsername());
 						}
 					}
 					if (validacion != null) {
@@ -117,13 +119,13 @@ public class ActaImpl implements ActaService {
 						usuarioActa.setSecretario(usuarioActaDto.getSecretario());
 						usuarioActa.setUsuario(validacion);
 						if (log.isInfoEnabled()) {
-							log.info("ActaImpl.guardarModificarActa.grabandoUsuario: " + usuarioActa);						
+							log.info("ActaImpl.guardarModificarActa.grabandoUsuario: " + usuarioActa);
 						}
 						usuarioActaService.save(usuarioActa);
 					}
 					if (log.isInfoEnabled()) {
-						log.info("ActaImpl.guardarModificarActa.grabandoUsuario.FIN");						
-					}						
+						log.info("ActaImpl.guardarModificarActa.grabandoUsuario.FIN");
+					}
 				}
 			}
 		} catch (Exception ex) {
@@ -146,7 +148,7 @@ public class ActaImpl implements ActaService {
 		}
 		if (!callStoreProcedureImpl.validaPermiso(guardar.getActaId(), userName, ACT))
 			throw new ValidacionesException(Constants.ERROR_PERMISO_GENERICO_COD, Constants.ERROR_PERMISO_ERROR, null);
-		
+
 		Acta acta = null;
 		try {
 			if (proyectoJpa.findByProyectoId(guardar.getProyectoId()) != null) {
@@ -158,7 +160,7 @@ public class ActaImpl implements ActaService {
 				Proyecto _pry = new Proyecto();
 				_pry.setProyectoId(guardar.getProyectoId());
 				acta.setProyecto(_pry);
-				acta.setResumen(guardar.getResumen());				
+				acta.setResumen(guardar.getResumen());
 				acta.setHoraIncio(guardar.getHoraInicio());
 				acta.setHoraFin(guardar.getHoraFin());
 				Usuario lider = new Usuario();
@@ -167,7 +169,7 @@ public class ActaImpl implements ActaService {
 				acta = actaJpa.save(acta);
 			}
 			if (acta == null)
-				throw new Exception();			
+				throw new Exception();
 		} catch (Exception ex) {
 			if (log.isErrorEnabled()) {
 				log.info("ActaImpl.eliminarActa.ERROR - " + ex.getMessage());
@@ -189,14 +191,15 @@ public class ActaImpl implements ActaService {
 		try {
 			if (proyectoJpa.findByProyectoId(proyectoId) != null) {
 				listarActa = callStoreProcedureImpl.buscarActasProyecto(proyectoId);
-			}else {
-				throw new ValidacionesException(Constants.ERROR_TECNICO_GENERICO_COD, Constants.ERROR_PROYECTO_NOEXISTE, null);
-			}				
+			} else {
+				throw new ValidacionesException(Constants.ERROR_TECNICO_GENERICO_COD, Constants.ERROR_PROYECTO_NOEXISTE,
+						null);
+			}
 		} catch (Exception ex) {
 			if (log.isErrorEnabled()) {
 				log.info("ActaImpl.listarActaProyecto.ERROR - " + ex.getMessage());
 			}
-			throw ex;			
+			throw ex;
 		}
 		if (log.isInfoEnabled()) {
 			log.info("ActaImpl.listarActaProyecto.FIN");
@@ -204,7 +207,7 @@ public class ActaImpl implements ActaService {
 		return listarActa;
 	}
 
-		@Override
+	@Override
 	public ActaDto getActa(long actaId) {
 		if (log.isInfoEnabled()) {
 			log.info("ActaImpl.getActa.INIT");
@@ -213,8 +216,9 @@ public class ActaImpl implements ActaService {
 		ActaDto actaDto = new ActaDto();
 		try {
 			Acta acta = actaJpa.findByActaId(actaId);
-			if (acta == null) 
-				throw new ValidacionesException(Constants.ERROR_TECNICO_GENERICO_COD, Constants.ERROR_ACTA_NOEXISTE, null);
+			if (acta == null)
+				throw new ValidacionesException(Constants.ERROR_TECNICO_GENERICO_COD, Constants.ERROR_ACTA_NOEXISTE,
+						null);
 			if (log.isInfoEnabled()) {
 				log.info("ActaImpl.getActa.acta: " + acta.toString());
 			}
@@ -227,9 +231,12 @@ public class ActaImpl implements ActaService {
 			actaDto.setHoraInicio(acta.getHoraIncio());
 			actaDto.setHoraFin(acta.getHoraFin());
 			actaDto.setUsername(acta.getUsuario().getUsername());
-			List<UsuarioActaDto> listaUsuarioActaResponse = callStoreProcedureImpl.buscarUsuarioActaProyectoAll(acta.getProyecto().getProyectoId());
-			List<UsuarioActaDto> validacion = listaUsuarioActaResponse.stream().filter(a -> Objects.equals(a.getActaId(), actaDto.getActaId() )).collect(Collectors.toList());
-			List<ElementoDialogoDto> elementoDialogoDto = elementoDialogoService.getListaAllElementoDialogoActa(acta.getActaId());
+			List<UsuarioActaDto> listaUsuarioActaResponse = callStoreProcedureImpl
+					.buscarUsuarioActaProyectoAll(acta.getProyecto().getProyectoId());
+			List<UsuarioActaDto> validacion = listaUsuarioActaResponse.stream()
+					.filter(a -> Objects.equals(a.getActaId(), actaDto.getActaId())).collect(Collectors.toList());
+			List<ElementoDialogoDto> elementoDialogoDto = elementoDialogoService
+					.getListaAllElementoDialogoActa(acta.getActaId());
 			actaDto.setTareaPendiente(elementoDialogoDto);
 
 			actaDto.setUsuarioActa(validacion);
@@ -241,49 +248,54 @@ public class ActaImpl implements ActaService {
 			if (log.isErrorEnabled()) {
 				log.info("ActaImpl.getActa.ERROR - " + ex.getMessage());
 			}
-			throw ex;			
+			throw ex;
 		}
 		if (log.isInfoEnabled()) {
 			log.info("ActaImpl.getActa.FIN");
 		}
 		return actaDto;
 	}
-		
-		public ActaDto getActaId(long actaId) {
-			if (log.isInfoEnabled()) {
-				log.info("ActaImpl.getActa.INIT");
-				log.info("ActaImpl.getActa.NumeroActa: " + actaId);
-			}
-			ActaDto actaDto = new ActaDto();
-			try {
-				Acta acta = actaJpa.findByActaId(actaId);
-				if (acta == null) 
-					throw new ValidacionesException(Constants.ERROR_TECNICO_GENERICO_COD, Constants.ERROR_ACTA_NOEXISTE, null);
-				if (log.isInfoEnabled()) {
-					log.info("ActaImpl.getActa.acta: " + acta.toString());
-				}
-				actaDto.setActaId(acta.getActaId());
-				actaDto.setCorrelativo(acta.getCorrelativo());
-				actaDto.setEstado(acta.getEstado());
-				actaDto.setFecha(Utilitario.formatoFecha(acta.getFecha()));
-				actaDto.setProyectoId(acta.getProyecto().getProyectoId());
-				actaDto.setResumen(acta.getResumen());
-				actaDto.setHoraInicio(acta.getHoraIncio());
-				actaDto.setHoraFin(acta.getHoraFin());
-				actaDto.setUsername(acta.getUsuario().getUsername());
-				if (log.isInfoEnabled()) {
-					log.info("ActaImpl.getActa.retorno:" + actaDto);
-				}
-			} catch (Exception ex) {
-				if (log.isErrorEnabled()) {
-					log.info("ActaImpl.getActa.ERROR - " + ex.getMessage());
-				}
-				throw ex;			
-			}
-			if (log.isInfoEnabled()) {
-				log.info("ActaImpl.getActa.FIN");
-			}
-			return actaDto;
+
+	public ActaDto getActaId(long actaId) {
+		if (log.isInfoEnabled()) {
+			log.info("ActaImpl.getActa.INIT");
+			log.info("ActaImpl.getActa.NumeroActa: " + actaId);
 		}
+		ActaDto actaDto = new ActaDto();
+		try {
+			Acta acta = actaJpa.findByActaId(actaId);
+			if (acta == null)
+				throw new ValidacionesException(Constants.ERROR_TECNICO_GENERICO_COD, Constants.ERROR_ACTA_NOEXISTE,
+						null);
+			if (log.isInfoEnabled()) {
+				log.info("ActaImpl.getActa.acta: " + acta.toString());
+			}
+			actaDto.setActaId(acta.getActaId());
+			actaDto.setCorrelativo(acta.getCorrelativo());
+			actaDto.setEstado(acta.getEstado());
+			actaDto.setFecha(Utilitario.formatoFecha(acta.getFecha()));
+			actaDto.setProyectoId(acta.getProyecto().getProyectoId());
+			actaDto.setResumen(acta.getResumen());
+			actaDto.setHoraInicio(acta.getHoraIncio());
+			actaDto.setHoraFin(acta.getHoraFin());
+			actaDto.setUsername(acta.getUsuario().getUsername());
+			if (log.isInfoEnabled()) {
+				log.info("ActaImpl.getActa.retorno:" + actaDto);
+			}
+		} catch (Exception ex) {
+			if (log.isErrorEnabled()) {
+				log.info("ActaImpl.getActa.ERROR - " + ex.getMessage());
+			}
+			throw ex;
+		}
+		if (log.isInfoEnabled()) {
+			log.info("ActaImpl.getActa.FIN");
+		}
+		return actaDto;
+	}
+
+	private long countActasProyecto(long proyectoId) {
+		return callStoreProcedureImpl.contarActasProyecto(proyectoId) + 1;
+	}
 
 }

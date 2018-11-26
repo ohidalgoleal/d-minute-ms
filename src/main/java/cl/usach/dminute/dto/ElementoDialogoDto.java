@@ -21,5 +21,6 @@ public class ElementoDialogoDto {
 	private long temaId;
 	private String codRol;	
 	private String titulo;
+	private long correlativo;
 	
 }

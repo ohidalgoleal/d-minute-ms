@@ -49,7 +49,7 @@ public class ElementoDialogoImpl implements ElementoDialogoService {
 			if (temaService.findByIdTema(guardar.getTemaId()) != null) {
 				elementoDialogo = new ElementoDialogo();
 				String cadena = "";
-				if ((guardar.getDescripcion() != null) || (guardar.getDescripcion() != ""))
+				if (guardar.getDescripcion() != null)
 					cadena = guardar.getDescripcion();
 				elementoDialogo.setDescripcion(cadena.toUpperCase());
 				elementoDialogo.setTitulo(guardar.getTitulo().toUpperCase());
@@ -68,6 +68,9 @@ public class ElementoDialogoImpl implements ElementoDialogoService {
 				elementoDialogo.setUsuario(usuario);
 				if (log.isInfoEnabled()) {
 					log.info("ElementoDialogoImpl.guardarModificarElementoDialogo.GUARDAR: " + elementoDialogo.toString());
+				}
+				if (elementoDialogo.getId() == 0) {
+					elementoDialogo.setCorrelativo(this.contarListaAllElementoDialogoActa(guardar.getTemaId()));
 				}
 				elementoDialogo = elementoDialogoJpa.save(elementoDialogo);
 			}			
@@ -186,5 +189,10 @@ public class ElementoDialogoImpl implements ElementoDialogoService {
 			log.info("ElementoDialogoImpl.getListaAllElementoDialogoProyecto.FIN");
 		}
 		return lista;
+	}
+	
+	private long contarListaAllElementoDialogoActa(long temaId) {
+		long actaId = this.temaService.findByIdTema(temaId).getActaId();
+		return callStoreProcedureImpl.contarElementosDialogoTemasDeActaProyectoAll(actaId) + 1;
 	}
 }

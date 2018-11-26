@@ -2,6 +2,7 @@ package cl.usach.dminute.exception;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.ResponseEntity.BodyBuilder;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -9,7 +10,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import cl.usach.dminute.dto.Constants;
 import cl.usach.dminute.dto.ErrorDto;
-import lombok.extern.slf4j.Slf4j;
 
 /** 
  * 
@@ -17,23 +17,7 @@ import lombok.extern.slf4j.Slf4j;
  * 
  */
 @ControllerAdvice
-@Slf4j
 public class ExceptionManager {
-
-	/**
-	 * Metodo encargado de manejar el retorno de excepciones centralizadas
-	 * 
-	 * @param String
-	 * @return ResponseEntity<Object>
-	 */
-	private ResponseEntity<Object> mensajeErrorTecnico(String mensaje,String debug) {
-		ErrorDto errorDto = ErrorDto.builder()
-				.codigo("500")
-				.mensaje(mensaje)
-				.debug(debug)
-			.build();
-		return new ResponseEntity<>(errorDto, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
-	}
 
 	/**
 	 * Metodo encargado de tratar excepcion de tipo ValidacionesException 
@@ -44,11 +28,23 @@ public class ExceptionManager {
 	 */
 	@ExceptionHandler(ValidacionesException.class)
 	private ResponseEntity<Object> manageValidacionesEntradaException(ValidacionesException e){
-		ErrorDto errorDto = ErrorDto.builder()
-				.codigo(e.getCodigo())
-				.mensaje(e.getMensaje())				
-			.build();
-		return new ResponseEntity<>(errorDto, new HttpHeaders(), HttpStatus.BAD_REQUEST);
+		ResponseEntity response = null;
+        String mensaje = null;
+        String codigo = null;
+        HttpStatus status = null;
+
+        mensaje = e.getMensaje();
+        codigo = e.getCodigo();
+        status = HttpStatus.PRECONDITION_REQUIRED;
+        ErrorDto errorDto = ErrorDto.builder()
+                .codigo(codigo)
+                .mensaje(mensaje)
+                .build();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+        response = new ResponseEntity<>(errorDto, headers, status);
+        return response;
 	}
 	
 	/**
@@ -58,14 +54,24 @@ public class ExceptionManager {
 	 * @return ResponseEntity<Object>
 	 */
 	@ExceptionHandler(StoredProcedureException.class)
-	private ResponseEntity<ErrorDto> manageRegistroNotFoundException(StoredProcedureException e){
-		ErrorDto errorDto = ErrorDto.builder()
-				.codigo(e.getCodigo())
-				.mensaje(e.getMensaje())
-			.build();
-		
-		BodyBuilder bodyBuilder = ResponseEntity.status(460);
-		return bodyBuilder.body(errorDto);
+	private ResponseEntity<Object> manageRegistroNotFoundException(StoredProcedureException e){
+        ResponseEntity response = null;
+        String mensaje = null;
+        String codigo = null;
+        HttpStatus status = null;
+
+        mensaje = e.getMensaje();
+        codigo = e.getCodigo();
+        status = HttpStatus.NOT_IMPLEMENTED;
+        ErrorDto errorDto = ErrorDto.builder()
+                .codigo(codigo)
+                .mensaje(mensaje)
+                .build();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+        response = new ResponseEntity<>(errorDto, headers, status);
+        return response;
 	}
 	
 	
@@ -89,8 +95,45 @@ public class ExceptionManager {
 	 */
 	@ExceptionHandler(ErrorTecnicoException.class)
 	private ResponseEntity<Object> manageAuthenticationSystemFaultException(ErrorTecnicoException e){
-		log.error("ErrorTecnicoException: " , e);
-		return mensajeErrorTecnico(Constants.ERROR_TECNICO_MENSAJE,"Error tecnico: " + e.getCodigo() + " Mensaje:" + e.getMessage());
+		 ResponseEntity response = null;
+	        String mensaje = null;
+	        String codigo = null;
+	        HttpStatus status = null;
+
+	        mensaje = Constants.ERROR_INTERNAL_MENSAJE;
+	        codigo = Constants.ERROR_INTERNAL;
+	        status = HttpStatus.BAD_REQUEST;
+	        ErrorDto errorDto = ErrorDto.builder()
+	                .codigo(codigo)
+	                .mensaje(mensaje)
+	                .build();
+
+	        HttpHeaders headers = new HttpHeaders();
+	        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+	        response = new ResponseEntity<>(errorDto, headers, status);
+	        return response;
 	}
+	
+	@ExceptionHandler({Exception.class})
+    private ResponseEntity<Object> manageExceptions(Exception e) {
+        ResponseEntity response = null;
+        String mensaje = null;
+        String codigo = null;
+        HttpStatus status = null;
+
+        mensaje = Constants.ERROR_INTERNAL_MENSAJE;
+        codigo = Constants.ERROR_INTERNAL;
+        status = HttpStatus.INTERNAL_SERVER_ERROR;
+        ErrorDto errorDto = ErrorDto.builder()
+                .codigo(codigo)
+                .mensaje(mensaje)
+                .build();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+        response = new ResponseEntity<>(errorDto, headers, status);
+        return response;
+    }
+
 	
 }
