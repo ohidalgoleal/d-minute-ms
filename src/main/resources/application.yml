@@ -77,3 +77,15 @@ spring:
     url: jdbc:mysql://us-cdbr-iron-east-04.cleardb.net/heroku_8e6f58dd6a16279?useSSL=false
     username: b2bef385757862
     password: c9b30dca
+    
+---
+spring:
+  profiles: docker
+  datasource:
+    url: jdbc:mysql://172.17.0.2/heroku_ddeb90f13531d40?useSSL=false
+    username: bb0c481c17d801
+    password: 548aed1858602ac
+eureka:
+  instance:
+    hostname: ${DOMAIN_NAME}
+    nonSecurePort: 80

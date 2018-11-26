@@ -1,0 +1,15 @@
+<fontFamilies>
+    <fontFamily name="Arial">
+        <!-- Normal Arial Font -->
+        <normal><![CDATA[fonts/LiberationSans/LiberationSans-Regular.ttf]]></normal>
+        <!-- Bold Arial Font -->
+        <bold><![CDATA[fonts/LiberationSans/LiberationSans-Bold.ttf]]></bold>
+        <!-- Italic Arial Font -->
+        <italic><![CDATA[fonts/LiberationSans/LiberationSans-Italic.ttf]]></italic>
+        <!-- Bolt italic Arial Font -->
+        <boldItalic><![CDATA[fonts/LiberationSans/LiberationSans-BoldItalic.ttf]]></boldItalic>
+        <!-- Is font is embedded in PDF -->
+        <pdfEmbedded><![CDATA[true]]></pdfEmbedded>
+    </fontFamily>
+</fontFamilies>
+
