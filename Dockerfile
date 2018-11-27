@@ -6,7 +6,7 @@ LABEL maintainer="ohidalgoleal@gmail.com"
 VOLUME /tmp
 
 # Make port 8081 available to the world outside this container
-EXPOSE 8081
+EXPOSE 8001
 
 # Fix zona horaria de Chile
 #RUN apk update && apk install -y tzdata
