@@ -12,8 +12,8 @@ EXPOSE 8003
 #RUN apk update && apk install -y tzdata
 #ENV TZ America/Santiago
 
-ENV CONFIG_SERVER_DMINUTE=https://dminute-config-server.herokuapp.com/
-ENV EUREKA_ENDPOINT=https://d-minute-eureka.herokuapp.com/eureka/
+ENV CONFIG_SERVER_DMINUTE=http://172.17.0.6:8888
+ENV EUREKA_ENDPOINT=http://172.17.0.7:1111/eureka
 ENV DOMAIN_NAME=huelen.diinf.usach.cl
 
 # The application's jar file
