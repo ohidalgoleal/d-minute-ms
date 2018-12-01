@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Cacheable;
 import javax.persistence.EntityManager;
 import javax.persistence.ParameterMode;
 import javax.persistence.PersistenceContext;
@@ -26,6 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Repository("callStoreProcedureImpl")
+@Cacheable
 public class CallStoreProcedureImpl {
 
 	@PersistenceContext
@@ -372,6 +374,7 @@ public class CallStoreProcedureImpl {
 					elementoDialogoDto.setTemaId(Long.parseLong(row[5].toString()));
 					elementoDialogoDto.setUsername(row[7].toString());
 					elementoDialogoDto.setTitulo(row[8].toString());
+					elementoDialogoDto.setSecuencia(row[9].toString());
 					retorno.add(elementoDialogoDto);
 				}
 			}
