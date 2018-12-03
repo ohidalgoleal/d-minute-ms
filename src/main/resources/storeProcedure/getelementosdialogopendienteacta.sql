@@ -3,10 +3,15 @@ DROP procedure IF EXISTS `getelementosdialogopendienteacta`;
 
 DELIMITER $$
 USE `heroku_ddeb90f13531d40`$$
-CREATE PROCEDURE `getelementosdialogopendienteacta`(IN _proyectoid bigint(20))
+CREATE PROCEDURE `getelementosdialogopendienteacta`(IN _proyectoid bigint(20), IN _actaid bigint(20))
 BEGIN
 	
+		DECLARE _fechaActa datetime;
+        
 		if exists(select * from proyecto where proyecto_id =  _proyectoid) then 
+			
+			 select fecha into _fechaActa from acta where acta_id = _actaid;
+
         
         	 SELECT el.id,
 				el.descripcion,
@@ -24,8 +29,10 @@ BEGIN
             INNER JOIN acta ac
             ON tm.acta_acta_id = ac.acta_id
             WHERE el.tema_id in (select id from tema inner join acta on tema.acta_acta_id = acta.acta_id where acta.proyecto_proyecto_id =  _proyectoid)
-            AND el.estado <> "DELE"
-            ORDER BY el.fecha_compromiso;
+            AND el.estado not in ( "DELE", "DONE")
+            AND ac.acta_id <> _actaid
+            AND ac.fecha  < _fechaActa
+            ORDER BY ac.fecha, el.fecha_compromiso;
 
         end if;
         
