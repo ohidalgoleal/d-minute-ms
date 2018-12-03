@@ -1,8 +1,8 @@
-USE `heroku_97b21c584329283`;
+USE `heroku_ddeb90f13531d40`;
 DROP procedure IF EXISTS `validapermisos`;
 
 DELIMITER $$
-USE `heroku_97b21c584329283`$$
+USE `heroku_ddeb90f13531d40`$$
 CREATE PROCEDURE `validapermisos`(IN _id bigint(20),IN _usuario varchar(255),IN _tipo varchar(3))
 BEGIN
 

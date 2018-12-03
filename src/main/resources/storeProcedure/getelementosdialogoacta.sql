@@ -1,8 +1,8 @@
-USE `heroku_97b21c584329283`;
+USE `heroku_ddeb90f13531d40`;
 DROP procedure IF EXISTS `getelementosdialogoacta`;
 
 DELIMITER $$
-USE `heroku_97b21c584329283`$$
+USE `heroku_ddeb90f13531d40`$$
 CREATE PROCEDURE `getelementosdialogoacta`(IN _actaid bigint(20))
 BEGIN
 	
