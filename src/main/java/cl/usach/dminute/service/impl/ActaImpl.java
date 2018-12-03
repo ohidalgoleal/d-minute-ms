@@ -235,9 +235,7 @@ public class ActaImpl implements ActaService {
 					.buscarUsuarioActaProyectoAll(acta.getProyecto().getProyectoId());
 			List<UsuarioActaDto> validacion = listaUsuarioActaResponse.stream()
 					.filter(a -> Objects.equals(a.getActaId(), actaDto.getActaId())).collect(Collectors.toList());
-			List<ElementoDialogoDto> elementoDialogoDto = elementoDialogoService
-					.getListaAllElementoDialogoActa(acta.getActaId());
-			actaDto.setTareaPendiente(elementoDialogoDto);
+			actaDto.setTareaPendiente(elementoDialogoService.getListaAllElementoDialogoActaPendientes(acta.getProyecto().getProyectoId(), acta.getActaId()));
 
 			actaDto.setUsuarioActa(validacion);
 			actaDto.setTemaActa(temaService.listarTemaActa(actaId));

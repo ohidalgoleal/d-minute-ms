@@ -389,6 +389,59 @@ public class CallStoreProcedureImpl {
 			throw new StoredProcedureException(Constants.ERROR_SP_COD, Constants.ERROR_INTERNAL_MENSAJE);
 		}
 	}
+	
+	@ApiOperation("Método encargado de listar todos los elementos de dialogo de un proyecto para el kanban.")
+	public List<ElementoDialogoDto> buscarElementosDialogoTemasDeActaPendientes(long proyectoId, long actaId) {
+		try {
+
+			if (log.isInfoEnabled()) {
+				log.info("CallStoreProcedureImpl.buscarElementosDialogoTemasDeActaPendientes.INIT");
+			}
+			StoredProcedureQuery storedProcedureQuery = em.createStoredProcedureQuery("getelementosdialogopendienteacta");
+			storedProcedureQuery.registerStoredProcedureParameter("_proyectoid", Long.class, ParameterMode.IN);
+			storedProcedureQuery.setParameter("_proyectoid", proyectoId);
+			storedProcedureQuery.registerStoredProcedureParameter("_actaid", Long.class, ParameterMode.IN);
+			storedProcedureQuery.setParameter("_actaid", actaId);
+			storedProcedureQuery.execute();
+			if (log.isInfoEnabled()) {
+				log.info("CallStoreProcedureImpl.buscarElementosDialogoTemasDeActaPendientes.SpEjecutado");
+			}
+			@SuppressWarnings("unchecked")
+			List<Object[]> results = storedProcedureQuery.getResultList();
+			if (log.isInfoEnabled()) {
+				log.info("CallStoreProcedureImpl.buscarElementosDialogoTemasDeActaPendientes.listaElementosDialogo: "
+						+ results.size());
+			}
+			List<ElementoDialogoDto> retorno = null;
+			if (results != null) {
+				retorno = new ArrayList<ElementoDialogoDto>();
+				for (Object[] row : results) {
+					ElementoDialogoDto elementoDialogoDto = new ElementoDialogoDto();
+					elementoDialogoDto.setIdElemento(Long.parseLong(row[0].toString()));
+					Date createdDate = (Date) row[3];
+					elementoDialogoDto.setFechaCompromiso(Utilitario.formatoFecha(createdDate));
+					elementoDialogoDto.setDescripcion(row[1].toString());
+					elementoDialogoDto.setEstado(row[2].toString());
+					elementoDialogoDto.setCodRol(row[6].toString());
+					elementoDialogoDto.setTemaId(Long.parseLong(row[5].toString()));
+					elementoDialogoDto.setUsername(row[7].toString());
+					elementoDialogoDto.setTitulo(row[8].toString());
+					elementoDialogoDto.setSecuencia(row[9].toString());
+					retorno.add(elementoDialogoDto);
+				}
+			}
+			if (log.isInfoEnabled()) {
+				log.info("CallStoreProcedureImpl.buscarElementosDialogoTemasDeActaPendientes.retorno: "
+						+ retorno.toString());
+				log.info("CallStoreProcedureImpl.buscarElementosDialogoTemasDeActaPendientes.FIN");
+			}
+			return retorno;
+
+		} catch (Exception e) {
+			throw new StoredProcedureException(Constants.ERROR_SP_COD, Constants.ERROR_INTERNAL_MENSAJE);
+		}
+	}
+
 
 	public long contarActasProyecto(long proyectoId) {
 		try {
