@@ -17,4 +17,6 @@ public interface ElementoDialogoService {
 	
 	public abstract List<ElementoDialogoDto> getListaAllElementoDialogoProyecto(long proyectoId);
 	
+	public abstract List<ElementoDialogoDto> getListaAllElementoDialogoActaPendientes(long proyectoId, long actaId);
+	
 }

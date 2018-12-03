@@ -1,9 +1,9 @@
 USE `heroku_ddeb90f13531d40`;
-DROP procedure IF EXISTS `getelementosdialogoproyecto`;
+DROP procedure IF EXISTS `getelementosdialogopendienteacta`;
 
 DELIMITER $$
 USE `heroku_ddeb90f13531d40`$$
-CREATE PROCEDURE `getelementosdialogoproyecto`(IN _proyectoid bigint(20))
+CREATE PROCEDURE `getelementosdialogopendienteacta`(IN _proyectoid bigint(20))
 BEGIN
 	
 		if exists(select * from proyecto where proyecto_id =  _proyectoid) then 

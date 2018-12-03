@@ -22,5 +22,6 @@ public class ElementoDialogoDto {
 	private String codRol;	
 	private String titulo;
 	private long correlativo;
+	private String secuencia;
 	
 }

@@ -191,6 +191,29 @@ public class ElementoDialogoImpl implements ElementoDialogoService {
 		return lista;
 	}
 	
+	@Override
+	public List<ElementoDialogoDto> getListaAllElementoDialogoActaPendientes(long proyectoId, long actaId) {
+		if (log.isInfoEnabled()) {
+			log.info("ElementoDialogoImpl.getListaAllElementoDialogoActaPendientes.INIT");
+			log.info("ElementoDialogoImpl.getListaAllElementoDialogoActaPendientes.proyectoId: " + proyectoId);
+			log.info("ElementoDialogoImpl.getListaAllElementoDialogoActaPendientes.actaId: " + actaId);
+		}
+		List<ElementoDialogoDto> lista = new ArrayList<ElementoDialogoDto>();
+		try {
+			lista=callStoreProcedureImpl.buscarElementosDialogoTemasDeActaPendientes(proyectoId, actaId);
+		} catch (Exception ex) {
+			if (log.isErrorEnabled()) {
+				log.info("ElementoDialogoImpl.getListaAllElementoDialogoActaPendientes.ERROR - " + ex.getMessage());
+			}
+			throw ex;
+		}
+		if (log.isInfoEnabled()) {
+			log.info("ElementoDialogoImpl.getListaAllElementoDialogoActaPendientes.lista: " + lista);
+			log.info("ElementoDialogoImpl.getListaAllElementoDialogoProyecto.FIN");
+		}
+		return lista;
+	}
+		
 	private long contarListaAllElementoDialogoActa(long temaId) {
 		long actaId = this.temaService.findByIdTema(temaId).getActaId();
 		return callStoreProcedureImpl.contarElementosDialogoTemasDeActaProyectoAll(actaId) + 1;
