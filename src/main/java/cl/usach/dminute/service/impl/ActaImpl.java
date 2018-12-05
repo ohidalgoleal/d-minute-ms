@@ -85,7 +85,9 @@ public class ActaImpl implements ActaService {
 				Usuario lider = new Usuario();
 				lider.setUsername(guardar.getUsername());
 				acta.setUsuario(lider);
-				acta.setCorrelativo(countActasProyecto(guardar.getProyectoId()));
+				if (acta.getActaId() == 0){
+					acta.setCorrelativo(countActasProyecto(guardar.getProyectoId()));
+				}
 				acta = actaJpa.save(acta);
 			}
 			if (acta == null)
