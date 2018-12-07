@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import cl.usach.dminute.dto.ActaDto;
+import cl.usach.dminute.dto.ActualizaEstadoKanban;
 import cl.usach.dminute.dto.ElementoDialogoDto;
 import cl.usach.dminute.dto.EntradaLista;
 import cl.usach.dminute.dto.EstadoElemento;
@@ -201,6 +202,30 @@ public class BffController {
 			log.info("BffController.listaActaFiltroElemento.FIN");
 		}	
     	return actaDto;
+    }
+    
+    
+    @PostMapping(value="/updateEstadoElementoKanban", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ListarActaDialogica listaActaFiltroElemento(@RequestBody ActualizaEstadoKanban updateElemento){
+    	if(log.isInfoEnabled()) {
+			log.info("BffController.UpdateEstadoElementoKanban.INIT");
+			log.info("BffController.UpdateEstadoElementoKanban.updateElemento:" + updateElemento);
+		}
+    	
+    	elementoDialogoService.actualizaEstadoKanban(updateElemento);
+    	
+    	ListarActaDialogica retorno = new ListarActaDialogica();
+    	List<ElementoDialogoDto> listaKanban = elementoDialogoService.getListaAllElementoDialogoProyecto(updateElemento.getProyectoId());
+		retorno.setKanbanTareasTodo(listaKanban.stream().filter(a -> Objects.equals(a.getEstado(), "TODO" )).collect(Collectors.toList()));
+		retorno.setKanbanTareasDoing(listaKanban.stream().filter(a -> Objects.equals(a.getEstado(), "DOING" )).collect(Collectors.toList()));
+		retorno.setKanbanTareasDone(listaKanban.stream().filter(a -> Objects.equals(a.getEstado(), "DONE" )).collect(Collectors.toList()));
+    	
+
+    	if(log.isInfoEnabled()) {
+			log.info("BffController.UpdateEstadoElementoKanban.ListarActaDialogica:" + retorno.toString());
+			log.info("BffController.UpdateEstadoElementoKanban.FIN");
+		}	
+    	return retorno;
     }
 	
 }
