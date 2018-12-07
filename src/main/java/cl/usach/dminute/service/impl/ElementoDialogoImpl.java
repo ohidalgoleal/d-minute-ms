@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import cl.usach.dminute.dto.ActualizaEstadoKanban;
 import cl.usach.dminute.dto.Constants;
 import cl.usach.dminute.dto.ElementoDialogoDto;
 import cl.usach.dminute.entity.ElementoDialogo;
@@ -212,6 +213,39 @@ public class ElementoDialogoImpl implements ElementoDialogoService {
 			log.info("ElementoDialogoImpl.getListaAllElementoDialogoProyecto.FIN");
 		}
 		return lista;
+	}
+	
+	@Override
+	public void actualizaEstadoKanban(ActualizaEstadoKanban guardar) {
+		if (log.isInfoEnabled()) {
+			log.info("ElementoDialogoImpl.actualizaEstadoKanban.INIT");
+			log.info("ElementoDialogoImpl.actualizaEstadoKanban.elemento: " + guardar.toString());
+		}
+		
+		try {
+			ElementoDialogo elementoDialogo = elementoDialogoJpa.findOne(guardar.getIdElemento());
+			
+			if (elementoDialogo != null) {
+				elementoDialogo.setEstado(guardar.getEstado());
+				if (log.isInfoEnabled()) {
+					log.info("ElementoDialogoImpl.actualizaEstadoKanban.GUARDAR: " + elementoDialogo.toString());
+				}
+				elementoDialogo = elementoDialogoJpa.save(elementoDialogo);
+			}else{
+				throw new Exception();
+			}
+			if (log.isInfoEnabled()) {
+					log.info("ElementoDialogoImpl.actualizaEstadoKanban.elementoDialogo: " + elementoDialogo.toString());
+			}
+		} catch (Exception ex) {
+			if (log.isErrorEnabled()) {
+				log.info("ElementoDialogoImpl.actualizaEstadoKanban.ERROR - " + ex.getMessage());
+			}
+			throw new ValidacionesException(Constants.ERROR_TECNICO_GENERICO_COD, Constants.ERROR_ELEMENTO_ERROR, null);
+		}
+		if (log.isInfoEnabled()) {
+			log.info("ElementoDialogoImpl.actualizaEstadoKanban.FIN");
+		}
 	}
 		
 	private long contarListaAllElementoDialogoActa(long temaId) {
