@@ -1,9 +1,12 @@
 FROM openjdk:8-jdk-alpine
 
-# Install maven
 RUN apk update
 
+# Install maven
 RUN apk add maven
+# Fix zona horaria de Chile
+RUN apk add tzdata
+
 # Add Maintainer Info
 LABEL maintainer="ohidalgoleal@gmail.com"
 
@@ -23,6 +26,7 @@ EXPOSE 8003
 ENV CONFIG_SERVER_DMINUTE=http://172.17.0.6:8888
 ENV EUREKA_ENDPOINT=http://172.17.0.7:1111/eureka
 ENV DOMAIN_NAME=huelen.diinf.usach.cl
+ENV TZ America/Santiago
 
 #Compila app
 RUN mvn clean install
