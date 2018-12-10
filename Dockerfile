@@ -1,6 +1,9 @@
 FROM openjdk:8-jdk-alpine
-#Install Maven
-RUN apt-get update -y && apt-get install maven -y
+
+# Install maven
+RUN apt-get update
+
+RUN apt-get install -y maven
 # Add Maintainer Info
 LABEL maintainer="ohidalgoleal@gmail.com"
 
