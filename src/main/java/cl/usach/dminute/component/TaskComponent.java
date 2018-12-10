@@ -11,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 @Component("taskComponent")
 public class TaskComponent {
 	
-	@Scheduled(fixedDelay=50000)
+	//@Scheduled(fixedDelay=50000)
 	public void doTastk() {
 		
 		if(log.isInfoEnabled()) {

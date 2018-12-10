@@ -8,11 +8,11 @@ import cl.usach.dminute.entity.ElementoDialogo;
 
 public interface ElementoDialogoService {
 
-	public abstract ElementoDialogo guardarModificar(ElementoDialogoDto guardar);
+	public abstract ElementoDialogo guardarModificar(ElementoDialogoDto guardar, String userName);
 	
-	public abstract void actualizaEstadoKanban(ActualizaEstadoKanban guardar);
+	public abstract void actualizaEstadoKanban(ActualizaEstadoKanban guardar, String userName);
 	
-	public abstract void eliminar(ElementoDialogoDto guardar);
+	public abstract void eliminar(ElementoDialogoDto guardar, String userName);
 	
 	public abstract ElementoDialogoDto getElemento(long elementoId);
 	

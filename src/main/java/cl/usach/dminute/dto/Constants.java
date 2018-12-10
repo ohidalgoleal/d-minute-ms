@@ -7,6 +7,7 @@ public class Constants {
     public static final String TOKEN_PREFIX = "Bearer ";
     public static final String HEADER_STRING = "Authorization";
     public static final String OK = "OK";
+    public static final String ACT = "ACT";
 	public static final String ERROR_TECNICO_MENSAJE = "Ha ocurrido un error en el sistema";
 	public static final String ERROR_USUARIO_EXISTE = "El usuario que se intenta guardar ya esta registrado";
 	public static final String ERROR_USUARIO_INVALIDO = "El usuario no existe o su sesion a cadicado";

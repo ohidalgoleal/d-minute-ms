@@ -6,9 +6,9 @@ import cl.usach.dminute.dto.TemaDto;
 
 public interface TemaService {
 	
-	public abstract TemaDto guardarModificar(TemaDto guardar);
+	public abstract TemaDto guardarModificar(TemaDto guardar, String userName);
 	
-	public abstract void eliminar(TemaDto guardar);
+	public abstract void eliminar(TemaDto guardar, String userName);
 	
 	public abstract List<TemaDto> listarTemaActa(long actaId);
 	

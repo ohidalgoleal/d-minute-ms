@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import cl.usach.dminute.configuration.JwtTokenUtil;
 import cl.usach.dminute.dto.ActaDto;
 import cl.usach.dminute.dto.ActualizaEstadoKanban;
 import cl.usach.dminute.dto.ElementoDialogoDto;
@@ -59,6 +60,9 @@ public class BffController {
 	@Autowired
 	@Qualifier("elementoDialogoService")
 	private ElementoDialogoService elementoDialogoService;
+	
+	@Autowired
+    private JwtTokenUtil jwtTokenUtil;
 	
 	@GetMapping(value = "/listarMinutaProyecto/{proyectoid}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ListarActaDialogica listarMinutaProyectoById(@PathVariable(value = "proyectoid") Long proyectoid, HttpServletRequest request) {
@@ -206,13 +210,15 @@ public class BffController {
     
     
     @PostMapping(value="/updateEstadoElementoKanban", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ListarActaDialogica listaActaFiltroElemento(@RequestBody ActualizaEstadoKanban updateElemento){
+    public ListarActaDialogica listaActaFiltroElemento(@RequestBody ActualizaEstadoKanban updateElemento, HttpServletRequest request){
     	if(log.isInfoEnabled()) {
 			log.info("BffController.UpdateEstadoElementoKanban.INIT");
 			log.info("BffController.UpdateEstadoElementoKanban.updateElemento:" + updateElemento);
 		}
     	
-    	elementoDialogoService.actualizaEstadoKanban(updateElemento);
+    	String userName = jwtTokenUtil.getUserToken(request);
+    	
+    	elementoDialogoService.actualizaEstadoKanban(updateElemento, userName);
     	
     	ListarActaDialogica retorno = new ListarActaDialogica();
     	List<ElementoDialogoDto> listaKanban = elementoDialogoService.getListaAllElementoDialogoProyecto(updateElemento.getProyectoId());

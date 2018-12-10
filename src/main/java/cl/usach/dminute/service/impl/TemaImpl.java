@@ -17,6 +17,7 @@ import cl.usach.dminute.entity.Tema;
 import cl.usach.dminute.exception.ValidacionesException;
 import cl.usach.dminute.repository.ActaJpa;
 import cl.usach.dminute.repository.TemaJpa;
+import cl.usach.dminute.service.ActaService;
 import cl.usach.dminute.service.ElementoDialogoService;
 import cl.usach.dminute.service.TemaService;
 import lombok.extern.slf4j.Slf4j;
@@ -37,12 +38,21 @@ public class TemaImpl implements TemaService {
 	@Qualifier("elementoDialogoService")
 	private ElementoDialogoService elementoDialogoService;
 	
+	@Autowired
+	@Qualifier("actaService")
+	private ActaService actaService;
+	
 	@Override
-	public TemaDto guardarModificar(TemaDto guardar) {
+	public TemaDto guardarModificar(TemaDto guardar, String userName) {
 		if (log.isInfoEnabled()) {
 			log.info("TemaImpl.guardarModificar.INIT");
 			log.info("TemaImpl.guardarModificar.tema: " + guardar.toString());
 		}
+		actaService.validarEdicionActa(guardar.getActaId(), userName);
+		if (log.isInfoEnabled()) {
+			log.info("TemaImpl.guardarModificar.usuarioOK: " + userName.toString());
+		}
+		
 		try {
 			Acta acta = actaJpa.findByActaId(guardar.getActaId());
 			if (acta != null) {
@@ -70,11 +80,16 @@ public class TemaImpl implements TemaService {
 	}
 
 	@Override
-	public void eliminar(TemaDto guardar) {
+	public void eliminar(TemaDto guardar, String userName) {
 		if (log.isInfoEnabled()) {
 			log.info("TemaImpl.eliminar.INIT");
 			log.info("TemaImpl.eliminar.tema: " + guardar.toString());
 		}
+		actaService.validarEdicionActa(guardar.getActaId(), userName);
+		if (log.isInfoEnabled()) {
+			log.info("TemaImpl.eliminar.usuarioOK: " + userName.toString());
+		}
+		
 		try {
 			Acta acta = actaJpa.findByActaId(guardar.getActaId());
 			if (acta != null) {
