@@ -16,5 +16,7 @@ public interface ActaService {
 	public abstract ActaDto getActa(long actaId);
 	
 	public abstract ActaDto getActaId(long actaId);
+	
+	public abstract void validarEdicionActa(long actaId, String userName);
 
 }

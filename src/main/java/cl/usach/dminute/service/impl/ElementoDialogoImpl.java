@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import cl.usach.dminute.dto.ActualizaEstadoKanban;
 import cl.usach.dminute.dto.Constants;
 import cl.usach.dminute.dto.ElementoDialogoDto;
+import cl.usach.dminute.dto.TemaDto;
 import cl.usach.dminute.entity.ElementoDialogo;
 import cl.usach.dminute.entity.Tema;
 import cl.usach.dminute.entity.TipoElementoDialogo;
@@ -17,6 +18,7 @@ import cl.usach.dminute.entity.Usuario;
 import cl.usach.dminute.exception.ValidacionesException;
 import cl.usach.dminute.repository.CallStoreProcedureImpl;
 import cl.usach.dminute.repository.ElementoDialogoJpa;
+import cl.usach.dminute.service.ActaService;
 import cl.usach.dminute.service.ElementoDialogoService;
 import cl.usach.dminute.service.TemaService;
 import cl.usach.dminute.util.Utilitario;
@@ -38,13 +40,23 @@ public class ElementoDialogoImpl implements ElementoDialogoService {
 	@Qualifier("callStoreProcedureImpl")
 	private CallStoreProcedureImpl callStoreProcedureImpl;
 	
+	@Autowired
+	@Qualifier("actaService")
+	private ActaService actaService;
+	
 	@Override
-	public ElementoDialogo guardarModificar(ElementoDialogoDto guardar) {
+	public ElementoDialogo guardarModificar(ElementoDialogoDto guardar, String userName) {
 		if (log.isInfoEnabled()) {
 			log.info("ElementoDialogoImpl.guardarModificarElementoDialogo.INIT");
 			log.info("ElementoDialogoImpl.guardarModificarElementoDialogo.elemento: " + guardar.toString());
 		}
 		ElementoDialogo elementoDialogo = null;
+		
+		this.validarEdicionActa(guardar.getTemaId(), userName);
+		
+		if (log.isInfoEnabled()) {
+			log.info("ElementoDialogoImpl.guardarModificarElementoDialogo.usuarioOK: " + userName.toString());
+		}
 		
 		try {
 			if (temaService.findByIdTema(guardar.getTemaId()) != null) {
@@ -94,14 +106,15 @@ public class ElementoDialogoImpl implements ElementoDialogoService {
 	}
 
 	@Override
-	public void eliminar(ElementoDialogoDto guardar) {
+	public void eliminar(ElementoDialogoDto guardar, String userName) {
 		if (log.isInfoEnabled()) {
 			log.info("ElementoDialogoImpl.eliminar.INIT");
 			log.info("ElementoDialogoImpl.eliminar.elemento: " + guardar.toString());
 		}
+		
 		try {
 			guardar.setEstado(Constants.estadoEliminadoElementoDialogo);
-			guardarModificar(guardar);
+			guardarModificar(guardar,userName);
 		} catch (Exception ex) {
 			if (log.isErrorEnabled()) {
 				log.info("ElementoDialogoImpl.eliminar.ERROR - " + ex.getMessage());
@@ -216,7 +229,7 @@ public class ElementoDialogoImpl implements ElementoDialogoService {
 	}
 	
 	@Override
-	public void actualizaEstadoKanban(ActualizaEstadoKanban guardar) {
+	public void actualizaEstadoKanban(ActualizaEstadoKanban guardar, String userName) {
 		if (log.isInfoEnabled()) {
 			log.info("ElementoDialogoImpl.actualizaEstadoKanban.INIT");
 			log.info("ElementoDialogoImpl.actualizaEstadoKanban.elemento: " + guardar.toString());
@@ -245,6 +258,20 @@ public class ElementoDialogoImpl implements ElementoDialogoService {
 		}
 		if (log.isInfoEnabled()) {
 			log.info("ElementoDialogoImpl.actualizaEstadoKanban.FIN");
+		}
+	}
+	
+	private void validarEdicionActa(long temaId, String userName) {
+		if (log.isInfoEnabled()) {
+			log.info("ElementoDialogoImpl.validarEdicionActa.INIT");
+			log.info("ElementoDialogoImpl.validarEdicionActa.elementoId: " + temaId);
+		}
+		TemaDto tema = temaService.findByIdTema(temaId);
+		if (tema != null){
+			actaService.validarEdicionActa(tema.getActaId(), userName);
+		}
+		if (log.isInfoEnabled()) {
+			log.info("ElementoDialogoImpl.validarEdicionActa.FINOK");
 		}
 	}
 		

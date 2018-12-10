@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import cl.usach.dminute.dto.ElementoDialogoDto;
 import cl.usach.dminute.entity.*;
 import cl.usach.dminute.service.*;
 import cl.usach.dminute.util.Utilitario;
@@ -55,19 +54,16 @@ public class ActaImpl implements ActaService {
 	@Qualifier("elementoDialogoService")
 	private ElementoDialogoService elementoDialogoService;
 
-	private static final String ACT = "ACT";
-
 	@Override
 	public Acta guardarModificar(ActaDto guardar, String userName) {
 		if (log.isInfoEnabled()) {
 			log.info("ActaImpl.guardarModificarActa.INIT");
 			log.info("ActaImpl.guardarModificarActa.acta: " + guardar.toString());
 		}
-		if (guardar.getActaId() > 0)
-			if (!callStoreProcedureImpl.validaPermiso(guardar.getActaId(), userName, ACT))
-				throw new ValidacionesException(Constants.ERROR_PERMISO_GENERICO_COD, Constants.ERROR_PERMISO_ERROR,
-						null);
-
+		validarEdicionActa(guardar.getActaId(), userName);
+		if (log.isInfoEnabled()) {
+			log.info("ActaImpl.guardarModificarActa.usuarioOK: " + userName.toString());
+		}
 		Acta acta = null;
 		List<UsuarioActaDto> listaUsuario = guardar.getUsuarioActa();
 		try {
@@ -148,9 +144,10 @@ public class ActaImpl implements ActaService {
 			log.info("ActaImpl.eliminarActa.INIT");
 			log.info("ActaImpl.eliminarActa.acta: " + guardar.toString());
 		}
-		if (!callStoreProcedureImpl.validaPermiso(guardar.getActaId(), userName, ACT))
-			throw new ValidacionesException(Constants.ERROR_PERMISO_GENERICO_COD, Constants.ERROR_PERMISO_ERROR, null);
-
+		validarEdicionActa(guardar.getActaId(), userName);
+		if (log.isInfoEnabled()) {
+			log.info("ActaImpl.eliminarActa.usuarioOK: " + userName.toString());
+		}
 		Acta acta = null;
 		try {
 			if (proyectoJpa.findByProyectoId(guardar.getProyectoId()) != null) {
@@ -255,6 +252,14 @@ public class ActaImpl implements ActaService {
 		}
 		return actaDto;
 	}
+	
+	@Override
+	public void validarEdicionActa(long actaId, String userName) {
+		if (actaId > 0)
+			if (!callStoreProcedureImpl.validaPermiso(actaId, userName, Constants.ACT))
+				throw new ValidacionesException(Constants.ERROR_PERMISO_GENERICO_COD, Constants.ERROR_PERMISO_ERROR,
+						null);
+	}
 
 	public ActaDto getActaId(long actaId) {
 		if (log.isInfoEnabled()) {
@@ -295,7 +300,11 @@ public class ActaImpl implements ActaService {
 	}
 
 	private long countActasProyecto(long proyectoId) {
-		return callStoreProcedureImpl.contarActasProyecto(proyectoId) + 1;
+		long numero = callStoreProcedureImpl.contarActasProyecto(proyectoId);
+		if (numero == 0)
+			return 1;
+		else
+			return numero + 1;
 	}
 
 }

@@ -1,5 +1,7 @@
 package cl.usach.dminute.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import cl.usach.dminute.configuration.JwtTokenUtil;
 import cl.usach.dminute.dto.Constants;
 import cl.usach.dminute.dto.ElementoDialogoDto;
 import cl.usach.dminute.dto.SalidaDto;
@@ -27,14 +30,20 @@ public class ElementoDialogoController {
 	@Qualifier("elementoDialogoService")
 	private ElementoDialogoService elementoDialogoService;
 	
+	@Autowired
+    private JwtTokenUtil jwtTokenUtil;
+	
 	@PostMapping(value = "/guardarElementoDialogoTema", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> registrar(@RequestBody ElementoDialogoDto nuevaElemento) {
+    public ResponseEntity<?> registrar(@RequestBody ElementoDialogoDto nuevaElemento, HttpServletRequest request) {
 		
 		if(log.isInfoEnabled()) {
 			log.info("ElementoDialogoController.registrar.INIT");
 			log.info("ElementoDialogoController.registrar.elementoDialogo:" + nuevaElemento.toString());
 		}
-		elementoDialogoService.guardarModificar(nuevaElemento);
+		
+		String userName = jwtTokenUtil.getUserToken(request);
+		
+		elementoDialogoService.guardarModificar(nuevaElemento, userName);
 		if(log.isInfoEnabled()) {
 			log.info("ElementoDialogoController.registrar.FIN");
 		}		
@@ -42,13 +51,17 @@ public class ElementoDialogoController {
 	}
 	
 	@PostMapping(value = "/eliminarElementoDialogoTema", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> eliminar(@RequestBody ElementoDialogoDto deleteElemento) {
+    public ResponseEntity<?> eliminar(@RequestBody ElementoDialogoDto deleteElemento, HttpServletRequest request) {
 		
 		if(log.isInfoEnabled()) {
 			log.info("ElementoDialogoController.eliminar.INIT");
 			log.info("ElementoDialogoController.eliminar.elementoDialogo:" + deleteElemento.toString());
 		}
-		elementoDialogoService.eliminar(deleteElemento);
+		
+		String userName = jwtTokenUtil.getUserToken(request);
+		
+		elementoDialogoService.eliminar(deleteElemento,userName);
+		
 		if(log.isInfoEnabled()) {
 			log.info("ElementoDialogoController.eliminar.FIN");
 		}		
