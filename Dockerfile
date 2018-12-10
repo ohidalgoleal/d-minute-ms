@@ -8,12 +8,10 @@ RUN apk add maven
 LABEL maintainer="ohidalgoleal@gmail.com"
 
 # Add a volume pointing to /tmp
-RUN mkdir /usr/src/app
-
-WORKDIR /usr/src/app
+VOLUME /tmp
 
 # add app
-COPY . /usr/src/app
+COPY . .
 
 # Make port 8001 available to the world outside this container
 EXPOSE 8003
