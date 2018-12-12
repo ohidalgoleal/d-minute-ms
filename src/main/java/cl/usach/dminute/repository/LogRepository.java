@@ -5,9 +5,9 @@ import java.io.Serializable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import cl.usach.dminute.entity.Log;
+import cl.usach.dminute.entity.LoggDminute;
 
 @Repository("logRepository")
-public interface LogRepository extends JpaRepository<Log, Serializable>{
+public interface LogRepository extends JpaRepository<LoggDminute, Serializable>{
 
 }

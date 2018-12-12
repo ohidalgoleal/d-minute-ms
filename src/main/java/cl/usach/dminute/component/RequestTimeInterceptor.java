@@ -13,10 +13,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import cl.usach.dminute.configuration.JwtTokenUtil;
+import cl.usach.dminute.entity.LoggDminute;
 import cl.usach.dminute.repository.LogRepository;
 import lombok.extern.slf4j.Slf4j;
 
-// TODO: Auto-generated Javadoc
 /** The Constant log. */
 @Slf4j
 @Component("requestTimeInterceptor")
@@ -31,9 +31,6 @@ public class RequestTimeInterceptor extends HandlerInterceptorAdapter {
 	@Qualifier("logRepository")
 	private LogRepository logRepository;
 
-	/* (non-Javadoc)
-	 * @see org.springframework.web.servlet.handler.HandlerInterceptorAdapter#preHandle(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, java.lang.Object)
-	 */
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
@@ -42,9 +39,6 @@ public class RequestTimeInterceptor extends HandlerInterceptorAdapter {
 		return true;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.springframework.web.servlet.handler.HandlerInterceptorAdapter#afterCompletion(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, java.lang.Object, java.lang.Exception)
-	 */
 	@Override
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
 			throws Exception {
@@ -52,8 +46,6 @@ public class RequestTimeInterceptor extends HandlerInterceptorAdapter {
 		if(log.isInfoEnabled()) {
 			log.info("RequestTimeInterceptor.afterCompletion.INI");
 		}
-		
-		//long startTime = (long)request.getAttribute("startTime");
 		
 		String userName = jwtTokenUtil.getUserToken(request);
 		
@@ -66,7 +58,7 @@ public class RequestTimeInterceptor extends HandlerInterceptorAdapter {
 		}
 			
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		cl.usach.dminute.entity.Log logtb =new cl.usach.dminute.entity.Log();
+		LoggDminute logtb =new LoggDminute();
 		
 		logtb.setDetalle(auth.getDetails().toString());
 		logtb.setFecha(new Date());

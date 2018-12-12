@@ -21,7 +21,7 @@ import lombok.ToString;
 @ToString
 @Entity
 @Table(name = "log")
-public class Log {
+public class LoggDminute {
 	
 	@Id
 	@GeneratedValue

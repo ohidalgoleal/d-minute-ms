@@ -1,9 +1,20 @@
 FROM openjdk:8-jdk-alpine
+
+RUN apk update
+
+# Install maven
+RUN apk add maven
+# Fix zona horaria de Chile
+RUN apk add tzdata
+
 # Add Maintainer Info
 LABEL maintainer="ohidalgoleal@gmail.com"
 
 # Add a volume pointing to /tmp
 VOLUME /tmp
+
+# add app
+COPY . .
 
 # Make port 8001 available to the world outside this container
 EXPOSE 8003
@@ -15,12 +26,10 @@ EXPOSE 8003
 ENV CONFIG_SERVER_DMINUTE=http://172.17.0.6:8888
 ENV EUREKA_ENDPOINT=http://172.17.0.7:1111/eureka
 ENV DOMAIN_NAME=huelen.diinf.usach.cl
+ENV TZ America/Santiago
 
-# The application's jar file
-ARG JAR_FILE=target/d-minute-ms-2.0.0.jar
-
-# Add the application's jar to the container
-ADD ${JAR_FILE} d-minute-ms.jar
+#Compila app
+RUN mvn clean install
 
 # Run the jar file 
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-Dspring.profiles.active=docker","-jar","/d-minute-ms.jar"]
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-Dspring.profiles.active=docker","-jar","/target/d-minute-ms-2.0.0.jar"]
