@@ -32,7 +32,7 @@ ENV TZ America/Santiago
 RUN mvn clean install
 
 # The application's jar file
-ARG JAR_FILE=target/d-minute-ms-2.0.0.jar
+ARG JAR_FILE=./target/d-minute-ms-2.0.0.jar
 
 # Add the application's jar to the container
 ADD ${JAR_FILE} d-minute-ms.jar
