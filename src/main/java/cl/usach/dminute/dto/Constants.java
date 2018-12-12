@@ -6,11 +6,16 @@ public class Constants {
     public static final String SIGNING_KEY = "devglan123r";
     public static final String TOKEN_PREFIX = "Bearer ";
     public static final String HEADER_STRING = "Authorization";
+    public static final String HEADER_ORIGEN = "Origen";
+    public static final String ORIGEN_DMINUTE = "DMINUTE";
+    public static final String ORIGEN_GOOGLE = "GOOGLE";
     public static final String OK = "OK";
     public static final String ACT = "ACT";
 	public static final String ERROR_TECNICO_MENSAJE = "Ha ocurrido un error en el sistema";
 	public static final String ERROR_USUARIO_EXISTE = "El usuario que se intenta guardar ya esta registrado";
+	public static final String ERROR_USUARIO_EXISTE_GOOGLE = "El usuario no puede acceder de esta forma, utilice inicio de sesion normal";
 	public static final String ERROR_USUARIO_INVALIDO = "El usuario no existe o su sesion a cadicado";
+	public static final String ERROR_USUARIO_NR = "El usuario no esta registrado en D-Minute, registre su información";
 	public static final String ERROR_USUARIO_NOK = "Usuario o contraseña invalido, verifique su información";
 	public static final String ERROR_PROYECTO_ERROR = "No ha sido posible guardar el proyecto, intenta mas tarde";
 	public static final String ERROR_ACTA_ERROR = "No ha sido posible guardar el acta asociada al proyecto, intenta mas tarde";

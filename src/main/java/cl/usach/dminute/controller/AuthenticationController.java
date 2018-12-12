@@ -2,11 +2,15 @@ package cl.usach.dminute.controller;
 
 import cl.usach.dminute.configuration.JwtTokenUtil;
 import cl.usach.dminute.dto.AuthTokenDto;
+import cl.usach.dminute.dto.Constants;
 import cl.usach.dminute.dto.LoginUserDto;
 import cl.usach.dminute.dto.SalidaDto;
 import cl.usach.dminute.entity.Usuario;
 import cl.usach.dminute.service.UsuarioService;
 import lombok.extern.slf4j.Slf4j;
+
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -45,22 +49,7 @@ public class AuthenticationController {
 			log.info("AuthenticationController.generate-token.getUsername:" + loginUser.getUsername());
 		}
     	
-        final Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        loginUser.getUsername(),
-                        loginUser.getPassword()
-                )
-        );
-        if(log.isInfoEnabled()) {
-			log.info("AuthenticationController.generate-token.Validacion.OK");
-		}
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        final Usuario user = usuarioService.findOne(loginUser.getUsername());
-        final String token = jwtTokenUtil.generateToken(user);
-        if(log.isInfoEnabled()) {
-			log.info("AuthenticationController.generate-token.Token.OK");
-		}
-        return ResponseEntity.ok(new AuthTokenDto(token));
+        return ResponseEntity.ok(new AuthTokenDto(validaGeneraToken(loginUser)));
     }
     
     @PostMapping(value="/usuarioGuardar", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -75,5 +64,45 @@ public class AuthenticationController {
 		}
         return ResponseEntity.ok(new SalidaDto());
     }
+    
+   @PostMapping(value = "/userOauth", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> userOauth(@RequestBody LoginUserDto loginUser) throws AuthenticationException, GeneralSecurityException, IOException {
+
+    	if(log.isInfoEnabled()) {
+			log.info("AuthenticationController.userOauth.INIT");
+			log.info("AuthenticationController.userOauth.loginUser:" + loginUser.toString());
+		}
+    	
+    	loginUser.setPassword(Constants.ORIGEN_GOOGLE);
+    	usuarioService.userOauth(loginUser);
+    	
+        return ResponseEntity.ok(new AuthTokenDto(validaGeneraToken(loginUser)));
+    }
+	
+	private String validaGeneraToken(LoginUserDto loginUser) {
+		
+		if(log.isInfoEnabled()) {
+			log.info("AuthenticationController.validaGeneraToken.INI");
+		}
+		
+		final Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        loginUser.getUsername(),
+                        loginUser.getPassword()
+                )
+        );
+    	
+        if(log.isInfoEnabled()) {
+			log.info("AuthenticationController.GeneraToken");
+		}
+        
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        final Usuario user = usuarioService.findOne(loginUser.getUsername());
+        final String token = jwtTokenUtil.generateToken(user);
+        if(log.isInfoEnabled()) {
+			log.info("AuthenticationController.validaGeneraToken.Token.OK");
+		}
+        return token;
+	}
 
 }
