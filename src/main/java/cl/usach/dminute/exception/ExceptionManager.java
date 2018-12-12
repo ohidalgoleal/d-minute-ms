@@ -114,6 +114,33 @@ public class ExceptionManager {
 	        return response;
 	}
 	
+	/**
+	 * Metodo encargado de tratar excepcion de Usuario 
+	 * 
+	 * @param UsPersonException
+	 * @return ResponseEntity<Object>
+	 */
+	@ExceptionHandler(UsPersonException.class)
+	private ResponseEntity<Object> manageAuthenticationSystemFaultException(UsPersonException e){
+		 ResponseEntity response = null;
+	        String mensaje = null;
+	        String codigo = null;
+	        HttpStatus status = null;
+
+	        mensaje = e.getMensaje();
+	        codigo = e.getCodigo();
+	        status = HttpStatus.PRECONDITION_REQUIRED;
+	        ErrorDto errorDto = ErrorDto.builder()
+	                .codigo(codigo)
+	                .mensaje(mensaje)
+	                .build();
+
+	        HttpHeaders headers = new HttpHeaders();
+	        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+	        response = new ResponseEntity<>(errorDto, headers, status);
+	        return response;
+	}
+	
 	@ExceptionHandler({Exception.class})
     private ResponseEntity<Object> manageExceptions(Exception e) {
         ResponseEntity response = null;

@@ -29,4 +29,6 @@ public class Usuario {
 	private String apellido;
 	@Column(name = "password")
 	private String password;
+	@Column(name = "origen")
+	private String origen;
 }

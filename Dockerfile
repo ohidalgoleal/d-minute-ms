@@ -17,7 +17,7 @@ ENV EUREKA_ENDPOINT=http://172.17.0.7:1111/eureka
 ENV DOMAIN_NAME=huelen.diinf.usach.cl
 
 # The application's jar file
-ARG JAR_FILE=target/d-minute-ms-1.0.0.jar
+ARG JAR_FILE=target/d-minute-ms-2.0.0.jar
 
 # Add the application's jar to the container
 ADD ${JAR_FILE} d-minute-ms.jar

@@ -10,12 +10,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
-
-import cl.usach.dminute.dto.Constants;
-import cl.usach.dminute.exception.UsPersonException;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -25,6 +21,7 @@ import java.io.IOException;
 import java.util.Arrays;
 
 import static cl.usach.dminute.dto.Constants.HEADER_STRING;
+import static cl.usach.dminute.dto.Constants.HEADER_ORIGEN;
 import static cl.usach.dminute.dto.Constants.TOKEN_PREFIX;
 
 @Slf4j
@@ -42,7 +39,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 			log.info("JwtAuthenticationFilter.doFilterInternal.INIT");
 		}
     	String header = req.getHeader(HEADER_STRING);
-        String username = null;
+    	String origen = req.getHeader(HEADER_ORIGEN);
+    	
+    	String username = null;
         String authToken = null;
         if (header != null && header.startsWith(TOKEN_PREFIX)) {
             authToken = header.replace(TOKEN_PREFIX,"");
@@ -55,12 +54,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             } catch(SignatureException e){
                 logger.error("Authentication Failed. Username or Password not valid.");
             }
-        } else {
-            logger.warn("couldn't find bearer string, will ignore the header");
-        }
+        } 
+        
         if(log.isInfoEnabled()) {
 			log.info("JwtAuthenticationFilter.doFilterInternal.AntesDeValidar: " + username);
+			log.info("JwtAuthenticationFilter.doFilterInternal.origen: " + origen);
 		}
+        
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
         	
         	if(log.isInfoEnabled()) {

@@ -9,8 +9,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import cl.usach.dminute.dto.Constants;
+import cl.usach.dminute.dto.LoginUserDto;
 import cl.usach.dminute.entity.Usuario;
-import cl.usach.dminute.exception.ErrorTecnicoException;
 import cl.usach.dminute.exception.UsPersonException;
 import cl.usach.dminute.repository.UsuarioJpa;
 import cl.usach.dminute.service.UsuarioService;
@@ -38,7 +38,7 @@ public class UsuarioImpl implements UserDetailsService, UsuarioService {
 		}
 		Usuario user = usuarioJpa.findByUsername(userId);
 		if(user == null){
-			throw new UsPersonException(Constants.ERROR_USUARIO_EXISTE_COD,"Invalid username or password.");
+			throw new UsPersonException(Constants.ERROR_USUARIO_EXISTE_COD,"Usuario o Password invalido.");
 		}
 		if(log.isInfoEnabled()) {
 			log.info("UsuarioImpl.loadUserByUsername.user: " + user);
@@ -77,8 +77,8 @@ public class UsuarioImpl implements UserDetailsService, UsuarioService {
 		}
 		Usuario retorno = usuarioJpa.findByUsername(username);
 		if(retorno == null){
-			log.info("UsuarioImpl.findOne.ERROR: " + Constants.ERROR_USUARIO_EXISTE_COD + "Invalid username.");	
-			return null;
+			log.info("UsuarioImpl.findOne.ERROR: " + Constants.ERROR_USUARIO_EXISTE_COD + "Usuario invalido.");	
+			throw new UsPersonException(Constants.ERROR_USUARIO_EXISTE_COD, Constants.ERROR_USUARIO_NR);
 		}
 		if(log.isInfoEnabled()) {
 			log.info("UsuarioImpl.findOne.FIN: " + retorno.toString());
@@ -100,10 +100,54 @@ public class UsuarioImpl implements UserDetailsService, UsuarioService {
 			if (validacion == null)
 				return usuarioJpa.save(user);
 			else
-				throw new ErrorTecnicoException(Constants.ERROR_USUARIO_EXISTE_COD, Constants.ERROR_USUARIO_EXISTE);
+				throw new UsPersonException(Constants.ERROR_USUARIO_EXISTE_COD, Constants.ERROR_USUARIO_EXISTE);
 		}catch(Exception ex) {
 			if(log.isErrorEnabled()) {
 				log.info("UsuarioImpl.save.ERROR - " + ex.getMessage());			
+			}	
+			throw ex;
+		}	
+    }
+	
+	@Override
+    public Usuario userOauth(LoginUserDto user) {
+		if(log.isInfoEnabled()) {
+			log.info("UsuarioImpl.userOauth.INIT");
+			log.info("UsuarioImpl.userOauth.user: " + user.toString());
+		}
+		try {
+			
+			Usuario validacion = usuarioJpa.findByUsername(user.getUsername()); 
+			if (validacion != null) {
+				if(log.isInfoEnabled()) {
+					log.info("UsuarioImpl.userOauth.usuarioExiste");
+				}
+				if ((validacion.getOrigen() == null) || (!validacion.getOrigen().toString().equals(Constants.ORIGEN_GOOGLE))) {
+					if(log.isInfoEnabled()) {
+						log.info("UsuarioImpl.userOauth.usuario.existente");
+					}
+					throw new UsPersonException(Constants.ERROR_USUARIO_EXISTE_COD, Constants.ERROR_USUARIO_EXISTE_GOOGLE);
+				}
+				else {
+					if(log.isInfoEnabled()) {
+						log.info("UsuarioImpl.userOauth.usuario.Oauth");
+					}
+					return validacion;
+				}
+			}
+			if(log.isInfoEnabled()) {
+				log.info("UsuarioImpl.userOauth.guardar");
+			}
+			Usuario usuario = new Usuario();
+			usuario.setUsername(user.getUsername());
+			usuario.setPassword(passwordEncoder.encode(user.getPassword()));
+			usuario.setNombre(user.getName().toUpperCase());
+			usuario.setApellido("");
+			usuario.setOrigen(Constants.ORIGEN_GOOGLE);
+			return usuarioJpa.save(usuario);
+		}catch(Exception ex) {
+			if(log.isErrorEnabled()) {
+				log.info("UsuarioImpl.userOauth.ERROR - " + ex.getMessage());			
 			}	
 			throw ex;
 		}	

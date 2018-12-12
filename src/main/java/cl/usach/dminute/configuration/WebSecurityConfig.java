@@ -33,11 +33,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Resource(name = "usuarioService")
     private UserDetailsService userDetailsService;
-
-    @Autowired
+    
+	@Autowired
     private JwtAuthenticationEntryPoint unauthorizedHandler;
 
-    @Override
+	@Override
     @Bean
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
@@ -65,6 +65,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/assets/**").permitAll()
                 .antMatchers("/sign-on").permitAll()
                 .antMatchers("/token/*").permitAll()
+                .antMatchers("/token/userOauth").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()

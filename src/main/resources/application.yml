@@ -52,12 +52,22 @@ spring:
     username: root
     password: 123456     
 #Security properties      
-security: 
-  oauth2:
-    resource:
-      service-id: resource
-      prefer-token-info: true   
 
+security:
+  oauth2:
+    client:
+      clientId: 1078712008081-tgdr6je72gotima3c66uli90he8g5lmg.apps.googleusercontent.com
+      clientSecret: 7Z_OER2G0YV-DhVPuA8ZEesH
+      accessTokenUri: https://www.googleapis.com/oauth2/v3/token
+      userAuthorizationUri: https://accounts.google.com/o/oauth2/auth
+      clientAuthenticationScheme: form
+      scope:
+        - openid
+        - email
+        - profile
+    resource:
+      userInfoUri: https://www.googleapis.com/oauth2/v3/userinfo
+      preferTokenInfo: true
 ---
 spring:
   profiles: heroku
