@@ -36,6 +36,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     
 	@Autowired
     private JwtAuthenticationEntryPoint unauthorizedHandler;
+	
 
 	@Override
     @Bean
