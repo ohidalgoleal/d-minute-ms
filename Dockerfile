@@ -28,8 +28,5 @@ ENV EUREKA_ENDPOINT=http://172.17.0.7:1111/eureka
 ENV DOMAIN_NAME=huelen.diinf.usach.cl
 ENV TZ America/Santiago
 
-#Compila app
-RUN mvn clean install
-
 # Run the jar file 
 ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-Dspring.profiles.active=docker","-jar","/target/d-minute-ms-2.0.0.jar"]
