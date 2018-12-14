@@ -85,6 +85,9 @@ public class ElementoDialogoImpl implements ElementoDialogoService {
 				if (elementoDialogo.getId() == 0) {
 					elementoDialogo.setCorrelativo(this.contarListaAllElementoDialogoActa(guardar.getTemaId()));
 				}
+				else{
+					elementoDialogo.setCorrelativo(guardar.getCorrelativo());
+				}
 				elementoDialogo = elementoDialogoJpa.save(elementoDialogo);
 			}			
 			if (elementoDialogo == null)
@@ -141,6 +144,7 @@ public class ElementoDialogoImpl implements ElementoDialogoService {
 				}
 				elementoDialogoDto = new ElementoDialogoDto();
 				elementoDialogoDto.setCodRol(elementoDialogo.getTipoElementoDialogo().getCodRol());
+				elementoDialogoDto.setCorrelativo(elementoDialogo.getCorrelativo());
 				elementoDialogoDto.setDescripcion(elementoDialogo.getDescripcion());
 				elementoDialogoDto.setEstado(elementoDialogo.getEstado());
 				elementoDialogoDto.setFechaCompromiso(Utilitario.formatoFecha(elementoDialogo.getFechaCompromiso()));

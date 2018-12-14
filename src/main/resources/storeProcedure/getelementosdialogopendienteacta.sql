@@ -31,7 +31,6 @@ BEGIN
             WHERE el.tema_id in (select id from tema inner join acta on tema.acta_acta_id = acta.acta_id where acta.proyecto_proyecto_id =  _proyectoid)
             AND el.estado not in ( "DELE", "DONE")
             AND ac.acta_id <> _actaid
-            AND ac.fecha  < _fechaActa
             ORDER BY ac.fecha, el.fecha_compromiso;
 
         end if;

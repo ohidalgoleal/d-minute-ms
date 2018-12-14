@@ -330,9 +330,9 @@ public class CallStoreProcedureImpl {
 					retorno = true;
 			}
 			if (log.isInfoEnabled()) {
-				log.info("CallStoreProcedureImpl.buscarElementosDialogoTemasDeActaProyectoAll.retorno: "
+				log.info("CallStoreProcedureImpl.validaPermiso.retorno: "
 						+ retorno.toString());
-				log.info("CallStoreProcedureImpl.buscarElementosDialogoTemasDeActaProyectoAll.FIN");
+				log.info("CallStoreProcedureImpl.validaPermiso.FIN");
 			}
 			return retorno;
 		} catch (Exception e) {

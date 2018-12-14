@@ -55,6 +55,8 @@ public class ProyectoImpl implements ProyectoService {
 		}
 		Proyecto proyecto = new Proyecto();
 		try {
+			if (guardar.getDescripcion() == null)
+				guardar.setDescripcion("");
 			proyecto.setDescripcion(guardar.getDescripcion().toUpperCase());
 			proyecto.setFechaFin(Utilitario.formatoFecha(guardar.getFechaFin()));
 			proyecto.setFechaInicio(Utilitario.formatoFecha(guardar.getFechaInicio()));
