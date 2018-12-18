@@ -16,7 +16,7 @@ VOLUME /tmp
 # add app
 COPY . .
 
-# Make port 8001 available to the world outside this container
+# Make port 8003 available to the world outside this container
 EXPOSE 8003
 
 # Fix zona horaria de Chile

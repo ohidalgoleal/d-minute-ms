@@ -89,13 +89,43 @@ spring:
     password: c9b30dca
     
 ---
-spring:
+spring: 
   profiles: docker
+  application:
+    name: dminutems 
+  aop:
+    auto: true
+    proxy-target-class: false
+  messages:
+    always-use-message-format: false
+    basename: messages
+    cache-seconds: -1
+  mvc:
+    async:
+      request-timeout: 300
+    date-format: DD/MM/YYYY
+    favicon:
+      enabled: true
+    dispatch-options-request: true
+    dispatch-trace-request: false
+  couchbase:
+    bucket:
+      name: default
+  jpa:
+    database: mysql
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+      naming:
+        strategy: org.hibernate.cfg.ImprovedNamingStrategy
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect 
   datasource:
     url: jdbc:mysql://172.17.0.2/heroku_ddeb90f13531d40?useSSL=false
     username: bb0c481c17d801
-    password: 548aed1858602ac
+    password: 548aed1858602ac   
 eureka:
   instance:
     hostname: ${DOMAIN_NAME}
-    nonSecurePort: 80
+    nonSecurePort: 80 
