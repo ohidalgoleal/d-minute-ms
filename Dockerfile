@@ -24,7 +24,7 @@ EXPOSE 8003
 #ENV TZ America/Santiago
 
 ENV CONFIG_SERVER_DMINUTE=http://172.17.0.6:8888
-ENV EUREKA_ENDPOINT=http://172.17.0.7:1111/eureka
+ENV EUREKA_ENDPOINT=http://172.17.0.5:1111/eureka
 ENV DOMAIN_NAME=huelen.diinf.usach.cl
 ENV TZ America/Santiago
 
