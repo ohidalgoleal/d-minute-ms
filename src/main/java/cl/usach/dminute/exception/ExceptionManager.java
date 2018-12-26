@@ -10,12 +10,14 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import cl.usach.dminute.dto.Constants;
 import cl.usach.dminute.dto.ErrorDto;
+import lombok.extern.slf4j.Slf4j;
 
 /** 
  * 
  * Exception Manager 
  * 
  */
+@Slf4j
 @ControllerAdvice
 public class ExceptionManager {
 
@@ -28,6 +30,11 @@ public class ExceptionManager {
 	 */
 	@ExceptionHandler(ValidacionesException.class)
 	private ResponseEntity<Object> manageValidacionesEntradaException(ValidacionesException e){
+		
+		if(log.isInfoEnabled()) {
+			log.error("ExceptionManager.ValidacionesException.Error:" + e.getMessage() );
+		}
+		
 		ResponseEntity response = null;
         String mensaje = null;
         String codigo = null;
@@ -55,6 +62,11 @@ public class ExceptionManager {
 	 */
 	@ExceptionHandler(StoredProcedureException.class)
 	private ResponseEntity<Object> manageRegistroNotFoundException(StoredProcedureException e){
+		
+		if(log.isInfoEnabled()) {
+			log.error("ExceptionManager.StoredProcedureException.Error:" + e.getMessage() );
+		}
+		
         ResponseEntity response = null;
         String mensaje = null;
         String codigo = null;
@@ -77,6 +89,11 @@ public class ExceptionManager {
 	
 	@ExceptionHandler(EnvioCorreoException.class)
 	private ResponseEntity<Object> manageEnvioCorreoException(EnvioCorreoException e) {
+		
+		if(log.isInfoEnabled()) {
+			log.error("ExceptionManager.EnvioCorreoException.Error:" + e.getMessage() );
+		}
+		
 		ErrorDto errorDto = ErrorDto.builder()
 				.codigo(e.getCodigo())
 				.mensaje(e.getMensaje())
@@ -95,6 +112,11 @@ public class ExceptionManager {
 	 */
 	@ExceptionHandler(ErrorTecnicoException.class)
 	private ResponseEntity<Object> manageAuthenticationSystemFaultException(ErrorTecnicoException e){
+		
+		if(log.isInfoEnabled()) {
+			log.error("ExceptionManager.ErrorTecnicoException.Error:" + e.getMessage() );
+		}
+		
 		 ResponseEntity response = null;
 	        String mensaje = null;
 	        String codigo = null;
@@ -122,6 +144,11 @@ public class ExceptionManager {
 	 */
 	@ExceptionHandler(UsPersonException.class)
 	private ResponseEntity<Object> manageAuthenticationSystemFaultException(UsPersonException e){
+		
+		if(log.isInfoEnabled()) {
+			log.error("ExceptionManager.UsPersonException.Error:" + e.getMessage() );
+		}
+		
 		 ResponseEntity response = null;
 	        String mensaje = null;
 	        String codigo = null;
@@ -143,6 +170,11 @@ public class ExceptionManager {
 	
 	@ExceptionHandler({Exception.class})
     private ResponseEntity<Object> manageExceptions(Exception e) {
+		
+		if(log.isInfoEnabled()) {
+			log.error("ExceptionManager.Exception.Error:" + e.getMessage() );
+		}
+		
         ResponseEntity response = null;
         String mensaje = null;
         String codigo = null;

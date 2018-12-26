@@ -11,10 +11,12 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class LoginUserDto {
+public class UserInfoOauth {
+	
+	private String name;
+	private String given_name;
+	private String family_name;
+	private String email;
+	private boolean email_verified;
 
-    private String username;
-    private String password;
-    private String name;
-    private String token;
 }

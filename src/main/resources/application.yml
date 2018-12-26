@@ -21,7 +21,7 @@ spring:
     name: dminutems 
   aop:
     auto: true
-    proxy-target-class: false
+    proxy-target-class: true
   messages:
     always-use-message-format: false
     basename: messages
@@ -80,6 +80,9 @@ eureka:
     hostname: ${DOMAIN_NAME}
     nonSecurePort: 80
 
+api-ms-base.url: http://127.0.0.1:3334/
+acta.findByActaId: actaDb/findByActaId/
+acta.saveActa: actaDb//guardar
 ---
 spring:
   profiles: localDB
