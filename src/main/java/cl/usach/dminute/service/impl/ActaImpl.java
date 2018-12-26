@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import cl.usach.dminute.component.ApiDminuteDb;
 import cl.usach.dminute.dto.ActaDto;
 import cl.usach.dminute.dto.Constants;
 import cl.usach.dminute.dto.UsuarioActaDto;
@@ -53,6 +54,9 @@ public class ActaImpl implements ActaService {
 	@Autowired
 	@Qualifier("elementoDialogoService")
 	private ElementoDialogoService elementoDialogoService;
+	
+    @Autowired
+    private ApiDminuteDb apiDminuteDb;
 
 	@Override
 	public Acta guardarModificar(ActaDto guardar, String userName) {
@@ -86,7 +90,7 @@ public class ActaImpl implements ActaService {
 				}else{
 					acta.setCorrelativo(guardar.getCorrelativo());
 				}	
-				acta = actaJpa.save(acta);
+				acta = apiDminuteDb.save(acta);
 			}
 			if (acta == null)
 				throw new Exception();
@@ -130,7 +134,7 @@ public class ActaImpl implements ActaService {
 			}
 		} catch (Exception ex) {
 			if (log.isErrorEnabled()) {
-				log.info("ActaImpl.guardarModificarActa.ERROR - " + ex.getMessage());
+				log.error("ActaImpl.guardarModificarActa.ERROR - " + ex.getMessage());
 			}
 			throw new ValidacionesException(Constants.ERROR_TECNICO_GENERICO_COD, Constants.ERROR_ACTA_ERROR, null);
 		}
@@ -167,13 +171,13 @@ public class ActaImpl implements ActaService {
 				Usuario lider = new Usuario();
 				lider.setUsername(guardar.getUsername());
 				acta.setUsuario(lider);
-				acta = actaJpa.save(acta);
+				acta = apiDminuteDb.save(acta);
 			}
 			if (acta == null)
 				throw new Exception();
 		} catch (Exception ex) {
 			if (log.isErrorEnabled()) {
-				log.info("ActaImpl.eliminarActa.ERROR - " + ex.getMessage());
+				log.error("ActaImpl.eliminarActa.ERROR - " + ex.getMessage());
 			}
 			throw new ValidacionesException(Constants.ERROR_TECNICO_GENERICO_COD, Constants.ERROR_ACTA_ERROR, null);
 		}
@@ -198,7 +202,7 @@ public class ActaImpl implements ActaService {
 			}
 		} catch (Exception ex) {
 			if (log.isErrorEnabled()) {
-				log.info("ActaImpl.listarActaProyecto.ERROR - " + ex.getMessage());
+				log.error("ActaImpl.listarActaProyecto.ERROR - " + ex.getMessage());
 			}
 			throw ex;
 		}
@@ -208,6 +212,7 @@ public class ActaImpl implements ActaService {
 		return listarActa;
 	}
 
+	
 	@Override
 	public ActaDto getActa(long actaId) {
 		if (log.isInfoEnabled()) {
@@ -216,7 +221,8 @@ public class ActaImpl implements ActaService {
 		}
 		ActaDto actaDto = new ActaDto();
 		try {
-			Acta acta = actaJpa.findByActaId(actaId);
+			
+			Acta acta = apiDminuteDb.findByActaId(actaId);
 			if (acta == null)
 				throw new ValidacionesException(Constants.ERROR_TECNICO_GENERICO_COD, Constants.ERROR_ACTA_NOEXISTE,
 						null);
@@ -245,7 +251,7 @@ public class ActaImpl implements ActaService {
 			}
 		} catch (Exception ex) {
 			if (log.isErrorEnabled()) {
-				log.info("ActaImpl.getActa.ERROR - " + ex.getMessage());
+				log.error("ActaImpl.getActa.ERROR - " + ex.getMessage());
 			}
 			throw ex;
 		}
@@ -270,7 +276,7 @@ public class ActaImpl implements ActaService {
 		}
 		ActaDto actaDto = new ActaDto();
 		try {
-			Acta acta = actaJpa.findByActaId(actaId);
+			Acta acta = apiDminuteDb.findByActaId(actaId);
 			if (acta == null)
 				throw new ValidacionesException(Constants.ERROR_TECNICO_GENERICO_COD, Constants.ERROR_ACTA_NOEXISTE,
 						null);
@@ -291,7 +297,7 @@ public class ActaImpl implements ActaService {
 			}
 		} catch (Exception ex) {
 			if (log.isErrorEnabled()) {
-				log.info("ActaImpl.getActa.ERROR - " + ex.getMessage());
+				log.error("ActaImpl.getActa.ERROR - " + ex.getMessage());
 			}
 			throw ex;
 		}

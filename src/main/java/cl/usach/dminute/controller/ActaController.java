@@ -30,7 +30,7 @@ public class ActaController {
 	@Autowired
 	@Qualifier("actaService")
 	private ActaService actaService;
-	
+    
 	@Autowired
     private JwtTokenUtil jwtTokenUtil;
 	

@@ -9,9 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,6 +22,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 @Entity
+@Builder
 @Table(name = "acta")
 public class Acta {
 
@@ -40,7 +40,6 @@ public class Acta {
 	private String resumen;
 	@Column(name = "correlativo")
 	private long correlativo;	
-	@JsonIgnore
 	@Column(name = "estado", length = 1)
 	private String estado;
 	@ManyToOne
