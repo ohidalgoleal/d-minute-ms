@@ -1,11 +1,14 @@
 package cl.usach.dminute.controller;
 
+import cl.usach.dminute.component.ApiDminuteDb;
 import cl.usach.dminute.configuration.JwtTokenUtil;
 import cl.usach.dminute.dto.AuthTokenDto;
 import cl.usach.dminute.dto.Constants;
 import cl.usach.dminute.dto.LoginUserDto;
 import cl.usach.dminute.dto.SalidaDto;
+import cl.usach.dminute.dto.UserInfoOauth;
 import cl.usach.dminute.entity.Usuario;
+import cl.usach.dminute.exception.ValidacionesException;
 import cl.usach.dminute.service.UsuarioService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -40,6 +43,11 @@ public class AuthenticationController {
 	@Autowired
 	@Qualifier("usuarioService")
     private UsuarioService usuarioService;
+	
+	@Autowired
+	@Qualifier("apiDminuteDb")
+    private ApiDminuteDb apiDminuteDb;
+	
 
 	@PostMapping(value = "/generate-token", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> register(@RequestBody LoginUserDto loginUser) throws AuthenticationException {
@@ -73,10 +81,9 @@ public class AuthenticationController {
 			log.info("AuthenticationController.userOauth.loginUser:" + loginUser.toString());
 		}
     	
-    	loginUser.setPassword(Constants.ORIGEN_GOOGLE);
-    	usuarioService.userOauth(loginUser);
+    	String tokenApp = validaGeneraToken(loginUser);
     	
-        return ResponseEntity.ok(new AuthTokenDto(validaGeneraToken(loginUser)));
+        return ResponseEntity.ok(new AuthTokenDto(tokenApp));
     }
 	
 	private String validaGeneraToken(LoginUserDto loginUser) {
@@ -85,24 +92,37 @@ public class AuthenticationController {
 			log.info("AuthenticationController.validaGeneraToken.INI");
 		}
 		
-		final Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        loginUser.getUsername(),
-                        loginUser.getPassword()
-                )
-        );
-    	
-        if(log.isInfoEnabled()) {
-			log.info("AuthenticationController.GeneraToken");
+		UserInfoOauth retorno = apiDminuteDb.userInfoGoogle(loginUser.getToken());
+		
+		if (retorno.isEmail_verified()){
+			
+			loginUser.setPassword(Constants.ORIGEN_GOOGLE);
+			loginUser.setName(retorno.getName());
+			usuarioService.userOauth(loginUser);
+			
+			final Authentication authentication = authenticationManager.authenticate(
+	                new UsernamePasswordAuthenticationToken(
+	                        loginUser.getUsername(),
+	                        loginUser.getPassword()
+	                )
+	        );
+	    	
+	        if(log.isInfoEnabled()) {
+				log.info("AuthenticationController.GenerandoToken");
+			}
+	        
+	        SecurityContextHolder.getContext().setAuthentication(authentication);
+	        final Usuario user = usuarioService.findOne(loginUser.getUsername());
+	        final String token = jwtTokenUtil.generateToken(user);
+	        if(log.isInfoEnabled()) {
+				log.info("AuthenticationController.validaGeneraToken.Token.OK");
+			}
+	        return token;
+			
 		}
-        
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        final Usuario user = usuarioService.findOne(loginUser.getUsername());
-        final String token = jwtTokenUtil.generateToken(user);
-        if(log.isInfoEnabled()) {
-			log.info("AuthenticationController.validaGeneraToken.Token.OK");
-		}
-        return token;
+		else{
+			throw new ValidacionesException(Constants.ERROR_PERMISO_GENERICO_COD, Constants.ERROR_USUARIO_INVALIDO, null);
+		}	
 	}
 
 }
