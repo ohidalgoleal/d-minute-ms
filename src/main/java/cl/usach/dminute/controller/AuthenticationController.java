@@ -97,6 +97,7 @@ public class AuthenticationController {
 		if (retorno.isEmail_verified()){
 			
 			loginUser.setPassword(Constants.ORIGEN_GOOGLE);
+			loginUser.setName(retorno.getName());
 			usuarioService.userOauth(loginUser);
 			
 			final Authentication authentication = authenticationManager.authenticate(
